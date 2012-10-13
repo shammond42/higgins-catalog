@@ -1,0 +1,45 @@
+%h1= @artifact.std_term
+
+%dl
+  %dt Accession Number
+  %dd= @artifact.accession_number
+  %dt Dates
+  %dd
+    %b Probable
+    = @artifact.prob_date
+  %dd
+    %b Range
+    == #{@artifact.min_date} &mdash; #{@artifact.max_date}
+  %dt Synonyms
+  %dd= @artifact.category_synonyms
+  %dt Artist
+  %dd= @artifact.artist
+  %dt School/Period
+  %dd= @artifact.school_period
+  %dt Origin
+  %dd= @artifact.origin
+  %dt Materials
+  %dd= @artifact.materials
+  %dt Measure
+  %dd= @artifact.measure
+  %dt Weight
+  %dd= @artifact.weight
+  %dt Marks
+  %dd= @artifact.marks
+  %dt Location
+  %dd= @artifact.public_loc
+  %dt Status
+  %dd= @artifact.status
+
+%h2 Description
+%p
+  %i= @artifact.label_text
+%p= @artifact.description
+
+%h2 Comments
+%p= @artifact.comments
+
+%h2 Bibliography
+%p= @artifact.bibliography
+%p= @artifact.published_refs
+%p= @artifact.exhibit_history

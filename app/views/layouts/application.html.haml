@@ -25,7 +25,7 @@
             %span.icon-bar
             %span.icon-bar
           %a.logo{href: 'http://higgins.org'}
-            %img{src: 'assets/higgins-logo.gif'}
+            %img{src: '/assets/higgins-logo.gif'}
           %a.brand{href: "/"} The Virtual Armory
           .container.nav-collapse
             %ul.nav
@@ -39,9 +39,9 @@
           .well.sidebar-nav
             %ul.nav.nav-list
               %li.nav-header Sidebar
-              %li= link_to "Link 1", "/path1"
-              %li= link_to "Link 2", "/path2"
-              %li= link_to "Link 3", "/path3"
+              %li= link_to "Link 1", artifact_path(Artifact.first)
+              %li= link_to "Link 2", artifact_path(Artifact.first)
+              %li= link_to "Link 3", artifact_path(Artifact.first)
         .span9
           = yield
     
