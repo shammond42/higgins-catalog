@@ -14,6 +14,7 @@ config/applicaton.yml
 #Higgins Provided Data
 /db/higgins_data/*.csv
 /public/ObjectPhotos.tgz
+/public/object_photos/*
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
