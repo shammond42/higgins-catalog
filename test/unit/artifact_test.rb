@@ -38,6 +38,7 @@ class ArtifactTest < ActiveSupport::TestCase
       FactoryGirl.create(:category_synonym, category: 'mace', synonym: 'blunt weapon')
       @artifact = FactoryGirl.build(:artifact, alt_name: 'blade')
     end
+
     should 'report its synonyms' do
       synonyms = @artifact.category_synonyms
       assert_equal 3, synonyms.size
@@ -46,6 +47,13 @@ class ArtifactTest < ActiveSupport::TestCase
       assert synonyms.include?('sharp thing')
       deny synonyms.include?('mace')
       deny synonyms.include?('blunt weapon')
+    end
+
+    should 'use its accession_number as an id param' do
+      assert_equal '1994', FactoryGirl.build(:artifact, accession_number: '1994').to_param
+      assert_equal '1994-23', FactoryGirl.build(:artifact, accession_number: '1994.23').to_param
+      assert_equal '1994-23-a', FactoryGirl.build(:artifact, accession_number: '1994.23.a').to_param
+      assert_equal '1994-23-a:b', FactoryGirl.build(:artifact, accession_number: '1994.23.a & b').to_param
     end
   end
 end

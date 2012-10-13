@@ -6,10 +6,20 @@ class Artifact < ActiveRecord::Base
 
   validates_uniqueness_of :accession_number
 
+  def to_param
+    accession_number.gsub('.','-').gsub(' & ',':')
+  end
+
+  def self.from_param(param)
+    param.gsub('-','.').gsub(':',' & ')
+  end
+
   def category_synonyms
+    return @synonyms if @synonyms.present?
+
     t = CategorySynonym.arel_table
 
-    CategorySynonym.where(t[:category].eq(alt_name).or(t[:synonym].eq(alt_name))).
+    @synonyms = CategorySynonym.where(t[:category].eq(alt_name).or(t[:synonym].eq(alt_name))).
       map{|i| [i.category,i.synonym]}.
       flatten.
       uniq
