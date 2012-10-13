@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ArtifactTest < ActiveSupport::TestCase
   should validate_uniqueness_of(:accession_number)
-  
+
   should_not allow_mass_assignment_of(:id)
   should_not allow_mass_assignment_of(:created_at)
   should_not allow_mass_assignment_of(:updated_at)
@@ -30,4 +30,22 @@ class ArtifactTest < ActiveSupport::TestCase
   should allow_mass_assignment_of(:marks)
   should allow_mass_assignment_of(:public_loc)
   should allow_mass_assignment_of(:status)
+
+  context 'an Artifact instance' do
+    setup do
+      FactoryGirl.create(:category_synonym, category: 'blade', synonym: 'edged weapon')
+      FactoryGirl.create(:category_synonym, category: 'sharp thing', synonym: 'blade')
+      FactoryGirl.create(:category_synonym, category: 'mace', synonym: 'blunt weapon')
+      @artifact = FactoryGirl.build(:artifact, alt_name: 'blade')
+    end
+    should 'report its synonyms' do
+      synonyms = @artifact.category_synonyms
+      assert_equal 3, synonyms.size
+      assert synonyms.include?('blade')
+      assert synonyms.include?('edged weapon')
+      assert synonyms.include?('sharp thing')
+      deny synonyms.include?('mace')
+      deny synonyms.include?('blunt weapon')
+    end
+  end
 end
