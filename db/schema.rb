@@ -11,21 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121013042255) do
+ActiveRecord::Schema.define(:version => 20121013104909) do
 
   create_table "artifacts", :force => true do |t|
     t.string   "accession_number"
     t.string   "std_term"
     t.string   "alt_name"
-    t.date     "prob_date"
-    t.date     "min_date"
-    t.date     "max_date"
+    t.string   "prob_date"
+    t.integer  "min_date"
+    t.integer  "max_date"
     t.string   "artist"
     t.string   "school_period"
     t.string   "geoloc"
     t.string   "origin"
     t.string   "materials"
-    t.string   "measure"
+    t.text     "measure"
     t.string   "weight"
     t.text     "comments"
     t.text     "bibliography"
@@ -33,13 +33,17 @@ ActiveRecord::Schema.define(:version => 20121013042255) do
     t.text     "label_text"
     t.text     "old_labels"
     t.text     "exhibit_history"
-    t.text     "desctiption"
+    t.text     "description"
     t.text     "marks"
     t.text     "public_loc"
     t.text     "status"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
   end
+
+  add_index "artifacts", ["accession_number"], :name => "index_artifacts_on_accession_number"
+  add_index "artifacts", ["max_date"], :name => "index_artifacts_on_max_date"
+  add_index "artifacts", ["min_date"], :name => "index_artifacts_on_min_date"
 
   create_table "users", :force => true do |t|
     t.string   "name"

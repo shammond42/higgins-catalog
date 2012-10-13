@@ -4,15 +4,15 @@ class CreateArtifacts < ActiveRecord::Migration
       t.string :accession_number
       t.string :std_term
       t.string :alt_name
-      t.date :prob_date
-      t.date :min_date
-      t.date :max_date
+      t.string :prob_date
+      t.integer :min_date
+      t.integer :max_date
       t.string :artist
       t.string :school_period
       t.string :geoloc
       t.string :origin
       t.string :materials
-      t.string :measure
+      t.text :measure
       t.string :weight
       t.text :comments
       t.text :bibliography
@@ -20,7 +20,7 @@ class CreateArtifacts < ActiveRecord::Migration
       t.text :label_text
       t.text :old_labels
       t.text :exhibit_history
-      t.text :desctiption
+      t.text :description
       t.text :marks
       t.text :public_loc
       t.text :status
