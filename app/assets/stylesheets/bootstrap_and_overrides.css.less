@@ -30,3 +30,50 @@ body {
 //
 // Example:
 // @linkColor: #ff0000;
+
+@baseFontSize: 16px;
+@backColor: #FFFAFA;
+@headerTextColor: #B17803;
+@fancyFonts: "aragon", "serif";
+@scriptFonts: "sanvito-pro",sans-serif;
+
+.navbar-inner {
+  background-color: #410F0B; /* fallback color, place your own */
+
+  /* Gradients for modern browsers, replace as you see fit */
+  background-image: -moz-linear-gradient(top, #2C1717, #410F0B);
+  background-image: -ms-linear-gradient(top, #2C1717, #410F0B);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2C1717), to(#410F0B));
+  background-image: -webkit-linear-gradient(top, #2C1717, #410F0B);
+  background-image: -o-linear-gradient(top, #2C1717, #410F0B);
+  background-image: linear-gradient(top, #2C1717, #410F0B);
+  background-repeat: repeat-x;
+
+  /* IE8-9 gradient filter */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2C1717', endColorstr='#410F0B', GradientType=0);
+}
+
+body {
+  background-color: @backColor;
+}
+
+.navbar .brand {
+  font-family: @fancyFonts;
+  font-size: 25px;
+  color: @headerTextColor;
+  text-shadow: 0 1px 0 #000;
+}
+
+.navbar .nav li a {
+  font-family: @scriptFonts;
+  font-size: 20px;
+  color: @headerTextColor;
+  text-shadow: 0 1px 0 #000;
+}
+
+.navbar .logo {
+  float: right;
+  img {
+    height: 40px;
+  }
+}
