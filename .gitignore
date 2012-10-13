@@ -11,6 +11,8 @@
 config/database.yml
 config/applicaton.yml
 
+/db/higgins_data/*.csv
+
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
