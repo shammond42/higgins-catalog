@@ -36,6 +36,8 @@ group :test do
   gem 'shoulda-context'
   gem 'timecop'
 
+  gem 'mocha'
+  gem 'factory_girl'
   gem 'mocha-color'
 end
 # To use ActiveModel has_secure_password
