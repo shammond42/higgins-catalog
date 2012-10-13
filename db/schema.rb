@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121013121034) do
+ActiveRecord::Schema.define(:version => 20121013215213) do
+
+  create_table "artifact_images", :force => true do |t|
+    t.integer  "artifact_id", :null => false
+    t.string   "path",        :null => false
+    t.integer  "sort_order"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "artifact_images", ["artifact_id"], :name => "index_artifact_images_on_artifact_id"
 
   create_table "artifacts", :force => true do |t|
     t.string   "accession_number"

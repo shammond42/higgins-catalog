@@ -6,12 +6,18 @@ class Artifact < ActiveRecord::Base
 
   validates_uniqueness_of :accession_number
 
+  has_many :artifact_images
+  
   def to_param
     accession_number.gsub('.','-').gsub(' & ',':')
   end
 
   def self.from_param(param)
     param.gsub('-','.').gsub(':',' & ')
+  end
+
+  def self.de_space_ac_num(ac_num)
+    ac_num.gsub(/^[Nn]o#./,'n').sub(/(\d+)/){"%04d"%$1.to_i}.gsub(' & ', '&').gsub(' NC','.NC').downcase
   end
 
   def category_synonyms

@@ -3,6 +3,44 @@ require 'csv'
 namespace :higgins do
   namespace :data do
     CSV_FILE_PATH = 'db/higgins_data'
+    IMAGE_PATH = 'public/object_photos'
+
+    desc 'Delete all processes photos'
+    task :delete_processed_images  => :environment do
+      ArtifactImage.delete_all
+    end
+
+    desc 'Process Higgins Provided Pictures'
+    task :process_images => :environment do
+      STDOUT.sync = true
+      found = 0
+      unfound = 0
+
+      Dir.entries(IMAGE_PATH).each do |filename|
+        next unless filename =~ /[jJ][pP][gG]$/
+
+        # clean up messy names
+        accession_number = Artifact.de_space_ac_num(filename[0...-4]).split[0]
+        new_filename = Artifact.de_space_ac_num(filename).gsub(/\s+/,'').downcase
+
+        # rename file
+        File.rename("#{IMAGE_PATH}/#{filename}", "#{IMAGE_PATH}/#{new_filename}")
+
+        # associate new file with database
+        artifact = Artifact.find_by_accession_number(Artifact.de_space_ac_num(filename[0...-4]).split[0])
+        if artifact.present?
+          artifact.artifact_images.create(path: "/object_photos/#{new_filename}")
+          print '.'
+          found += 1
+        else # no record for this image
+          print 'F'
+          unfound += 1
+        end
+      end
+      puts ''
+      puts "Found: #{found}"
+      puts "Unfound: #{unfound}"
+    end
 
     desc 'Delete all artifacts from the database'
     task :delete_artifacts => :environment do
@@ -15,7 +53,7 @@ namespace :higgins do
       CSV.foreach( "#{CSV_FILE_PATH}/catalogue.csv", :headers           => true,
                                         :header_converters => :symbol) do |line|
         artifact = Artifact.new({
-          accession_number: line[:accessionnumber],
+          accession_number: Artifact.de_space_ac_num(line[:accessionnumber]),
           std_term: line[:stdterm],
           alt_name: line[:altname],
           prob_date: line[:probdate],
@@ -38,7 +76,12 @@ namespace :higgins do
           marks: line[:marks],
           public_loc: line[:publicloc],
           status: line[:status]
-        }).save!
+        })
+        if artifact.valid?
+          artifact.save!
+        else
+          puts line[:accessionnumber]
+        end
         print '.'
       end
       puts 'done'

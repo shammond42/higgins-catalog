@@ -31,6 +31,8 @@ class ArtifactTest < ActiveSupport::TestCase
   should allow_mass_assignment_of(:public_loc)
   should allow_mass_assignment_of(:status)
 
+  should have_many(:artifact_images)
+  
   context 'an Artifact instance' do
     setup do
       FactoryGirl.create(:category_synonym, category: 'blade', synonym: 'edged weapon')

@@ -1,5 +1,7 @@
 %h1= @artifact.std_term
 
+= image_tag @artifact.artifact_images.first.path
+
 %dl
   %dt Accession Number
   %dd= @artifact.accession_number
