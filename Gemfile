@@ -15,8 +15,8 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
-
+  gem 'therubyracer', :platforms => :ruby
+  gem 'twitter-bootstrap-rails'
   gem 'uglifier', '>= 1.0.3'
 end
 
@@ -28,7 +28,7 @@ gem 'capistrano'
 
 group :production do
   gem 'mysql2' # If using mysql in development, this can be outside the production group.
-  gem 'therubyracer'
+  # gem 'therubyracer'
 end
 
 group :test do
