@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121013104909) do
+ActiveRecord::Schema.define(:version => 20121013115022) do
 
   create_table "artifacts", :force => true do |t|
     t.string   "accession_number"
@@ -44,6 +44,15 @@ ActiveRecord::Schema.define(:version => 20121013104909) do
   add_index "artifacts", ["accession_number"], :name => "index_artifacts_on_accession_number"
   add_index "artifacts", ["max_date"], :name => "index_artifacts_on_max_date"
   add_index "artifacts", ["min_date"], :name => "index_artifacts_on_min_date"
+
+  create_table "category_xrefs", :force => true do |t|
+    t.string "category", :null => false
+    t.string "xref",     :null => false
+    t.text   "note"
+  end
+
+  add_index "category_xrefs", ["category"], :name => "index_category_xrefs_on_category"
+  add_index "category_xrefs", ["xref"], :name => "index_category_xrefs_on_xref"
 
   create_table "users", :force => true do |t|
     t.string   "name"
