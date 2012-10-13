@@ -47,12 +47,12 @@ ActiveRecord::Schema.define(:version => 20121013121034) do
 
   create_table "category_synonyms", :force => true do |t|
     t.string "category", :null => false
-    t.string "xref",     :null => false
+    t.string "synonym",  :null => false
     t.text   "note"
   end
 
   add_index "category_synonyms", ["category"], :name => "index_category_xrefs_on_category"
-  add_index "category_synonyms", ["xref"], :name => "index_category_xrefs_on_xref"
+  add_index "category_synonyms", ["synonym"], :name => "index_category_xrefs_on_xref"
 
   create_table "users", :force => true do |t|
     t.string   "name"
