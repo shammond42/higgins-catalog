@@ -11,7 +11,35 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121013024622) do
+ActiveRecord::Schema.define(:version => 20121013042255) do
+
+  create_table "artifacts", :force => true do |t|
+    t.string   "accession_number"
+    t.string   "std_term"
+    t.string   "alt_name"
+    t.date     "prob_date"
+    t.date     "min_date"
+    t.date     "max_date"
+    t.string   "artist"
+    t.string   "school_period"
+    t.string   "geoloc"
+    t.string   "origin"
+    t.string   "materials"
+    t.string   "measure"
+    t.string   "weight"
+    t.text     "comments"
+    t.text     "bibliography"
+    t.text     "published_refs"
+    t.text     "label_text"
+    t.text     "old_labels"
+    t.text     "exhibit_history"
+    t.text     "desctiption"
+    t.text     "marks"
+    t.text     "public_loc"
+    t.text     "status"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"
