@@ -7,6 +7,7 @@
     = csrf_meta_tags
 
     %link{rel: "icon", href: "http://www.example.com/favicon.ico", type: "image/x-icon"}
+    = ga_tracking_code unless request.local?
 
   %body
     = yield
