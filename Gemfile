@@ -22,6 +22,7 @@ end
 
 gem 'jquery-rails'
 gem 'high_voltage'
+gem 'airbrake'
 
 group :test do
   gem 'shoulda-matchers'
