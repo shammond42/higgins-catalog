@@ -29,7 +29,7 @@ require 'bundler/capistrano'
 #############################################
 
 GITHUB_REPOSITORY_NAME = 'r12-team-118'
-LINODE_SERVER_HOSTNAME = 'higgins'
+LINODE_SERVER_HOSTNAME = '198.74.58.166'
 
 #############################################
 #############################################
