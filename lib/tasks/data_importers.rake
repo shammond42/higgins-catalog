@@ -89,7 +89,7 @@ namespace :higgins do
 
     desc 'Delete all category synonyms'
     task :delete_category_synonyms => :environment do
-      CategoryXref.delete_all
+      CategorySynonym.delete_all
     end
 
     desc 'Import category cross references (synonmyms)'
@@ -97,9 +97,9 @@ namespace :higgins do
       STDOUT.sync = true
       CSV.foreach( "#{CSV_FILE_PATH}/category_xrefs.csv", :headers           => true,
                                         :header_converters => :symbol) do |line|
-        artifact = CategoryXref.new({
+        artifact = CategorySynonym.new({
           category: line[:category],
-          xref: line[:category_xref],
+          synonym: line[:category_xref],
           note: line[:note]
           }).save!
         print '.'

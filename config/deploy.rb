@@ -71,6 +71,7 @@ role :db,  LINODE_SERVER_HOSTNAME, :primary => true
 after 'deploy:update_code' do
   # Setup Configuration
   run "cp #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+  run "ln -s #{shared_path}/object_photos #{release_path}/public/object_photos"
 
   # Compile Assets
   run "cd #{release_path}; RAILS_ENV=production bundle exec rake assets:precompile"
