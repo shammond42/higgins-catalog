@@ -1,3 +1,15 @@
+- content_for(:sidebar) do
+  %ul.nav.nav-list
+    %li.nav-header Sidebar
+    - if Artifact.first.present?
+      %li= link_to "First Artifact", artifact_path(Artifact.first)
+    %li= link_to "Browse List", artifacts_path
+  = form_tag artifacts_path, method: :get do
+    %p
+      = text_field_tag :query, params[:query]
+      = submit_tag 'Search', name: nil
+  = render partial: 'artifacts/temporal_facets'
+
 %h1 Artifact List
 
 %table

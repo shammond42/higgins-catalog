@@ -37,7 +37,7 @@ body {
 @fancyFonts: "aragon", "serif";
 @scriptFonts: "sanvito-pro",sans-serif;
 
-.navbar-inner {
+.navbar-inverse .navbar-inner {
   background-color: #410F0B; /* fallback color, place your own */
 
   /* Gradients for modern browsers, replace as you see fit */
@@ -55,6 +55,10 @@ body {
 
 body {
   background-color: @backColor;
+}
+
+blockquote {
+  border-left: 5px solid #999;
 }
 
 .navbar .brand {
@@ -75,5 +79,29 @@ body {
   float: right;
   img {
     height: 40px;
+  }
+}
+
+h1, h2, h3 {
+  font-family: @scriptFonts;
+}
+h1 {
+  font-size: 50px;
+}
+.sidebar-nav {
+  h2 {
+    padding: 0;
+    margin-bottom: 0;
+  }
+  dl {margin-top: 0;}
+}
+
+@media (max-width: 480px) {
+  .navbar .brand {
+    text-align: center;
+    float: none;
+  }
+  .artifact-name {
+    text-align: center;
   }
 }
