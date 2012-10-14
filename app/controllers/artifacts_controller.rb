@@ -10,7 +10,7 @@ class ArtifactsController < ApplicationController
 
   def daily
     if params[:screenshot].present?
-      @artifact = Artifact.find(29810)
+      @artifact = Artifact.find_by_accession_number('2000.02')
       render :show
     else
       @artifact = Artifact.of_the_day
