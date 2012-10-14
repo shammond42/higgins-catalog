@@ -1,11 +1,17 @@
 module ArtifactsHelper
   def temportal_facet_path(params, low, high)
-    artifacts_path(params.update(low_date: low, high_date: high))
+    artifacts_path(params.dup.update(low_date: low, high_date: high))
   end
 
   def temporal_facet_menu_item(params, low, high, text=nil)
+    puts params.inspect
+
     text = "#{low} &ndash; #{high}".html_safe unless text.present?
-    link_to text, temportal_facet_path(params, low, high)
+    if params[:low_date].present? && params[:low_date].to_i == low
+      return "#{text}<i class=\"icon-ok\"></i>".html_safe
+    else
+      return link_to text, temportal_facet_path(params, low, high)
+    end
   end
 
   def display_fields
