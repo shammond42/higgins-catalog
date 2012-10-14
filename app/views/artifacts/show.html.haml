@@ -2,7 +2,9 @@
 - content_for(:sidebar) do
   = render partial: 'info_sidebar'
 
-%h1.artifact-name= @artifact.std_term.titlecase
+%h1.artifact-name
+  :textile
+    #{@artifact.std_term.titlecase}
 
 - if @artifact.artifact_images.any?
   = image_tag @artifact.artifact_images.first.path

@@ -1,0 +1,19 @@
+- content_for(:title, 'Higgins Armory Museum Online Catalog')
+- content_for(:sidebar) do 
+  = render partial: 'artifacts/search_options'
+
+%h1 Higgins Armory Museum Online Catalog
+
+%a.artifact-of-the-day{href: artifact_path(@artifact)}
+  %h2 Artifact of the Day
+  
+  = image_tag @artifact.artifact_images.first.path
+
+  :textile
+    h3. #{@artifact.std_term.titlecase}
+  %p
+    = "#{@artifact.origin}" if @artifact.origin.present?
+    = "(#{@artifact.prob_date})" if @artifact.prob_date.present?
+  :textile
+    #{@artifact.description}
+

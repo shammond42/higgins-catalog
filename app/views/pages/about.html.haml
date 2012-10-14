@@ -1,0 +1,33 @@
+- content_for(:title, 'About : Higgins Catalog')
+- content_for(:sidebar) do 
+  = render partial: 'artifacts/search_options'
+
+:textile
+  h1. Explore the only dedicated museum of armor in the Western Hemisphere
+
+  During the Industrial Revolution, John Higgins' passion for steel and romance for chivalry led him to acquire, piece by piece, this great collection. He then built the world's first steel and glass building in Worcester, MA to house his collection.
+
+  This app combines my own love of knights and fantasy, with my passion for the ongoing Information Revolution to bring this great collection to you. Explore the wonders of a different time as this great collection moves from one revolution to the next.
+
+  Enjoy,
+  _Steven Hammond_
+
+  h2. Project Goals
+
+  This project is a complete rewrite of the "existing catalog":http://users.wpi.edu/~jforgeng/CollectionIQP/searchform.pl. There were several objectives:
+
+  # Win the "Rails Rumble":http://railsrumble.com!
+  # Greatly Improve the search capabilities of the site
+  # Provide a responsive design so that patrons can explore the database from within the museum
+  # Provide some engagement features (at 4:00pm on Sunday it is looking like we may not achieve this goal)
+
+  h2. Next Steps
+
+  As this project moves from the incredible pace of the "Rails Rumble":http://railsrumble.com toward actual use there are a few next steps to take care of.
+
+  - Punch List := I've got a pile of sticky notes, with bugs and polish that should be cleaned up once judging is over.
+  - Styleing and Integration := Ultimately this app needs to be integrated with the existing "Higgins Armory site":http://higgins.org and their "Virtual Armory Site":http://users.wpi.edu/~virtualarmory/.
+  - Data Massageing := I think a little bit of work in the underlying data source could make a major improvment in this app.
+  - An API := It didn't happen during the Runble, but an API could be interesting. ArchaeoML looks like a standard for this kind of thing, but documentation seems scarce. The API would make it easier for others to use this data in their own apps.
+
+  

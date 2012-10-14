@@ -11,6 +11,5 @@ class ArtifactsController < ApplicationController
   def daily
     @artifact = Artifact.of_the_day
     @new_question = @artifact.questions.build
-    render :show
   end
 end
