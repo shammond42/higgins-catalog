@@ -1,4 +1,5 @@
-- content_for(:sidebar) do
+- content_for(:title, "#{params[:query].try(:titlecase) || 'Search'} : Higgin's Catalog")
+- content_for(:sidebar) do 
   %ul.nav.nav-list
     %li.nav-header Sidebar
     - if Artifact.first.present?
@@ -12,18 +13,17 @@
 
 %h1 Artifact List
 
-%table
-  %thead
-    %tr
-      %th Name
-      %th Origin
-      %th Date Range
-  %tbody
-    - @artifacts.each do |artifact|
-      %tr
-        %td
-          %a{href: "/artifacts/#{artifact[:to_param]}"}= artifact.std_term
-        %td= artifact.origin
-        %td
-          == #{artifact.min_date} &mdash; #{artifact.max_date}
-= will_paginate @artifacts
+%ul.search-results
+  - @artifacts.each do |artifact|
+    %a{href: "/artifacts/#{artifact[:to_param]}"}
+      %li
+        %strong= artifact.std_term.titlecase
+        %br
+        %span.muted
+          = "#{artifact.origin}" if artifact.origin.present?
+          = "(#{artifact.prob_date})" if artifact.prob_date.present?
+
+- if (request.user_agent =~ /Mobile|webOS/) && !(request.user_agent =~ /iPad/)
+  = will_paginate @artifacts, page_links:false, class: 'pagination pagination-centered'
+- else
+  = will_paginate @artifacts, inner_window: 3, outer_window: 1, previous_label: '&laquo;', next_label: '&raquo;', class: 'pagination pagination-centered'

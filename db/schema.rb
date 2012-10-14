@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121014042533) do
+ActiveRecord::Schema.define(:version => 20121014153909) do
 
   create_table "artifact_images", :force => true do |t|
     t.integer  "artifact_id", :null => false

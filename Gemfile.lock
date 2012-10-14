@@ -33,6 +33,8 @@ GEM
       builder
       girl_friday
     arel (3.0.2)
+    bootstrap-will_paginate (0.0.9)
+      will_paginate
     builder (3.0.3)
     capistrano (2.13.4)
       highline
@@ -171,6 +173,7 @@ PLATFORMS
 DEPENDENCIES
   RedCloth
   airbrake
+  bootstrap-will_paginate
   capistrano
   coffee-rails (~> 3.2.1)
   factory_girl
