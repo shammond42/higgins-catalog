@@ -39,9 +39,13 @@
           .well.sidebar-nav
             %ul.nav.nav-list
               %li.nav-header Sidebar
-              %li= link_to "Link 1", artifact_path(Artifact.first)
-              %li= link_to "Link 2", artifact_path(Artifact.first)
-              %li= link_to "Link 3", artifact_path(Artifact.first)
+              - if Artifact.first.present?
+                %li= link_to "First Artifact", artifact_path(Artifact.first)
+              %li= link_to "Browse List", artifacts_path
+            = form_tag artifacts_path, method: :get do
+              %p
+                = text_field_tag :query, params[:query]
+                = submit_tag 'Search', name: nil
         .span9
           = yield
     

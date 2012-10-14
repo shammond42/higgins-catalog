@@ -22,6 +22,8 @@ end
 
 gem 'jquery-rails'
 gem 'high_voltage'
+gem 'will_paginate'
+gem 'tire'
 
 gem 'airbrake'
 gem 'capistrano'

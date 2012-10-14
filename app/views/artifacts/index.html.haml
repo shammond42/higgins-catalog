@@ -1,0 +1,16 @@
+%h1 Artifact List
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Origin
+      %th Date Range
+  %tbody
+    - @artifacts.each do |artifact|
+      %tr
+        %td
+          %a{href: "/artifacts/#{artifact[:to_param]}"}= artifact.std_term
+        %td= artifact.origin
+        %td= #{artifact.min_date} &mdash; #{artifact.max_date}
+= will_paginate @artifacts
