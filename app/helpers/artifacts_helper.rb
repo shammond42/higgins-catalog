@@ -1,6 +1,6 @@
 module ArtifactsHelper
   def temportal_facet_path(params, low, high)
-    artifacts_path(params.dup.update(low_date: low, high_date: high))
+    artifacts_path(params.dup.update(low_date: low, high_date: high, page: 1))
   end
 
   def temporal_facet_menu_item(params, low, high, text=nil)
