@@ -9,7 +9,12 @@ class ArtifactsController < ApplicationController
   end
 
   def daily
-    @artifact = Artifact.of_the_day
-    @new_question = @artifact.questions.build
+    if params[:screenshot].present?
+      @artifact = Artifact.find(29810)
+      render :show
+    else
+      @artifact = Artifact.of_the_day
+      @new_question = @artifact.questions.build
+    end
   end
 end
