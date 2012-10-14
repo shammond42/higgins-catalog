@@ -12,5 +12,6 @@
         %td
           %a{href: "/artifacts/#{artifact[:to_param]}"}= artifact.std_term
         %td= artifact.origin
-        %td= #{artifact.min_date} &mdash; #{artifact.max_date}
+        %td
+          == #{artifact.min_date} &mdash; #{artifact.max_date}
 = will_paginate @artifacts

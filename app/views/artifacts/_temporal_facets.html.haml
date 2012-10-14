@@ -1,0 +1,6 @@
+%ul.nav.nav-list
+  %li.nav-header Temporal Facets
+  %li= temporal_facet_menu_item(params, nil, -1, '1 BCE and Earlier')
+  - [[0, 499], [500, 999], [1000,1199], [1200,1399],[1400,1599],[1600,1799]].each do |date_range|
+    %li= temporal_facet_menu_item(params, date_range[0], date_range[1])
+  %li=temporal_facet_menu_item(params, 1800, nil, '1800 &ndash; Present'.html_safe)
