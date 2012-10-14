@@ -1,13 +1,5 @@
 - content_for(:title, "#{params[:query].try(:titlecase) || 'Search'} : Higgin's Catalog")
 - content_for(:sidebar) do 
-  %ul.nav.nav-list
-    %li.nav-header Search the Armory
-  = form_tag artifacts_path, method: :get, class: 'form-search' do
-    %p
-      = text_field_tag :query, params[:query], class: 'input-medium search-query'
-      %br
-      %button{type: 'submit', class: 'btn'} Search
-      = link_to 'Search Help', page_path(:help), class: 'seach-help-link'
   = render partial: 'artifacts/search_options'
 
 %h1 Artifact List
@@ -22,7 +14,7 @@
           = "#{artifact.origin}" if artifact.origin.present?
           = "(#{artifact.prob_date})" if artifact.prob_date.present?
 
-- if (request.user_agent =~ /Mobile|webOS/) && !(request.user_agent =~ /iPad/)
+- if using_phone?
   = will_paginate @artifacts, page_links:false, class: 'pagination pagination-centered'
 - else
   = will_paginate @artifacts, inner_window: 3, outer_window: 1, previous_label: '&laquo;', next_label: '&raquo;', class: 'pagination pagination-centered'

@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+  def using_phone?
+    (request.user_agent =~ /Mobile|webOS/) && !(request.user_agent =~ /iPad/)
+  end
+
   def ga_tracking_code
     "<script type=\"text/javascript\">
 

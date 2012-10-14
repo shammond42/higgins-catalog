@@ -1,8 +1,19 @@
 .accordion#accordion1
   .accordion-group
     .accordion-heading
-      %a.accordion-toggle{href: '#collapseOne', data: {toggle: 'collapse', parent: '#accordion1'}} Temporal Facets
-    #collapseOne.accordion-body.collapse.in
+      %a.accordion-toggle{href: '#searchForm', data: {toggle: 'collapse', parent: '#accordion1'}} Search The Armory
+    #searchForm.accordion-body.collapse.in
+      .accordion-inner
+        = form_tag artifacts_path, method: :get, class: 'form-search' do
+          %p
+            = text_field_tag :query, params[:query], class: 'input-medium search-query'
+            %br
+            %button{type: 'submit', class: 'btn'} Search
+            = link_to 'Search Help', page_path(:help), class: 'seach-help-link'
+  .accordion-group
+    .accordion-heading
+      %a.accordion-toggle{href: '#collapseOne', data: {toggle: 'collapse', parent: '#accordion1'}} Date FIlters
+    #collapseOne.accordion-body.collapse{class: !using_phone? ? 'in' : nil}
       .accordion-inner
         %ul.nav.nav-list
           %li= temporal_facet_menu_item(params, nil, -1, '1 BCE and Earlier')
@@ -12,9 +23,8 @@
   .accordion-group
     .accordion-heading
       %a.accordion-toggle{href: '#collapseTwo', data: {toggle: 'collapse', parent: '#accordion1'}} Canned Searches
-    #collapseTwo.accordion-body.collapse.in
+    #collapseTwo.accordion-body.collapse{class: !using_phone? ? 'in' : nil}
       .accordion-inner
         %ul.nav.nav-list
-          %li Browse by Accession Number
-          %li Top 250 Items
-          %li On Display in the Museum
+          %li= link_to 'Browse by Accession Number', artifacts_path
+          %li= link_to 'On Display in the Museum', artifacts_path(on_display: true)
