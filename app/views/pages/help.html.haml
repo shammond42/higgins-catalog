@@ -1,0 +1,15 @@
+- content_for(:title, 'Search Help : Higgins Collection')
+- content_for(:sidebar) do 
+  = render partial: 'artifacts/search_options'
+
+:textile
+  h1. Search Help
+
+  The search field provided is deceptively simple. It is really quite powerful. Review the following tips to take advantage of it.
+
+  - Free Text Search := All of the text assicated with each artifact can be searched. This includes descriptions, curators comments, etc. To search this text, just type a key word in the search box and click _search_.
+  - Multiple Words := If you type more than one word in the search box, it will look for artifacts where both words occur. If you want to search for either word, just type "OR" between them like _shield OR sword_.
+  - Accession Number := If you want to get a specific item by its catalog number you can do this by typeing 'accession_number: 9999' in the search box. Some accession numbers have strange formats, so this is not 100% reliable yet.
+  - Other Fields := You can also search for things by other specific fields, like _origin_ or _materials_. Try _materials: silver_ if you are looking for your lycanthrope slaying options.
+  - Date Filtering := Once you have some search results, you can click on the _Date Filter_ links to limit them to specific time periods.
+  - Canned Searches := Don't know what to search for, there are few canned searches that you can try out.
