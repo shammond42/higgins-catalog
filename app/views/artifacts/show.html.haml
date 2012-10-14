@@ -32,7 +32,7 @@
   %p= @artifact.published_refs
   %p= @artifact.exhibit_history
 
-- if @artifact.questions.answered.any?
+- if false && @artifact.questions.answered.any?
   %h2 Questions & Answers
   %dl
     - @artifact.questions.order('created_at asc').each do |question|
@@ -40,5 +40,6 @@
       %dd= question.answer
       %dd.muted= "Asked by #{question.nickname} on #{question.created_at.strftime("%B %d, %Y")}."
 
-%h2 Ask a Question
-= render 'questions/form'
+- if false
+  %h2 Ask a Question
+  = render 'questions/form'
