@@ -7,7 +7,7 @@
 %a.artifact-of-the-day{href: artifact_path(@artifact)}
   %h2 Artifact of the Day
   
-  = image_tag @artifact.artifact_images.first.path
+  = image_tag @artifact.artifact_images.first.path, class: 'artifact-image'
 
   :textile
     h3. #{@artifact.std_term.titlecase}
