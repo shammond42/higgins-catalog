@@ -38,6 +38,7 @@
     - @artifact.questions.order('created_at asc').each do |question|
       %dt= question.question
       %dd= question.answer
+      %dd.muted= "Asked by #{question.nickname} on #{question.created_at.strftime("%B %d, %Y")}."
 
-%h2 Ask a Your Own Question
+%h2 Ask a Question
 = render 'questions/form'

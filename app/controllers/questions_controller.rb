@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
-  def index
-    @questions = Question.unanswered.order('created_at asc')
-  end
+  # def index
+  #   @questions = Question.unanswered.order('created_at asc')
+  # end
 
   def create
     puts params.inspect
@@ -10,9 +10,9 @@ class QuestionsController < ApplicationController
     redirect_to :back
   end
 
-  def update
-    @question = Question.find(params[:id])
-    @question.update_attributes(params[:question])
-    redirect_to :back
-  end
+  # def update
+  #   @question = Question.find(params[:id])
+  #   @question.update_attributes(params[:question])
+  #   redirect_to :back
+  # end
 end
