@@ -30,6 +30,9 @@ class Artifact < ActiveRecord::Base
     indexes :marks
     indexes :public_loc
 
+    indexes :origin, boost: 5
+    indexes :geoloc, boost: 3
+
     indexes :min_date, type: 'integer'
     indexes :max_date, type: 'integer'
   end
