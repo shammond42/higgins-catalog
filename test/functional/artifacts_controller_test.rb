@@ -5,7 +5,6 @@ class ArtifactsControllerTest < ActionController::TestCase
 
   test 'browse artifacts' do
     5.times{FactoryGirl.create(:artifact)}
-    puts Artifact.all.map(&:accession_number)
 
     get :index
     assert_not_nil assigns[:artifacts]
