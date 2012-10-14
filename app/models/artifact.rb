@@ -67,7 +67,7 @@ class Artifact < ActiveRecord::Base
     @synonyms = CategorySynonym.where(t[:category].eq(alt_name).or(t[:synonym].eq(alt_name))).
       map{|i| [i.category,i.synonym]}.
       flatten.
-      uniq
+      uniq.join(', ')
   end
 
 
