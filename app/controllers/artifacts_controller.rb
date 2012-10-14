@@ -5,5 +5,6 @@ class ArtifactsController < ApplicationController
 
   def show
     @artifact = Artifact.find_by_accession_number(Artifact.from_param(params[:id]))
+    @new_question = @artifact.questions.build
   end
 end

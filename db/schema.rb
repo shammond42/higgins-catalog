@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121013215213) do
+ActiveRecord::Schema.define(:version => 20121014042533) do
 
   create_table "artifact_images", :force => true do |t|
     t.integer  "artifact_id", :null => false
@@ -63,6 +63,18 @@ ActiveRecord::Schema.define(:version => 20121013215213) do
 
   add_index "category_synonyms", ["category"], :name => "index_category_xrefs_on_category"
   add_index "category_synonyms", ["synonym"], :name => "index_category_xrefs_on_xref"
+
+  create_table "questions", :force => true do |t|
+    t.string   "email"
+    t.string   "nickname"
+    t.text     "question"
+    t.text     "answer"
+    t.integer  "artifact_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "questions", ["artifact_id"], :name => "index_questions_on_artifact_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"

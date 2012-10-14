@@ -1,0 +1,9 @@
+= form_for [@artifact, @new_question] do |f|
+  %dl
+    %dt Nickname
+    %dd= f.text_field :nickname
+    %dt E-Mail Address
+    %dd= f.text_field :email
+    %dt Your question
+    %dd= f.text_area :question
+    %dt= submit_tag 'Ask away', name: nil

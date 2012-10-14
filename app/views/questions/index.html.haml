@@ -1,0 +1,8 @@
+%h1 Unanswered Questions
+
+%dl
+  - @questions.each do |question|
+    = form_for question do |f|
+      %dt= question.question
+      %dd= f.text_area :answer
+      %dd= f.submit "Answer the question", name: nil

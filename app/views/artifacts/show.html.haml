@@ -46,3 +46,13 @@
 %p= @artifact.bibliography
 %p= @artifact.published_refs
 %p= @artifact.exhibit_history
+
+- if @artifact.questions.answered.any?
+  %h2 Questions & Answers
+  %dl
+    - @artifact.questions.order('created_at asc').each do |question|
+      %dt= question.question
+      %dd= question.answer
+
+%h2 Ask a Your Own Question
+= render 'questions/form'

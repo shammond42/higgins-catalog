@@ -10,6 +10,7 @@ class Artifact < ActiveRecord::Base
   validates_uniqueness_of :accession_number
 
   has_many :artifact_images
+  has_many :questions
 
   mapping do
     indexes :id, type: 'integer'
