@@ -4,7 +4,6 @@ class QuestionsController < ApplicationController
   # end
 
   def create
-    puts params.inspect
     @artifact = Artifact.find_by_accession_number(Artifact.from_param(params[:artifact_id]))
     @artifact.questions.create(params[:question])
     redirect_to :back
