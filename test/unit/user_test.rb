@@ -10,6 +10,8 @@ class UserTest < ActiveSupport::TestCase
   should validate_presence_of(:title).with_message(/title/)
 
   should_not allow_mass_assignment_of(:id)
+  should_not allow_mass_assignment_of(:created_at)
+  should_not allow_mass_assignment_of(:updated_at)
 
   should allow_mass_assignment_of(:email)
   should allow_mass_assignment_of(:name)
