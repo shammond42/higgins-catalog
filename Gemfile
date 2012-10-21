@@ -28,7 +28,14 @@ gem 'will_paginate'
 gem 'tire'
 
 gem 'airbrake'
-gem 'capistrano'
+
+group :development do
+  gem 'capistrano'
+  gem 'rb-fsevent'
+  gem 'growl'
+  gem 'guard', '>= 1.4.0'
+  gem 'guard-test', '>= 0.5.0'
+end
 
 group :production do
   gem 'mysql2' # If using mysql in development, this can be outside the production group.
@@ -42,7 +49,7 @@ group :test do
 
   gem 'mocha'
   gem 'factory_girl'
-  gem 'mocha-color'
+  gem 'timecop'
 end
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
