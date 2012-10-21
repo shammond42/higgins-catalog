@@ -33,6 +33,38 @@ class ArtifactTest < ActiveSupport::TestCase
 
   should have_many(:artifact_images)
   
+  context 'the Artifact class' do
+    should 'be able to select an artifact of the day' do
+      5.times {FactoryGirl.create(:artifact)}
+      5.times {FactoryGirl.create(:quality_artifact)}
+
+      Timecop.freeze(Time.local(2012, 10, 21)) do 
+        assert Artifact.all.include?(Artifact.of_the_day)
+        aod = Artifact.of_the_day
+        assert_equal aod, Artifact.of_the_day, 'Should return the same object all day.'
+        Timecop.travel(2.days.from_now) do 
+          assert_not_equal aod, Artifact.of_the_day, 'Should return a different object tomorrow.'
+        end
+      end
+    end
+
+    should 'be able to find artifacts with quality descriptions' do
+      FactoryGirl.create(:artifact, comments: nil, description: nil)
+      FactoryGirl.create(:artifact, comments: nil, description: 'It is made of metal.')
+      FactoryGirl.create(:artifact, comments: 'This is a great artifact.', description: nil)
+      FactoryGirl.create(:artifact, comments: 'This is a great artifact', description: 'It is made of metal.')
+
+      # quality_artifact = FactoryGirl.create(:artifact, comments: 'This is a great artifact',
+      #   description: 'It is made of metal.')
+      # quality_artifact.artifact_images << FactoryGirl.create(:artifact_image,
+      #   artifact_id: quality_artifact.id )
+      quality_artifact = FactoryGirl.create(:quality_artifact)
+
+      assert_equal 1, Artifact.quality_entries.count
+      assert_equal quality_artifact, Artifact.quality_entries.first
+    end
+  end
+
   context 'an Artifact instance' do
     setup do
       FactoryGirl.create(:category_synonym, category: 'blade', synonym: 'edged weapon')
