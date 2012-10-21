@@ -14,6 +14,7 @@ class Artifact < ActiveRecord::Base
 
   scope :quality_entries, where('comments is not null and description is not null and id in (select artifact_id from artifact_images)').order(:accession_number)
 
+  # Elasticsearch Indexing Configuration
   mapping do
     indexes :id, type: 'integer'
     indexes :accession_number, index: 'not_analyzed'
