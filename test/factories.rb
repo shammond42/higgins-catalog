@@ -30,6 +30,10 @@ FactoryGirl.define do
     nickname 'Old Tobey'
     email 'bbaggins@fellowship.org'
     question 'Is that made of metal?'
+
+    factory :answered_question do
+      answer 'Yes'
+    end
   end
 
   factory :user do
