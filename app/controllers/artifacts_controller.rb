@@ -7,7 +7,7 @@ class ArtifactsController < ApplicationController
     @artifact = Artifact.includes(:questions, :artifact_images).find_by_accession_number(Artifact.from_param(params[:id]))
 
     if user_signed_in?
-      @questions = @artifact.questions
+      @questions = @artifact.questions.sort_by{|q| [q.answer.present? ? -1 : 1, q.created_at]}
     else
       @questions = @artifact.questions.answered
     end

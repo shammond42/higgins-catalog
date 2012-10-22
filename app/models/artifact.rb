@@ -10,7 +10,7 @@ class Artifact < ActiveRecord::Base
   validates_uniqueness_of :accession_number
 
   has_many :artifact_images
-  has_many :questions
+  has_many :questions, order: 'created_at desc'
 
   scope :quality_entries, where('comments is not null and description is not null and id in (select artifact_id from artifact_images)').order(:accession_number)
 

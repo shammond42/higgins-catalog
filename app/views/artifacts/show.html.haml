@@ -35,8 +35,8 @@
 - if @questions.any?
   %h2 Questions & Answers
   %dl.question-list
-    - @questions.sort_by{|q| [q.answer.present? ? -1 : 1, q.created_at]}.each do |question|
-      %dt{class: question.answer.present? ? 'answered-question' : 'unanswered-question'}= question.question
+    - @questions.each do |question|
+      %dt{class: question_class(question)}= question.question
       %dd.muted== Asked by #{question.nickname} (#{question.email}) on #{question.created_at.stamp('June 1, 2012')}
       - if question.answer.present?
         %dd= question.answer
