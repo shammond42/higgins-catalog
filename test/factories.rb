@@ -24,4 +24,11 @@ FactoryGirl.define do
     artifact
     path '/test/path/image.jpg'
   end
+
+  factory :user do
+    name 'Frodo Baggins'
+    email 'fbaggins@bagend.com'
+    title 'Ring Bearer'
+    password 'letmein'
+  end
 end

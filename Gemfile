@@ -26,6 +26,7 @@ gem 'jquery-rails'
 gem 'high_voltage'
 gem 'will_paginate'
 gem 'tire'
+gem 'devise'
 
 gem 'airbrake'
 
