@@ -32,14 +32,25 @@
   %p= @artifact.published_refs
   %p= @artifact.exhibit_history
 
-- if false && @artifact.questions.answered.any?
+- if @questions.any?
   %h2 Questions & Answers
-  %dl
-    - @artifact.questions.order('created_at asc').each do |question|
+  %dl.question-list
+    - @questions.sort_by{|q| [q.answer.present? ? -1 : 1, q.created_at]}.each do |question|
       %dt= question.question
-      %dd= question.answer
-      %dd.muted= "Asked by #{question.nickname} on #{question.created_at.strftime("%B %d, %Y")}."
+      %dd.muted== Asked by #{question.nickname} (#{question.email}) on #{question.created_at.stamp('June 1, 2012')}
+      - if question.answer.present?
+        %dd= question.answer
+      - elsif user_signed_in?
+        %dd
+          = form_for question do |f|
+            = f.text_area :answer, class: 'input-xxlarge', rows: 5
+            <br />
+            = f.submit "Answer the question", name: nil, class: 'btn btn-inverse btn-mini'
+            = delete_question_link question
 
-- if false
-  %h2 Ask a Question
+- unless user_signed_in?
+  - if @artifact.questions.answered.any?
+    %h2 Ask Your Own Question
+  -else
+    %h2 Ask a Question
   = render 'questions/form'

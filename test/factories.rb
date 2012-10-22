@@ -25,6 +25,13 @@ FactoryGirl.define do
     path '/test/path/image.jpg'
   end
 
+  factory :question do
+    artifact
+    nickname 'Old Tobey'
+    email 'bbaggins@fellowship.org'
+    question 'Is that made of metal?'
+  end
+
   factory :user do
     name 'Frodo Baggins'
     email 'fbaggins@bagend.com'

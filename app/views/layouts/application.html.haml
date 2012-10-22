@@ -35,6 +35,9 @@
               %li= link_to "About", page_path(:about)
               %li= link_to "Dedication", page_path(:dedication)
               %li= link_to "Higgins Museum", 'http://higgins.org'
+              -if user_signed_in?
+                %li= link_to 'Questions', questions_path
+                %li= link_to 'Sign Out', destroy_user_session_path, method: :delete
     .container-fluid
       .row-fluid
         .span8.main

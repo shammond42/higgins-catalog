@@ -4,12 +4,19 @@ class ArtifactsController < ApplicationController
   end
 
   def show
-    @artifact = Artifact.find_by_accession_number(Artifact.from_param(params[:id]))
-    @new_question = @artifact.questions.build
+    @artifact = Artifact.includes(:questions, :artifact_images).find_by_accession_number(Artifact.from_param(params[:id]))
+
+    if user_signed_in?
+      @questions = @artifact.questions
+    else
+      @questions = @artifact.questions.answered
+    end
+
+    @new_question = Question.new
+    @new_question.artifact = @artifact
   end
 
   def daily
     @artifact = Artifact.of_the_day
-    @new_question = @artifact.questions.build
   end
 end

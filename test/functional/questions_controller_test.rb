@@ -16,4 +16,16 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_not_nil assigns[:artifact] 
     assert_equal old_question_count + 1, Question.count
   end
+
+  context 'an unauthenticated user' do
+    should 'not be able to see restricted pages' do
+      get :index
+      assert_response :redirect
+      assert_redirected_to new_user_session_url
+
+      put :update, id: FactoryGirl.create(:question)
+      assert_response :redirect
+      assert_redirected_to new_user_session_url
+    end
+  end
 end
