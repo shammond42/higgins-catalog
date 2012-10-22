@@ -27,6 +27,7 @@ gem 'high_voltage'
 gem 'will_paginate'
 gem 'tire'
 gem 'devise'
+gem 'stamp'
 
 gem 'airbrake'
 
