@@ -24,6 +24,11 @@ class ArtifactsControllerTest < ActionController::TestCase
   end
 
   test 'daily artifiact' do
-    
+    artifact = FactoryGirl.create(:quality_artifact)
+
+    get :daily
+    assert_response :success
+    assert_template :daily
+    assert_equal artifact, assigns(:artifact)
   end
 end
