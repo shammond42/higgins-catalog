@@ -12,7 +12,8 @@ class Artifact < ActiveRecord::Base
   has_many :artifact_images
   has_many :questions, order: 'created_at desc'
 
-  scope :quality_entries, where('comments is not null and description is not null and id in (select artifact_id from artifact_images)').order(:accession_number)
+  scope :quality_entries, where('comments is not null and description is not null and exists
+    (select 1 from artifact_images where artifacts.id = artifact_id)').order(:accession_number)
 
   # Elasticsearch Indexing Configuration
   mapping do
