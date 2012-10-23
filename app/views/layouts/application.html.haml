@@ -42,6 +42,8 @@
     .container-fluid
       .row-fluid
         %section.span8.main
+          #flash-messages
+            =render :partial => 'layouts/flash_messages', :locals => {:flash => flash}
           = yield
         %aside.span4.side
           .sidebar-nav

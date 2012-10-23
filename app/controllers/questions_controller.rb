@@ -8,6 +8,7 @@ class QuestionsController < ApplicationController
   def create
     @artifact = Artifact.find_by_accession_number(Artifact.from_param(params[:artifact_id]))
     @artifact.questions.create(params[:question])
+    flash[:success] = 'Thank you for the question. Watch your e-mail for the answer.'
     redirect_to :back
   end
 
