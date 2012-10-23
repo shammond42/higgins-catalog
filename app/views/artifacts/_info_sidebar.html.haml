@@ -4,4 +4,4 @@
     - if@artifact.send(item[:field]).present?
       %dt= item[:label]
       %dd= @artifact.send(item[:field])
-= link_to_function "Return to Search", "history.back()", class: 'btn btn-inverse', style: 'width: 90%; margin-top: 10px'
+= link_to "Return to Search", artifacts_path(session[:search_params]), class: 'btn btn-inverse', style: 'margin-top: 10px;'

@@ -1,6 +1,7 @@
 class ArtifactsController < ApplicationController
   def index
     @artifacts = Artifact.search(params)
+    session[:search_params] = {query: params[:query], page: params[:page]}
   end
 
   def show
