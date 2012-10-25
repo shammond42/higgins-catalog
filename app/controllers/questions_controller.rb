@@ -6,10 +6,16 @@ class QuestionsController < ApplicationController
   end
 
   def create
+    @question = Question.create(params[:question])
     @artifact = Artifact.find_by_accession_number(Artifact.from_param(params[:artifact_id]))
-    @artifact.questions.create(params[:question])
-    flash[:success] = 'Thank you for the question. Watch your e-mail for the answer.'
-    redirect_to :back
+    @artifact.questions << @question
+
+    if request.xhr?
+      render partial: 'questions/processing', locals: {question: @question}, layout: nil
+    else
+      flash[:success] = 'Thank you for the question. Watch your e-mail for the answer.'
+      redirect_to :back
+    end
   end
 
   def update

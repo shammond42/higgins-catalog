@@ -4,3 +4,16 @@
 
 $ ->
   $(".first-field").focus()
+
+  askQuestion = (e) ->
+    e.preventDefault()
+    form_data = $(this).serialize()
+
+    $.ajax $(@).attr('action'),
+      data: form_data
+      dataType: 'html'
+      type: 'post'
+      success: (result) ->
+        $('#ask-a-question').html(result).addClass('alert alert-info')
+
+  $('#new_question').submit askQuestion

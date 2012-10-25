@@ -1,0 +1,12 @@
+%dl.question-item
+  %dt{class: question_class(question)}= question.question
+  %dd.muted== Asked by #{question.nickname} (#{question.email}) on #{question.created_at.stamp('June 1, 2012')}
+  - if question.answer.present?
+    %dd= question.answer
+  - elsif user_signed_in?
+    %dd
+      = form_for question do |f|
+        = f.text_area :answer, class: 'input-xxlarge', rows: 5
+        <br />
+        = f.submit "Answer the question", name: nil, class: 'btn btn-inverse btn-mini'
+        = delete_question_link question

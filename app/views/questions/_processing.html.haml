@@ -1,0 +1,7 @@
+%h2= thank_you_title(question)
+
+%blockquote
+  %em= question.question
+%p= "Your question has been sent to a curator. Please check back on this page over the next few days to see the answer."
+- if question.email.present?
+  %p= "The answer will also be sent to your e-mail address, #{question.email}."

@@ -1,7 +1,7 @@
 -content_for(:title, 'Unasnwered Questions : Higgins Catalog')
 %h1 Unanswered Questions
 
-%dl.question-list
+%dl#question-list
   - @questions.each do |question|
     %dt== #{question.artifact.std_term} (HAM&nbsp;#{question.artifact.accession_number})
     %dd= question.question
