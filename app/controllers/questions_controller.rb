@@ -26,6 +26,12 @@ class QuestionsController < ApplicationController
 
   def destroy
     Question.destroy(params[:id])
-    redirect_to questions_path
+
+    if request.xhr?
+      puts "In xhr request"
+      render nothing: true
+    else
+      redirect_to questions_path
+    end
   end
 end

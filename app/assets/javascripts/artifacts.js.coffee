@@ -7,7 +7,7 @@ $ ->
 
   askQuestion = (e) ->
     e.preventDefault()
-    form_data = $(this).serialize()
+    form_data = $(@).serialize()
 
     $.ajax $(@).attr('action'),
       data: form_data
