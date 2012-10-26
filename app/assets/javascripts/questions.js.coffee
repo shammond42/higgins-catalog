@@ -27,6 +27,22 @@ askQuestion = (e) ->
     success: (result) ->
       $('#ask-a-question').html(result).addClass('alert alert-info')
 
+answerQuestion = (e) ->
+  e.preventDefault()
+  form_data = $(@).serialize()
+
+  $.ajax $(@).attr('action'),
+    data: form_data
+    dataType: 'html'
+    type: 'post'
+    context: $(@)
+    success: (result) ->
+      dl = $(@).parents('dl:first')
+      dl.slideUp 'fast', ->
+        $(@).find('form').replaceWith(result)
+        $(@).slideDown 'slow'
+
 $ ->
   $('.btn-question-delete').click deleteQuestion
+  $('.edit_question').submit answerQuestion
   $('#new_question').submit askQuestion

@@ -21,14 +21,19 @@ class QuestionsController < ApplicationController
   def update
     @question = Question.find(params[:id])
     @question.update_attributes(params[:question])
-    redirect_to :back
+
+    if request.xhr?
+      render text: @question.answer
+    else
+      flash[:success] = 'The question has been answered.'
+      redirect_to :back
+    end
   end
 
   def destroy
     Question.destroy(params[:id])
 
     if request.xhr?
-      puts "In xhr request"
       render nothing: true
     else
       redirect_to questions_path
