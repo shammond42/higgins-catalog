@@ -15,6 +15,11 @@ FactoryGirl.define do
     end
   end
   
+  factory :geoloc_synonym do
+    geoloc 'Iberia'
+    synonym 'Western Europe'
+  end
+
   factory :category_synonym do
     category 'blade'
     synonym 'edged weapon'

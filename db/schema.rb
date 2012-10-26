@@ -65,9 +65,11 @@ ActiveRecord::Schema.define(:version => 20121026140811) do
   add_index "category_synonyms", ["synonym"], :name => "index_category_xrefs_on_xref"
 
   create_table "geoloc_synonyms", :force => true do |t|
-    t.string "location", :null => false
-    t.string "synonym",  :null => false
+    t.string "geoloc",  :null => false
+    t.string "synonym", :null => false
   end
+
+  add_index "geoloc_synonyms", ["geoloc"], :name => "index_geoloc_synonyms_on_geoloc"
 
   create_table "questions", :force => true do |t|
     t.string   "email"

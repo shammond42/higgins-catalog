@@ -117,8 +117,8 @@ namespace :higgins do
       STDOUT.sync = true
       CSV.foreach( "#{CSV_FILE_PATH}/geoloc_xrefs.csv") do |line|
         loc_syn = GeolocSynonym.new({
-          location: line[2],
-          synonym: line[1]
+          geoloc: line[1],
+          synonym: line[2]
           }).save!
         print '.'
       end

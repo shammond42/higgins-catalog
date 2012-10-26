@@ -77,17 +77,31 @@ class ArtifactTest < ActiveSupport::TestCase
       FactoryGirl.create(:category_synonym, category: 'blade', synonym: 'edged weapon')
       FactoryGirl.create(:category_synonym, category: 'sharp thing', synonym: 'blade')
       FactoryGirl.create(:category_synonym, category: 'mace', synonym: 'blunt weapon')
-      @artifact = FactoryGirl.build(:artifact, alt_name: 'blade')
+
+      FactoryGirl.create(:geoloc_synonym, geoloc: 'Minas Morgul', synonym: 'Mordor')
+      FactoryGirl.create(:geoloc_synonym, geoloc: 'Minas Morgul', synonym: 'Middle Earth')
+      FactoryGirl.create(:geoloc_synonym, geoloc: 'Hobbiton', synonym: 'Middle Earth')
+      
+      @artifact = FactoryGirl.build(:artifact, alt_name: 'blade', geoloc: 'Minas Morgul')
     end
 
-    should 'report its synonyms' do
+    should 'report its category synonyms' do
       synonyms = @artifact.category_synonyms
-      # assert_equal 3, synonyms.size
+
       assert synonyms.include?('blade')
       assert synonyms.include?('edged weapon')
       assert synonyms.include?('sharp thing')
       deny synonyms.include?('mace')
       deny synonyms.include?('blunt weapon')
+    end
+
+    should 'report its geoloc synonyms' do
+      geo_syn = @artifact.geoloc_synonyms
+
+      assert geo_syn.include?('Minas Morgul')
+      assert geo_syn.include?('Mordor')
+      assert geo_syn.include?('Middle Earth')
+      deny geo_syn.include?('Hobbiton')
     end
 
     should 'use its accession_number as an id param' do

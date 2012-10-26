@@ -35,8 +35,8 @@ class Artifact < ActiveRecord::Base
     indexes :marks
     indexes :public_loc
 
-    indexes :origin, boost: 5
-    indexes :geoloc, boost: 3
+    indexes :origin, boost: 7
+    indexes :geoloc_synonyms, boost: 5
 
     indexes :min_date, type: 'integer'
     indexes :max_date, type: 'integer'
@@ -71,6 +71,17 @@ class Artifact < ActiveRecord::Base
 
     @synonyms = CategorySynonym.where(t[:category].eq(alt_name).or(t[:synonym].eq(alt_name))).
       map{|i| [i.category,i.synonym]}.
+      flatten.
+      uniq.join(', ')
+  end
+
+  def geoloc_synonyms
+    return @geo_locs if @geolocs.present?
+
+    t = GeolocSynonym.arel_table
+
+    @geolocs = GeolocSynonym.where(t[:geoloc].eq(geoloc)).
+      map{|i| [i.geoloc, i.synonym]}.
       flatten.
       uniq.join(', ')
   end

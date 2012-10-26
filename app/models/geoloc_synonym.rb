@@ -1,5 +1,5 @@
 class GeolocSynonym < ActiveRecord::Base
-  attr_accessible :location, :synonym
+  attr_accessible :geoloc, :synonym
 
-  validates_presence_of :location, :synonym
+  validates_presence_of :geoloc, :synonym
 end
