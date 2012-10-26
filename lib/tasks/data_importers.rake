@@ -106,5 +106,23 @@ namespace :higgins do
       end
       puts 'done'
     end
+
+    desc 'Delete all geoloc synonyms'
+    task :delete_geoloc_synonyms => :environment do
+      GeolocSynonym.delete_all
+    end
+
+    desc 'Import geoloc synonyms'
+    task :import_geoloc_synonyms => :environment do
+      STDOUT.sync = true
+      CSV.foreach( "#{CSV_FILE_PATH}/geoloc_xrefs.csv") do |line|
+        loc_syn = GeolocSynonym.new({
+          location: line[2],
+          synonym: line[1]
+          }).save!
+        print '.'
+      end
+      puts 'done'
+    end
   end
 end
