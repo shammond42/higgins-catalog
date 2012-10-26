@@ -2,18 +2,6 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+# Put focus on the search field
 $ ->
-  $(".first-field").focus()
-
-  askQuestion = (e) ->
-    e.preventDefault()
-    form_data = $(@).serialize()
-
-    $.ajax $(@).attr('action'),
-      data: form_data
-      dataType: 'html'
-      type: 'post'
-      success: (result) ->
-        $('#ask-a-question').html(result).addClass('alert alert-info')
-
-  $('#new_question').submit askQuestion
+  $("#query").focus()

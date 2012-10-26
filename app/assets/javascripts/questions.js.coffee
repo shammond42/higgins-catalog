@@ -16,4 +16,17 @@ deleteQuestion = (e) ->
     else
       $(@).fadeIn()
 
-$('.btn-question-delete').click deleteQuestion
+askQuestion = (e) ->
+  e.preventDefault()
+  form_data = $(@).serialize()
+
+  $.ajax $(@).attr('action'),
+    data: form_data
+    dataType: 'html'
+    type: 'post'
+    success: (result) ->
+      $('#ask-a-question').html(result).addClass('alert alert-info')
+
+$ ->
+  $('.btn-question-delete').click deleteQuestion
+  $('#new_question').submit askQuestion
