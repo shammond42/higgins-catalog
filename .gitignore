@@ -13,6 +13,7 @@ config/applicaton.yml
 
 #Higgins Provided Data
 /db/higgins_data/*.csv
+/db/higgins_data/*.txt
 /public/ObjectPhotos.tgz
 /public/object_photos/*
 
