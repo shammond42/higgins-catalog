@@ -7,6 +7,7 @@ class Artifact < ActiveRecord::Base
     :bibliography, :published_refs, :label_text, :old_labels, :exhibit_history, :description,
     :marks, :public_loc, :status
 
+  validates_presence_of :accession_number
   validates_uniqueness_of :accession_number
 
   has_many :artifact_images
@@ -43,11 +44,7 @@ class Artifact < ActiveRecord::Base
   end
 
   def to_param
-    accession_number.gsub('.','-').gsub(' & ',':')
-  end
-
-  def self.from_param(param)
-    param.gsub('-','.').gsub(':',' & ')
+    accession_number
   end
 
   def self.search(params)
@@ -61,7 +58,7 @@ class Artifact < ActiveRecord::Base
   end
 
   def to_indexed_json
-    to_json(methods: [:category_synonyms, :to_param])
+    to_json(methods: [:category_synonyms, :geoloc_synonyms, :to_param])
   end
 
   def category_synonyms
@@ -91,7 +88,11 @@ class Artifact < ActiveRecord::Base
     self.quality_entries.offset(prng.rand(self.quality_entries.count)).first
   end
 
-  def self.de_space_ac_num(ac_num)
-    ac_num.gsub(/^[Nn]o#./,'n').sub(/(\d+)/){"%04d"%$1.to_i}.gsub(' & ', '&').gsub(' NC','.NC').downcase
+  def self.process_accession_number(ac_num)
+    ac_num.gsub(' NC', '.NC').gsub('#','').gsub(/\s/, '').downcase
   end
+
+  # def self.de_space_ac_num(ac_num)
+  #   ac_num.gsub(/^[Nn]o#./,'n').sub(/(\d+)/){"%04d"%$1.to_i}.gsub(' & ', '&').gsub(' NC','.NC').downcase
+  # end
 end

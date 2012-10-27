@@ -3,3 +3,10 @@
 == Things to Remeber When Transferring to Higgins
 
 # Change config.mailer_sender in devise.rb initializer
+
+
+== Accession Number Changes
+
+* "NC" changed to ".NC"
+* Removed all '#' chracters'
+* All spaces removed, so "a & b" becomes "a&b"

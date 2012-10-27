@@ -6,7 +6,7 @@
 
 %ul.search-results
   - @artifacts.each do |artifact|
-    %a{href: "/artifacts/#{artifact[:to_param]}"}
+    %a{href: "/artifacts/#{artifact[:accession_number]}"}
       %li
         %strong= artifact.std_term.titlecase
         %br

@@ -7,7 +7,7 @@ class QuestionsController < ApplicationController
 
   def create
     @question = Question.create(params[:question])
-    @artifact = Artifact.find_by_accession_number(Artifact.from_param(params[:artifact_id]))
+    @artifact = Artifact.find_by_accession_number(params[:artifact_id])
     @artifact.questions << @question
 
     if request.xhr?

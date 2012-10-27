@@ -5,6 +5,21 @@ namespace :higgins do
     CSV_FILE_PATH = 'db/higgins_data'
     IMAGE_PATH = 'public/object_photos'
 
+    desc 'Import all higgins data.'
+    task :import_all_data => :environment do
+      puts 'Import category synonyms'
+      Rake::Task['higgins:data:import_category_xrefs'].execute
+
+      puts 'Import geo location data'
+      Rake::Task['higgins:data:import_geoloc_synonyms'].execute
+
+      puts 'Import catalog data'
+      Rake::Task['higgins:data:import_artifacts'].execute
+
+      puts 'Process Images'
+      Rake::Task['higgins:data:process_images'].execute
+    end
+
     desc 'Delete all processes photos'
     task :delete_processed_images  => :environment do
       ArtifactImage.delete_all
@@ -14,32 +29,33 @@ namespace :higgins do
     task :process_images => :environment do
       STDOUT.sync = true
       found = 0
-      unfound = 0
+      unfound = []
 
       Dir.entries(IMAGE_PATH).each do |filename|
         next unless filename =~ /[jJ][pP][gG]$/
 
         # clean up messy names
-        accession_number = Artifact.de_space_ac_num(filename[0...-4]).split[0]
-        new_filename = Artifact.de_space_ac_num(filename).gsub(/\s+/,'').downcase
+        accession_number = Artifact.process_accession_number(filename[0...-4])
+        new_filename = Artifact.process_accession_number(filename).downcase
 
         # rename file
         File.rename("#{IMAGE_PATH}/#{filename}", "#{IMAGE_PATH}/#{new_filename}")
 
         # associate new file with database
-        artifact = Artifact.find_by_accession_number(Artifact.de_space_ac_num(filename[0...-4]).split[0])
+        artifact = Artifact.find_by_accession_number(Artifact.process_accession_number(filename[0...-4]))
         if artifact.present?
           artifact.artifact_images.create(path: "/object_photos/#{new_filename}")
           print '.'
           found += 1
         else # no record for this image
           print 'F'
-          unfound += 1
+          unfound << new_filename
         end
       end
       puts ''
       puts "Found: #{found}"
-      puts "Unfound: #{unfound}"
+      puts "Unfound: #{unfound.size}"
+      unfound.each {|u| puts u}
     end
 
     desc 'Delete all artifacts from the database'
@@ -53,8 +69,8 @@ namespace :higgins do
       CSV.foreach( "#{CSV_FILE_PATH}/catalogue.csv", :headers           => true,
                                         :header_converters => :symbol) do |line|
         artifact = Artifact.new({
-          accession_number: Artifact.de_space_ac_num(line[:accessionnumber]),
-          std_term: line[:stdterm],
+          accession_number: Artifact.process_accession_number(line[:accessionnumber]),
+          std_term: line[:stdterm] || 'Untitled',
           alt_name: line[:altname],
           prob_date: line[:probdate],
           min_date: line[:mindate].present? ? line[:mindate].to_i : nil,

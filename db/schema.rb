@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(:version => 20121026140811) do
     t.datetime "updated_at",       :null => false
   end
 
-  add_index "artifacts", ["accession_number"], :name => "index_artifacts_on_accession_number"
+  add_index "artifacts", ["accession_number"], :name => "index_artifacts_on_accession_number", :unique => true
   add_index "artifacts", ["max_date"], :name => "index_artifacts_on_max_date"
   add_index "artifacts", ["min_date"], :name => "index_artifacts_on_min_date"
 

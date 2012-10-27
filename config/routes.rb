@@ -16,7 +16,7 @@ HigginsCatalog::Application.routes.draw do
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
-  resources :artifacts do
+  resources :artifacts, id: /.*/, format: false do
     resources :questions
   end
   

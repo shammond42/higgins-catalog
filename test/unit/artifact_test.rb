@@ -2,6 +2,7 @@ require 'test_helper'
 
 class ArtifactTest < ActiveSupport::TestCase
   should validate_uniqueness_of(:accession_number)
+  should validate_presence_of(:accession_number)
 
   should_not allow_mass_assignment_of(:id)
   should_not allow_mass_assignment_of(:created_at)
@@ -63,13 +64,6 @@ class ArtifactTest < ActiveSupport::TestCase
       assert_equal 1, Artifact.quality_entries.count
       assert_equal quality_artifact, Artifact.quality_entries.first
     end
-
-    should 'be able to return a accession id from a query param' do
-      assert_equal '1994', Artifact.from_param('1994')
-      assert_equal '1994.23', Artifact.from_param('1994-23').to_param
-      assert_equal '1994.23.a', Artifact.from_param('1994-23-a')
-      assert_equal '1994.23.a & b', Artifact.from_param('1994.23.a & b')
-    end
   end
 
   context 'an Artifact instance' do
@@ -106,9 +100,9 @@ class ArtifactTest < ActiveSupport::TestCase
 
     should 'use its accession_number as an id param' do
       assert_equal '1994', FactoryGirl.build(:artifact, accession_number: '1994').to_param
-      assert_equal '1994-23', FactoryGirl.build(:artifact, accession_number: '1994.23').to_param
-      assert_equal '1994-23-a', FactoryGirl.build(:artifact, accession_number: '1994.23.a').to_param
-      assert_equal '1994-23-a:b', FactoryGirl.build(:artifact, accession_number: '1994.23.a & b').to_param
+      assert_equal '1994.23', FactoryGirl.build(:artifact, accession_number: '1994.23').to_param
+      assert_equal '1994.23.a', FactoryGirl.build(:artifact, accession_number: '1994.23.a').to_param
+      assert_equal '1994.23.a&b', FactoryGirl.build(:artifact, accession_number: '1994.23.a&b').to_param
     end
   end
 end
