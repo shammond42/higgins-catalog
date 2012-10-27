@@ -1,12 +1,15 @@
 -content_for(:title, 'Unasnwered Questions : Higgins Catalog')
 %h1 Unanswered Questions
 
-%section#question-list
-  - @questions.each do |question|
-    %dl
-      %dt== #{question.artifact.std_term} (HAM&nbsp;#{question.artifact.accession_number})
-      %dd= question.question
-      %dd.muted== Asked by #{question.nickname} (#{question.email}) on #{question.created_at.stamp('June 1, 2012')}
-      %dd
-        = link_to 'Go To Artifact', artifact_path(question.artifact), class: 'btn btn-inverse btn-mini'
-        = delete_question_link question
+- if @questions.empty?
+  %h2 No questions need to be answered at this time
+-else
+  %section#question-list
+    - @questions.each do |question|
+      %dl
+        %dt== #{question.artifact.std_term} (HAM&nbsp;#{question.artifact.accession_number})
+        %dd= question.question
+        %dd.muted= question_byline(question)
+        %dd
+          = link_to 'Go To Artifact', artifact_path(question.artifact), class: 'btn btn-inverse btn-mini'
+          = delete_question_link question

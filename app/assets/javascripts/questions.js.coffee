@@ -14,6 +14,9 @@ artifactQuestion =
             dl = $(@).parents('dl:first')
             dl.slideUp 1000, ->
               $(@).remove()
+              if $('dl').length is 0
+                $('<h2 class="hide">All questions have been taken care of.</h2>').insertAfter('h1:first')
+                $('h2:first').slideDown()
       else
         $(@).fadeIn()
   askQuestion: (e) ->

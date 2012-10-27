@@ -18,45 +18,65 @@ class QuestionsControllerTest < ActionController::TestCase
   end
 
   context 'an admin' do
-    setup do
+     setup do
       @user = FactoryGirl.create(:user)
       sign_in @user
 
       @artifact = FactoryGirl.create(:artifact)
-      5.times{FactoryGirl.create(:question, artifact: @artifact)}
-      3.times{FactoryGirl.create(:answered_question, artifact: @artifact)}
     end
 
-    should 'be able to view the list of unanswered questions' do
-      get :index
-      assert_response :success
-      assert_equal 5, assigns(:questions).size
-      assigns(:questions).each do |question|
-        assert_nil question.answer, 'should only have unanswered questions.'
+    context 'without unanswered questions' do
+      setup do
+        3.times{FactoryGirl.create(:answered_question, artifact: @artifact)}
+      end
+
+      should 'see a message instead of questions to answer' do
+        get :index
+        assert_response :success
+        assert_template :index
+
+        assert_equal 0, assigns(:questions).size
+        assert_select 'h2', /[Nn]o questions/
       end
     end
+    
+    context 'with unanswered questions' do
+      setup do
+        5.times{FactoryGirl.create(:question, artifact: @artifact)}
+        3.times{FactoryGirl.create(:answered_question, artifact: @artifact)}
+      end
 
-    should 'be able to answer a question' do
-      question = @artifact.questions.unanswered.first
-      redirect_path = artifact_url(question.artifact)
-      request.env["HTTP_REFERER"] = redirect_path
+      should 'be able to view the list of unanswered questions' do
+        get :index
+        assert_response :success
+        assert_equal 5, assigns(:questions).size
+        assigns(:questions).each do |question|
+          assert_nil question.answer, 'should only have unanswered questions.'
+        end
+      end
 
-      put :update, id: question, question: {answer: 'No'}
-      assert_response :redirect
-      assert_not_nil assigns(:question)
-      assert_equal question.id, assigns(:question).id
-      assert_equal 'No', assigns(:question).answer
-    end
+      should 'be able to answer a question' do
+        question = @artifact.questions.unanswered.first
+        redirect_path = artifact_url(question.artifact)
+        request.env["HTTP_REFERER"] = redirect_path
 
-    should 'be able to delete a question' do
-      question = @artifact.questions.unanswered.first
-      old_question_count = @artifact.questions.count
+        put :update, id: question, question: {answer: 'No'}
+        assert_response :redirect
+        assert_not_nil assigns(:question)
+        assert_equal question.id, assigns(:question).id
+        assert_equal 'No', assigns(:question).answer
+      end
 
-      delete :destroy, id: question
-      assert_response :redirect
-      assert_redirected_to questions_path
-      assert_equal old_question_count-1, @artifact.questions.count
-      deny @artifact.questions.include?(question)
+      should 'be able to delete a question' do
+        question = @artifact.questions.unanswered.first
+        old_question_count = @artifact.questions.count
+
+        delete :destroy, id: question
+        assert_response :redirect
+        assert_redirected_to questions_path
+        assert_equal old_question_count-1, @artifact.questions.count
+        deny @artifact.questions.include?(question)
+      end
     end
   end
 

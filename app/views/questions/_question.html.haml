@@ -1,6 +1,6 @@
 %dl.question-item
   %dt{class: question_class(question)}= question.question
-  %dd.muted== Asked by #{question.nickname} (#{question.email}) on #{question.created_at.stamp('June 1, 2012')}
+  %dd.muted= question_byline(question)
   - if question.answer.present?
     %dd= question.answer
   - elsif user_signed_in?
