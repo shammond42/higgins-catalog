@@ -19,15 +19,28 @@
   # Win the "Rails Rumble":http://railsrumble.com!
   # Greatly Improve the search capabilities of the site
   # Provide a responsive design so that patrons can explore the database from within the museum
-  # Provide some engagement features (at 4:00pm on Sunday it is looking like we may not achieve this goal)
+  # Provide some engagement features
 
-  h2. Next Steps
+  h2. Short Term Next Steps
 
-  As this project moves from the incredible pace of the "Rails Rumble":http://railsrumble.com toward actual use there are a few next steps to take care of.
+  If there is interest in keeping this app alive, then there are a few things remaining to make this *production ready*.
 
-  - Punch List := I've got a pile of sticky notes, with bugs and polish that should be cleaned up once judging is over.
-  - Styleing and Integration := Ultimately this app needs to be integrated with the existing "Higgins Armory site":http://higgins.org and their "Virtual Armory Site":http://users.wpi.edu/~virtualarmory/.
-  - Data Massageing := I think a little bit of work in the underlying data source could make a major improvment in this app.
-  - An API := It didn't happen during the Runble, but an API could be interesting. ArchaeoML looks like a standard for this kind of thing, but documentation seems scarce. The API would make it easier for others to use this data in their own apps.
+  - User Administration := Right now, users need to be added by hand on the server. I need to create a page for adding and deleting users. There also needs to be a way for users to change their passwords and a _forgot password_ link needs to be added to the sign in page. This will require connection to some sort of email service.
+  - Integration with the other sites := There are lots of ways this could go. The content of the rest of the Virtual Armory Site could be merged with this app, possibly by adding a CMS (Content Management System) so the content could be easily maintained by Museum staff. This site could be style more like the virtual armory, but that would make it hard to keep the responsive aspects of this design. This site could be maintained as its own entity separate from the other sites.
+  - Text Review and Updates := The text around the site, including this page needs to be changed to museum approved copy. The dedication page probably needs to be removed. A privacy policy and terms of use need to be added.
+  - Productionizing := There are a few basic any app needs to take care of as it moves to production. The app is already collection usage statitis on Google Analytics, and error reporing. The database should probably be rebuilt to clean up test questions and a backup regimen needs to be established. Finally, need to make sure that Google is properly indexing the catalog so that people can find this wonderful resource.
 
+  h2. Medium Term Enhancements
   
+  Once fully operation, there are a handful of features and improvements that I would like to add.
+
+  - Automated Email to Questioners := I somebody's question is answered it would be nice if we automatically send them an email with that answer in it.
+  - Twitter or Facebook Integration := When a question is particularly good a Tweet or Facebook post could be generated with a link to the artifact.
+  - Reporting on Searching := It might be interesting to the museum to record the searches that people do on the site and be able to report on them. This might provide some insight into what the public finds interesting.
+  - Mobile Performance Tuning := Performance is not bad, but there are some tweaks that could make the experience, especially on mobile, even better.
+
+  h3. Longer Term features
+  
+  - API := I have ready about an ArchaeoML format that is used to exchange Archaeological data. However, I could not find an actual specification for this. It might be useful if the artifacts in the catalog could be
+    retrieved in this format and used by researchers everywhere.
+  - Catalog Management := It would not be too hard to take this first step and turn it into a full replacement for the access database that is currently used to maintain the catalog. This would allow researchers to take advantage of the improved search capabilities, browser/mobile accessibility and allow a much broader range of features to be added.
