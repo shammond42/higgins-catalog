@@ -40,11 +40,6 @@ group :development do
   gem 'guard-test', '>= 0.5.0'
 end
 
-group :production do
-  gem 'mysql2' # If using mysql in development, this can be outside the production group.
-  # gem 'therubyracer'
-end
-
 group :test do
   gem 'shoulda-matchers'
   gem 'shoulda-context'
