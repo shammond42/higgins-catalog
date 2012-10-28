@@ -4,11 +4,13 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-begin
-  require 'vlad'
-  Vlad.load
-rescue LoadError
-  # do nothing
+if Rails.env.development?
+  begin
+    require 'vlad'
+    Vlad.load :app => :passenger, :scm => :git
+  rescue LoadError
+    puts 'Could not load Vlad'
+  end
 end
 
 HigginsCatalog::Application.load_tasks
