@@ -94,7 +94,6 @@ GEM
     mime-types (1.19)
     mocha (0.9.12)
     multi_json (1.3.6)
-    mysql2 (0.3.11)
     open4 (1.3.0)
     orm_adapter (0.4.0)
     pg (0.14.1)
@@ -193,7 +192,6 @@ DEPENDENCIES
   high_voltage
   jquery-rails
   mocha
-  mysql2
   pg
   rails (= 3.2.8)
   rb-fsevent
