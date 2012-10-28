@@ -2,8 +2,11 @@
   %dl
     %dt Nickname
     %dd= f.text_field :nickname, class: 'input-xxlarge', placeholder: 'optional'
+  %dl
     %dt E-Mail Address
     %dd= f.text_field :email, class: 'input-xxlarge', placeholder: 'optional, used to send you the answer'
+  %dl.control-group
     %dt Your question
-    %dd= f.text_area :question, class: 'input-xxlarge', rows: 5
+    %dd.controls= f.text_area :question, class: 'input-xxlarge', rows: 5
+  %dl
     %dt= submit_tag 'Ask away', name: nil, class: 'btn btn-inverse btn-small'

@@ -21,6 +21,10 @@ artifactQuestion =
         $(@).fadeIn()
   askQuestion: (e) ->
     e.preventDefault()
+    if not $('#question_question').val?()
+      $('#question_question').parents('dl:first').addClass('error')
+      $('#question_question').attr('placeholder', 'Please ask a question before submitting the form.')
+      return
     form_data = $(@).serialize()
 
     $.ajax $(@).attr('action'),
@@ -31,6 +35,10 @@ artifactQuestion =
         $('#ask-a-question').html(result).addClass('alert alert-info')
   answerQuestion: (e) ->
     e.preventDefault()
+    if not $('#question_answer').val?()
+      $('#question_answer').parents('dl:first').addClass('error')
+      $('#question_answer').attr('placeholder', 'Please answer the question before submitting the form.')
+      return
     form_data = $(@).serialize()
 
     $.ajax $(@).attr('action'),
@@ -40,6 +48,7 @@ artifactQuestion =
       context: $(@)
       success: (result) ->
         dl = $(@).parents('dl:first')
+        dl.removeClass('error')
         dl.slideUp 1000, ->
           $(@).find('form').replaceWith(result)
           $(@).slideDown 'slow'

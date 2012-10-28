@@ -1,4 +1,4 @@
-%dl.question-item
+%dl.question-item.control-group
   %dt{class: question_class(question)}= question.question
   %dd.muted= question_byline(question)
   - if question.answer.present?
@@ -6,7 +6,7 @@
   - elsif user_signed_in?
     %dd
       = form_for question do |f|
-        = f.text_area :answer, class: 'input-xxlarge', rows: 5
+        = f.text_area :answer, class: 'input-xxlarge controls', rows: 5
         <br />
         = f.submit "Answer the question", name: nil, class: 'btn btn-inverse btn-mini'
         = delete_question_link question
