@@ -32,7 +32,8 @@ gem 'stamp'
 gem 'airbrake'
 
 group :development do
-  gem 'capistrano'
+  gem 'vlad'
+  gem 'vlad-git'
   gem 'rb-fsevent'
   gem 'growl'
   gem 'guard', '>= 1.4.0'

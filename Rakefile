@@ -4,4 +4,11 @@
 
 require File.expand_path('../config/application', __FILE__)
 
+begin
+  require 'vlad'
+  Vlad.load
+rescue LoadError
+  # do nothing
+end
+
 HigginsCatalog::Application.load_tasks

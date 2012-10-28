@@ -1,90 +1,64 @@
-require 'bundler/capistrano'
+require "bundler/vlad"
 
-# This capistrano deployment recipe is made to work with the optional
-# StackScript provided to all Rails Rumble teams in their Linode dashboard.
-#
-# After setting up your Linode with the provided StackScript, configuring
-# your Rails app to use your GitHub repository, and copying your deploy
-# key from your server's ~/.ssh/github-deploy-key.pub to your GitHub
-# repository's Admin / Deploy Keys section, you can configure your Rails
-# app to use this deployment recipe by doing the following:
-#
-# 1. Add `gem 'capistrano'` to your Gemfile.
-# 2. Run `bundle install --binstubs --path=vendor/bundles`.
-# 3. Run `bin/capify .` in your app's root directory.
-# 4. Replace your new config/deploy.rb with this file's contents.
-# 5. Configure the two parameters in the Configuration section below.
-# 6. Run `git commit -a -m "Configured capistrano deployments."`.
-# 7. Run `git push origin master`.
-# 8. Run `bin/cap deploy:setup`.
-# 9. Run `bin/cap deploy:migrations` or `bin/cap deploy`.
-#
-# Note: When deploying, you'll be asked to enter your server's root
-# password. To configure password-less deployments, see below.
+set :application, "higgins_catalog"
+set :user, 'www'
+set :domain, "#{user}@ramses.lostpapyr.us"
+set :repository,  "git@github.com:shammond42/higgins-rumble.git"
 
-#############################################
-##                                         ##
-##              Configuration              ##
-##                                         ##
-#############################################
+# set :scm, :git
+# Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 
-GITHUB_REPOSITORY_NAME = 'r12-team-118'
-LINODE_SERVER_HOSTNAME = '198.74.58.166'
+# set :use_sudo, false
+set :deploy_to, "/home/www/#{application}"
 
-#############################################
-#############################################
+# role :web, "ramses.lostpapyr.us"                          # Your HTTP server, Apache/etc
+# role :app, "ramses.lostpapyr.us"                          # This may be the same as your `Web` server
+# role :db,  "ramses.lostpapyr.us", :primary => true # This is where Rails migrations will run
+# role :db,  "your slave db-server here"
 
-# General Options
+# if you want to clean up old releases on each deploy uncomment this:
+# after "deploy:restart", "deploy:cleanup"
 
-set :bundle_flags,               "--deployment"
+# if you're still using the script/reaper helper you will need
+# these http://github.com/rails/irs_process_scripts
 
-set :application,                "railsrumble"
-set :deploy_to,                  "/var/www/apps/railsrumble"
-set :normalize_asset_timestamps, false
-set :rails_env,                  "production"
+# If you are using Passenger mod_rails uncomment this:
+# namespace :deploy do
+#   task :start do ; end
+#   task :stop do ; end
+#   task :restart, :roles => :app, :except => { :no_release => true } do
+#     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
+#   end
+# end
 
-set :user,                       "root"
-set :runner,                     "www-data"
-set :admin_runner,               "www-data"
+namespace :vlad do
+  desc "Symlinks the configuration files"
+  remote_task :symlink_config, :roles => :web do
+    %w(database.yml).each do |file|
+      run "ln -s #{shared_path}/config/#{file} #{current_path}/config/#{file}"
+    end
+    run "ln -s #{shared_path}/object_photos #{current_path}/public/object_photos"
+  end
 
-# Password-less Deploys (Optional)
-#
-# 1. Locate your local public SSH key file. (Usually ~/.ssh/id_rsa.pub)
-# 2. Execute the following locally: (You'll need your Linode server's root password.)
-#
-#    cat ~/.ssh/id_rsa.pub | ssh root@LINODE_SERVER_HOSTNAME "cat >> ~/.ssh/authorized_keys"
-#
-# 3. Uncomment the below ssh_options[:keys] line in this file.
-#
-# ssh_options[:keys] = ["~/.ssh/id_rsa"]
+  desc "Precompile assets"
+  remote_task :assets_precompile, :roles => :app do
+    run "cd #{current_path} && RAILS_ENV=production rake assets:precompile"
+  end
 
-# SCM Options
-set :scm,        :git
-set :repository, "git@github.com:railsrumble/#{GITHUB_REPOSITORY_NAME}.git"
-set :branch,     "master"
+  desc "Notify Airbrake of Deploy"
+  remote_task :airbrake_deploy, :roles => :app do
+    run "cd #{current_path} && RAILS_ENV=production rake airbrake:deploy TO=#{rails_env}"
+  end
 
-# Roles
-role :app, LINODE_SERVER_HOSTNAME
-role :db,  LINODE_SERVER_HOSTNAME, :primary => true
-
-# Add Configuration Files & Compile Assets
-after 'deploy:update_code' do
-  # Setup Configuration
-  run "cp #{shared_path}/config/database.yml #{release_path}/config/database.yml"
-  run "ln -s #{shared_path}/object_photos #{release_path}/public/object_photos"
-
-  # Compile Assets
-  run "cd #{release_path}; RAILS_ENV=production bundle exec rake assets:precompile"
-end
-
-# Restart Passenger
-deploy.task :restart, :roles => :app do
-  # Fix Permissions
-  sudo "chown -R www-data:www-data #{current_path}"
-  sudo "chown -R www-data:www-data #{latest_release}"
-  sudo "chown -R www-data:www-data #{shared_path}/bundle"
-  sudo "chown -R www-data:www-data #{shared_path}/log"
-
-  # Restart Application
-  run "touch #{current_path}/tmp/restart.txt"
+  desc "Full deployment cycle: Update, migrate, restart, cleanup"
+  remote_task :deploy, :roles => :app do
+    Rake::Task['vlad:update'].invoke
+    Rake::Task['vlad:bundle:install'].invoke
+    Rake::Task['vlad:symlink_config'].invoke
+    Rake::Task['vlad:migrate'].invoke
+    Rake::Task['vlad:assets_precompile'].invoke
+    Rake::Task['vlad:start_app'].invoke
+    Rake::Task['vlad:airbrake_deploy'].invoke
+    Rake::Task['vlad:cleanup'].invoke
+  end
 end
