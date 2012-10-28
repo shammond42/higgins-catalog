@@ -14,11 +14,11 @@ module QuestionsHelper
   end
 
   def question_byline(question)
-    who = question.nickname.present? ? question.nickname : "Anonymous"
+    who = question.nickname.present? ? h(question.nickname) : "Anonymous"
     if user_signed_in?
-      who << " (#{question.email.present? ? question.email : "email not given"})"
+      who << " (#{question.email.present? ? link_to(question.email, "mailto://#{question.email}") : "email not given"})".html_safe
     end
 
-    "Asked by #{who} on #{question.created_at.stamp('June 1, 2012')}"
+    "Asked by #{who} on #{question.created_at.stamp('June 1, 2012')}".html_safe
   end
 end
