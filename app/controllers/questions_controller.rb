@@ -18,12 +18,20 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def edit
+    @question = Question.find(params[:id])
+
+    if request.xhr?
+      render partial: 'answer_form', locals: {question: @question}
+    end
+  end
+
   def update
     @question = Question.find(params[:id])
     @question.update_attributes(params[:question])
 
     if request.xhr?
-      render text: @question.answer
+      render partial: 'questions/question', locals: {question: @question}, layout: nil
     else
       flash[:success] = 'The question has been answered.'
       redirect_to :back

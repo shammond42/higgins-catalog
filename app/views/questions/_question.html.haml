@@ -2,13 +2,11 @@
   %dt{class: question_class(question)}= question.question
   %dd.muted= question_byline(question)
   - if question.answer.present?
-    %dd= question.answer
+    %dd.answer= question.answer
     - if user_signed_in?
-      %dd= delete_question_link question
+      %dd.admin_links
+        = edit_answer_link question
+        = delete_question_link question
   - elsif user_signed_in?
     %dd
-      = form_for question do |f|
-        = f.text_area :answer, class: 'input-xxlarge controls', rows: 5
-        <br />
-        = f.submit "Answer the question", name: nil, class: 'btn btn-inverse btn-mini'
-        = delete_question_link question
+      = render partial: 'questions/answer_form', locals: {question: question}

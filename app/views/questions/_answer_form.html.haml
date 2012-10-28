@@ -1,0 +1,5 @@
+= form_for question do |f|
+  = f.text_area :answer, class: 'input-xxlarge controls', rows: 5
+  <br />
+  = f.submit "Answer the question", name: nil, class: 'btn btn-inverse btn-mini'
+  = delete_question_link question

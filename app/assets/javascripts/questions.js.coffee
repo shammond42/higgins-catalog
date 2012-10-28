@@ -33,6 +33,18 @@ artifactQuestion =
       type: 'post'
       success: (result) ->
         $('#ask-a-question').html(result).addClass('alert alert-info')
+  editAnswer: (e) ->
+    e.preventDefault()
+    $.ajax $(@).attr('href'),
+      dataType: 'html'
+      type: 'get'
+      context: $(@)
+      success: (result) ->
+        dd = $(@).parents('dl:first').children('.answer')
+        dd.slideUp 'fast', ->
+          $(@).next().slideUp()
+          $(@).html(result)
+          $(@).slideDown 'slow'
   answerQuestion: (e) ->
     e.preventDefault()
     if not $('#question_answer').val?()
@@ -49,12 +61,13 @@ artifactQuestion =
       success: (result) ->
         dl = $(@).parents('dl:first')
         dl.removeClass('error')
-        dl.slideUp 1000, ->
-          $(@).find('form').replaceWith(result)
+        dl.slideUp 'slow', ->
+          $(@).html($(result).html())
           $(@).slideDown 'slow'
   init: ->
-    $('.btn-question-delete').click this.deleteQuestion
-    $('.edit_question').submit this.answerQuestion
+    $('.question-item').on 'click', '.btn-question-delete', this.deleteQuestion
+    $('.question-item').on 'click', '.btn-answer-edit', this.editAnswer
+    $('.question-item').on 'submit','.edit_question', this.answerQuestion
     $('#new_question').submit this.askQuestion
   
 $ ->

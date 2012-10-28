@@ -4,6 +4,11 @@ module QuestionsHelper
         class: 'btn btn-danger btn-mini btn-question-delete'
   end
 
+  def edit_answer_link(question)
+    link_to 'Edit Answer', edit_question_path(question),
+        class: 'btn btn-inverse btn-mini btn-answer-edit'
+  end
+
   def question_class(question)
     question.answer.present? ? 'answered-question' : 'unanswered-question'
   end
