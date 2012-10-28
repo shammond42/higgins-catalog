@@ -1,7 +1,11 @@
 class ArtifactsController < ApplicationController
   def index
     @artifacts = Artifact.search(params)
-    session[:search_params] = {query: params[:query], page: params[:page]}
+    session[:search_params] = {
+      query: params[:query],
+      page: params[:page],
+      high_date: params[:high_date],
+      low_date: params[:low_date]}
   end
 
   def show

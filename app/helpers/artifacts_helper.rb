@@ -24,4 +24,14 @@ module ArtifactsHelper
       {field: 'weight', label: 'Weight'}
     ]
   end
+
+  def return_link
+    link_text, return_path = if request.referrer == root_url
+      ['Return to Homepage', root_path]
+    else
+      ['Reture to Search', artifacts_path(session[:search_params])]
+    end
+
+    link_to link_text, return_path, class: 'btn btn-inverse', style: 'margin-top: 10px;'
+  end
 end
