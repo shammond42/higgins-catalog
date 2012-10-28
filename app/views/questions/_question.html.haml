@@ -3,6 +3,8 @@
   %dd.muted= question_byline(question)
   - if question.answer.present?
     %dd= question.answer
+    - if user_signed_in?
+      %dd= delete_question_link question
   - elsif user_signed_in?
     %dd
       = form_for question do |f|
