@@ -17,10 +17,17 @@ class ArtifactsControllerTest < ActionController::TestCase
   test 'look at a specific artifact' do
     artifact = FactoryGirl.create(:artifact)
 
-    get :show, :id => artifact.to_param
+    get :show, id: artifact.to_param
     assert_response :success
     assert_template :show
     assert_not_nil assigns[:artifact]    
+  end
+
+  test 'artifact not found' do
+    assert_nil Artifact.find_by_accession_number('this_id_does_not_exist')
+    get :show, id: 'this_id_does_not_exist'
+    assert_response 301
+    assert flash[:warning] =~ /unable to find that page/
   end
 
   test 'daily artifiact' do
