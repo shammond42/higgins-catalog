@@ -30,6 +30,7 @@ gem 'devise'
 gem 'stamp'
 
 gem 'airbrake'
+gem 'newrelic_rpm'
 
 group :development do
   gem 'vlad'
