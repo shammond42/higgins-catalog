@@ -22,6 +22,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+gem 'turbolinks'
 gem 'jquery-rails'
 gem 'high_voltage'
 gem 'will_paginate'
@@ -39,6 +40,7 @@ group :development do
   gem 'growl'
   gem 'guard', '>= 1.4.0'
   gem 'guard-test', '>= 0.5.0'
+  gem 'better_errors'
 end
 
 group :test do
