@@ -1,7 +1,7 @@
 .accordion#accordion1
   .accordion-group
     .accordion-heading
-      %a.accordion-toggle{href: '#searchForm', data: {toggle: 'collapse', parent: '#accordion1'}} Search The Armory
+      %a.accordion-toggle{href: '#searchForm', data: {toggle: 'collapse', parent: '#accordion1'}} Search the Higgins Collection
     #searchForm.accordion-body.collapse.in
       .accordion-inner
         = form_tag artifacts_path, method: :get, class: 'form-search' do
