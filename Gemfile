@@ -51,6 +51,8 @@ group :test do
   gem 'mocha'
   gem 'factory_girl'
   gem 'timecop'
+
+  gem 'autotest-rails-pure'
 end
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
