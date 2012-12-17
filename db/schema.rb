@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(:version => 20121216225002) do
 
   create_table "search_logs", :force => true do |t|
     t.string   "terms"
-    t.string   "type"
+    t.string   "search_type"
     t.integer  "linked_search"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false

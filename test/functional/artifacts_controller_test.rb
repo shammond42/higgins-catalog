@@ -23,6 +23,19 @@ class ArtifactsControllerTest < ActionController::TestCase
     assert_not_nil assigns[:artifact]    
   end
 
+  test 'record all queries' do
+    @search_log_count = SearchLog.count
+    get :index, {query: 'hammer'}
+    assert_equal @search_log_count+1, SearchLog.count
+    assert_equal 'hammer', assigns[:search_log].terms
+    assert_equal 'keyword', assigns[:search_log].search_type
+
+    get :index, {query: 'accession_number:906.2'}
+    assert_equal @search_log_count+2, SearchLog.count
+    assert_equal '906.2', assigns[:search_log].terms
+    assert_equal 'accession_number', assigns[:search_log].search_type
+  end
+
   test 'artifact not found' do
     assert_nil Artifact.find_by_accession_number('this_id_does_not_exist')
     get :show, id: 'this_id_does_not_exist'

@@ -1,6 +1,7 @@
 class ArtifactsController < ApplicationController
   def index
     @artifacts = Artifact.search(params)
+    @search_log = SearchLog.create_from_query_string(params[:query]) if params[:query]
     session[:search_params] = {
       query: params[:query],
       page: params[:page],
