@@ -33,9 +33,9 @@
           %a.brand{href: "/"} Search the Higgins Collection
           .container.nav-collapse
             %ul.nav
-              %li= link_to "About", page_path(:about)
-              %li= link_to "Dedication", page_path(:dedication)
               %li= link_to "Higgins Museum", 'http://higgins.org'
+              %li= link_to "Virtual Armory", 'http://users.wpi.edu/~virtualarmory/'
+              %li= link_to "About", page_path(:about)
               -if user_signed_in?
                 %li= link_to 'Questions', questions_path
                 %li= link_to 'Sign Out', destroy_user_session_path, method: :delete
