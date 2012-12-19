@@ -33,7 +33,6 @@ GEM
       builder
       girl_friday
     arel (3.0.2)
-    autotest-rails-pure (4.1.2)
     bcrypt-ruby (3.0.1)
     better_errors (0.3.0)
       coderay (>= 1.0.0)
@@ -188,7 +187,6 @@ PLATFORMS
 DEPENDENCIES
   RedCloth
   airbrake
-  autotest-rails-pure
   better_errors
   bootstrap-will_paginate
   coffee-rails (~> 3.2.1)
