@@ -24,13 +24,13 @@
     = render partial: 'layouts/nav_menu'
     .container-fluid
       .row-fluid
-        %section.span8.main
+        %aside.span4#side
+          #sidebar
+            = yield(:sidebar)
+        %section.span8#main
           #flash-messages
             =render :partial => 'layouts/flash_messages', :locals => {:flash => flash}
           = yield
-        %aside.span4.side
-          .sidebar-nav
-            = yield(:sidebar)
     %footer.navbar.navbar-fixed-bottom.navbar-inverse.visible-phone
       .navbar-inner
         .container-fluid
