@@ -104,5 +104,19 @@ class ArtifactTest < ActiveSupport::TestCase
       assert_equal '1994.23.a', FactoryGirl.build(:artifact, accession_number: '1994.23.a').to_param
       assert_equal '1994.23.a&b', FactoryGirl.build(:artifact, accession_number: '1994.23.a&b').to_param
     end
+
+    should 'return the best field it has for artifact of the day' do
+      artifact = Factory.build(:artifact, description: 'description')
+      assert_equal 'description', artifact.daily_summary
+
+      artifact.comments = 'comments'
+      assert_equal 'comments', artifact.daily_summary
+
+      artifact.old_labels = 'old labels'
+      assert_equal 'old labels', artifact.daily_summary
+
+      artifact.label_text = 'label text'
+      assert_equal 'label text', artifact.daily_summary
+    end
   end
 end
