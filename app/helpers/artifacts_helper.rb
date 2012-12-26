@@ -15,8 +15,7 @@ module ArtifactsHelper
   def display_fields
     [
       {field: 'accession_number', label: 'Accession Number'},
-      {field: 'origin', label: 'Origin'},
-      {field: 'prob_date', label: 'Probable Date'},
+      {field: 'origin_with_date', label: 'Origin'},
       {field: 'artist', label: 'Artist'},
       {field: 'school_period', label: 'School/Period'},
       {field: 'materials', label: 'Materials'},

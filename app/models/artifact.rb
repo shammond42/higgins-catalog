@@ -48,7 +48,7 @@ class Artifact < ActiveRecord::Base
   end
 
   def self.search(params)
-    tire.search(page:params[:page], per_page: 10) do
+    tire.search(page:params[:page], per_page: 10, load: true) do
       query {string params[:query], default_operator: "AND"} if params[:query].present?
       filter :range, min_date: {lte: params[:high_date]} if params[:high_date].present?
       filter :range, max_date: {gte: params[:low_date]} if params[:low_date].present?
@@ -86,6 +86,10 @@ class Artifact < ActiveRecord::Base
   def daily_summary
     return self.label_text || self.old_labels ||
       self.comments || self.description
+  end
+
+  def origin_with_date
+    [self.origin, self.prob_date].compact.join(', ')
   end
 
   def self.of_the_day

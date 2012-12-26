@@ -3,6 +3,11 @@ require 'test_helper'
 class ArtifactsControllerTest < ActionController::TestCase
   tests ArtifactsController
 
+  setup do
+    Artifact.tire.index.delete
+    load File.expand_path("../../../app/models/artifact.rb", __FILE__)
+  end
+
   test 'browse artifacts' do
     5.times{FactoryGirl.create(:artifact)}
 

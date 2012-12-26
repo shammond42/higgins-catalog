@@ -105,6 +105,23 @@ class ArtifactTest < ActiveSupport::TestCase
       assert_equal '1994.23.a&b', FactoryGirl.build(:artifact, accession_number: '1994.23.a&b').to_param
     end
 
+    should 'return the origin_with_date' do
+      artifact = Factory.build(:artifact)
+      assert_nil artifact.origin
+      assert_nil artifact.prob_date
+      assert_equal '', artifact.origin_with_date
+
+      artifact.origin = 'Mordor'
+      assert_equal 'Mordor', artifact.origin_with_date
+
+      artifact.origin = nil
+      artifact.prob_date = '1450 - 1500'
+      assert_equal '1450 - 1500', artifact.origin_with_date
+
+      artifact.origin = 'Mordor'
+      assert_equal 'Mordor, 1450 - 1500', artifact.origin_with_date
+    end
+
     should 'return the best field it has for artifact of the day' do
       artifact = Factory.build(:artifact, description: 'description')
       assert_equal 'description', artifact.daily_summary
