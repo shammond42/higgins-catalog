@@ -83,6 +83,11 @@ class Artifact < ActiveRecord::Base
       uniq.join(', ')
   end
 
+  def daily_summary
+    return self.label_text || self.old_labels ||
+      self.comments || self.description
+  end
+
   def self.of_the_day
     prng = Random.new(Date.today.to_time.to_i)
     self.quality_entries.offset(prng.rand(self.quality_entries.count)).first
