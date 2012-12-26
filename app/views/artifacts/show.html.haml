@@ -1,4 +1,4 @@
--content_for(:title, "#{@artifact.std_term.titlecase} : Higgins Catalog")
+- set_subtitle "#{@artifact.std_term.titlecase}"
 - content_for(:sidebar) do
   = render partial: 'info_sidebar'
 

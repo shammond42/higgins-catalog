@@ -4,6 +4,14 @@ module ApplicationHelper
     (request.user_agent =~ /Mobile|webOS/) && !(request.user_agent =~ /iPad/)
   end
 
+  def set_subtitle(subtitle)
+    @subtitle = subtitle
+  end
+
+  def subtitle
+    "#{@subtitle} : " if @subtitle.present?
+  end
+
   def ga_tracking_code
     "<script type=\"text/javascript\">
 

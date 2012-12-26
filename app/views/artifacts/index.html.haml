@@ -1,4 +1,4 @@
-- content_for(:title, "#{params[:query].try(:titlecase) || 'Search'} : Higgins Catalog")
+- set_subtitle "#{params[:query].try(:titlecase) || 'Search'}"
 - content_for(:sidebar) do 
   = render partial: 'artifacts/search_options'
 
