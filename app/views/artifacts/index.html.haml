@@ -8,10 +8,13 @@
   - @artifacts.each do |artifact|
     %a{href: "/artifacts/#{artifact[:accession_number]}"}
       %li
-        %strong= artifact.std_term.titlecase
+        %strong== #{artifact.std_term.titlecase}
         %br
         %span.muted
-          = artifact.origin_with_date
+          %span.origin
+            = artifact.origin_with_date
+          %span.accession_number
+            == Higgins Armory Museum (#{artifact.accession_number})
 
 - if using_phone?
   = will_paginate @artifacts, page_links:false, class: 'pagination pagination-centered'
