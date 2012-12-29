@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_filter :authenticate_user!, except: [:create]
-
+  
   def index
     @questions = Question.unanswered.order('created_at asc').includes(:artifact)
   end

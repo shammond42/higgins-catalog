@@ -1,4 +1,7 @@
 HigginsCatalog::Application.routes.draw do
+  get 'admin/index'
+  match 'admin' => 'admin#index'
+
   devise_for :users
 
   resources :questions

@@ -1,0 +1,35 @@
+%ul.nav.nav-list
+  %li.nav-header Site Administration Tools
+  %li
+    %a{href: admin_path}
+      %i.icon-home
+      Admin Summary
+  %li
+    %a{href: questions_path}
+      %i.icon-question-sign
+      Answer Questions
+  %li
+    %a
+      %i.icon-search
+      Frequent Search Terms
+  %li
+    %a
+      %i.icon-user
+      Administer Users
+  %li= link_to '<i class="icon-chevron-left"></i> Sign Out'.html_safe, destroy_user_session_path, method: :delete
+  %li.nav-header External Tools
+  %li
+    %a
+      %i.icon-signal
+      Google Analytics: Site Traffic Analysis
+  %li
+    %a
+      %i.icon-exclamation-sign
+      Github: Report an issue or bug
+  %li.nav-header Technical Monitoring Tools (Steve Only)
+  %li
+    %a Airbrake Error Monitoring
+  %li
+    %a New Relic Performance Monitoring
+  %li
+    %a Linode Applicaiton Hosting

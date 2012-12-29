@@ -3,7 +3,8 @@ class SearchLog < ActiveRecord::Base
   before_validation :set_default_values
   validates_presence_of :terms, :search_type
 
-
+  scope :since, lambda {|time| where('created_at > ?', time)}
+  
   def set_default_values
     self.search_type ||= 'keyword'
   end

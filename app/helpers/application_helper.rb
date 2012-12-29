@@ -12,6 +12,10 @@ module ApplicationHelper
     "#{@subtitle} : " if @subtitle.present?
   end
 
+  def admin_sidebar
+    content_for(:sidebar) {render partial: 'admin/side_menu'}
+  end
+
   def ga_tracking_code
     "<script type=\"text/javascript\">
 
