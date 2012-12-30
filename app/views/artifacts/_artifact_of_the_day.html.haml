@@ -1,0 +1,12 @@
+%a.artifact-of-the-day{href: artifact_path(@artifact)}
+  %h1 Artifact of the Day
+  
+  = image_tag @artifact.artifact_images.first.path, class: 'artifact-image'
+
+  :textile
+    h2. #{@artifact.std_term.titlecase}
+  %p.muted
+    = "#{@artifact.origin}" if @artifact.origin.present?
+    = "(#{@artifact.prob_date})" if @artifact.prob_date.present?
+  :textile
+    #{@artifact.description}

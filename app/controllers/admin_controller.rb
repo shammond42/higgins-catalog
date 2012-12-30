@@ -2,7 +2,10 @@ class AdminController < ApplicationController
   before_filter :authenticate_user!
 
   def index
+    @artifact = Artifact.of_the_day
+    
     @artifact_count = Artifact.count
+    @last_database_import = Artifact.order('created_at desc').first.created_at
     @unanswered_question_count = Question.unanswered.count
     @searches = {}
     @searches[:total] = SearchLog.count

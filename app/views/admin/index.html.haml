@@ -2,3 +2,14 @@
 
 %h1 Admin Page
 
+%dl
+  %dt Artifacts
+  %dd== Artifact Count: #{number_with_delimiter(@artifact_count, :delimeter => ',')}
+  %dd== Last Database Import: #{@last_database_import.stamp('January 1, 2012')}
+  %dt Searches
+  %dd Performed today: #{@searches[:today]}
+  %dd In the last 7-days: #{@searches[:last_seven_days]}
+  %dd In the last 30-days: #{@searches[:last_30_days]}
+  %dd Total searches: #{@searches[:total]}
+
+= render partial: 'artifacts/artifact_of_the_day'

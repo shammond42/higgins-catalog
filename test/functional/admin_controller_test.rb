@@ -11,6 +11,7 @@ class AdminControllerTest < ActionController::TestCase
 
   context 'an authenticated user' do
     setup do
+      Factory.create(:quality_artifact)
       @user = FactoryGirl.create(:user)
       sign_in @user
     end
@@ -29,7 +30,9 @@ class AdminControllerTest < ActionController::TestCase
       get :index
       assert_response :success
 
+      assert assigns[:artifact]
       assert assigns[:artifact_count]
+      assert assigns[:last_database_import]
       assert assigns[:unanswered_question_count]
       assert assigns[:searches]
       assert_not_nil assigns[:searches][:total]
