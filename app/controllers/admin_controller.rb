@@ -15,6 +15,21 @@ class AdminController < ApplicationController
   end
 
   def search_report
-    SearchLog.first
+    @num_terms = 25
+
+    if(params[:num_days] == 'all')
+      @num_days = params[:num_days]
+      conditions = ['search_type = ?', 'keyword']
+    else
+      @num_days = (params[:num_days] || 30).to_i
+      conditions = ['search_type = ? and created_at >= ?', 'keyword', @num_days.days.ago]
+    end
+
+
+    @popular_searches = SearchLog.count(:all,
+      group: :terms,
+      order: 'count_all desc',
+      conditions: conditions,
+      limit: @num_terms)
   end
 end

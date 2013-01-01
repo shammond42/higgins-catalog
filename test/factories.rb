@@ -41,6 +41,11 @@ FactoryGirl.define do
     end
   end
 
+  factory :search_log do
+    search_type 'keyword'
+    terms 'sword'
+  end
+
   factory :user do
     name 'Frodo Baggins'
     email 'fbaggins@bagend.com'

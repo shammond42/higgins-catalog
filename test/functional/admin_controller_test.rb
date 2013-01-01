@@ -47,10 +47,31 @@ class AdminControllerTest < ActionController::TestCase
       assert_not_nil assigns[:searches][:last_30_days]
     end
 
-    should 'have data ready for the search report' do
-      get :search_report
-      assert_response :success
-      assert_template :search_report
+    context 'viewing the search report' do
+      should 'have data ready' do
+        get :search_report
+        assert_response :success
+        assert_template :search_report
+
+        assert_not_nil assigns[:num_terms]
+        assert_not_nil assigns[:num_days]
+        assert_not_nil assigns[:popular_searches]
+      end
+
+      should 'have sensible defaults' do
+        get :search_report
+        assert_equal 30, assigns[:num_days]
+        assert_equal 25, assigns[:num_terms]
+      end
+
+      should 'filter by the number of days' do
+        10.times{|i| Factory.create(:search_log, terms: 'sword', created_at: i.days.ago)}
+        get :search_report, num_days: 7
+
+        assert_equal 7, assigns[:num_days]
+        assert_equal 1, assigns[:popular_searches].length
+        assert_equal 7, assigns[:popular_searches]['sword']
+      end
     end
   end
 end

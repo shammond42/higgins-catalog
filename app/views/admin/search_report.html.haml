@@ -1,2 +1,21 @@
+- admin_sidebar
 
 %h1 Search Report
+
+%h2== Top #{@num_terms} search terms#{" in the last #{@num_days} days" if @num_days != 'all'}.
+
+%table.table.table-condensed.table-hover
+  %thead
+    %tr
+      %th Search Terms
+      %th Count
+  %tbody
+    - @popular_searches.each do |key, value|
+      %tr
+        %td= key
+        %td= value
+
+.btn-group
+  %a.btn{class: ('active' if @num_days == 'all'), href: search_report_path(num_days: 'all')} All Time
+  %a.btn{class: ('active' if @num_days == 30), href: search_report_path(num_days: 30)} Last 30 Days
+  %a.btn{class: ('active' if @num_days == 7), href: search_report_path(num_days: 7)} Last 7 Days
