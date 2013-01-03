@@ -1,6 +1,7 @@
 HigginsCatalog::Application.routes.draw do
   get 'admin/index'
   get 'admin/search_report', as: 'search_report'
+  get 'admin/user_report', as: 'user_report'
   match 'admin' => 'admin#index'
 
   devise_for :users

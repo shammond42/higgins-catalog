@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class AdminControllerTest < ActionController::TestCase
-  RESTRICTED_PAGES = [:index, :search_report]
+  RESTRICTED_PAGES = [:index, :search_report, :user_report]
 
   context 'an unauthenticated user' do
     should 'not be able to see restricted pages' do
@@ -71,6 +71,17 @@ class AdminControllerTest < ActionController::TestCase
         assert_equal 7, assigns[:num_days]
         assert_equal 1, assigns[:popular_searches].length
         assert_equal 7, assigns[:popular_searches]['sword']
+      end
+    end
+
+    context 'viewing the user report' do
+      should 'have data ready' do
+        get :user_report
+        assert_response :success
+        assert_template :user_report
+
+        assert_not_nil assigns[:users]
+        assert_equal User.count, assigns[:users].size
       end
     end
   end

@@ -14,6 +14,10 @@ class AdminController < ApplicationController
     @searches[:last_30_days] = SearchLog.since(30.days.ago).count
   end
 
+  def user_report
+    @users = User.all
+  end
+
   def search_report
     @num_terms = 25
 
