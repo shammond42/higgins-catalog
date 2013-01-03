@@ -1,30 +1,24 @@
 %ul.nav.nav-list
   %li.nav-header Site Administration Tools
-  %li
+  %li{class: ('active' if params[:controller] == 'admin' && params[:action] == 'index')}
     %a{href: admin_path}
-      %i.icon-home
       Admin Summary
-  %li
+  %li{class: ('active' if params[:controller] == 'questions')}
     %a{href: questions_path}
-      %i.icon-question-sign
       Answer Questions
-  %li
+  %li{class: ('active' if params[:controller] == 'admin' && params[:action] == 'search_report')}
     %a{href: search_report_path}
-      %i.icon-search
       Frequent Search Terms
-  %li
-    %a
-      %i.icon-user
+  %li{class: ('active' if params[:controller] == 'admin' && params[:action] == 'user_report')}
+    %a{href: user_report_path}
       Administer Users
-  %li= link_to '<i class="icon-chevron-left"></i> Sign Out'.html_safe, destroy_user_session_path, method: :delete
+  %li= link_to 'Sign Out'.html_safe, destroy_user_session_path, method: :delete
   %li.nav-header External Tools
   %li
     %a
-      %i.icon-signal
       Google Analytics: Site Traffic Analysis
   %li
     %a
-      %i.icon-exclamation-sign
       Github: Report an issue or bug
   %li.nav-header Technical Monitoring Tools (Steve Only)
   %li
