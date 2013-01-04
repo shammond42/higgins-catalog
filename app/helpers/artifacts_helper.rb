@@ -1,4 +1,8 @@
 module ArtifactsHelper
+  def format_artifact_name(artifact)
+    textilize(artifact.std_term).gsub(/<\/?p>/,'').html_safe
+  end
+
   def temportal_facet_path(params, low, high)
     artifacts_path(params.dup.update(low_date: low, high_date: high, page: 1))
   end

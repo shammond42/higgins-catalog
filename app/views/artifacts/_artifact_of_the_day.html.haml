@@ -3,8 +3,7 @@
   
   = image_tag @artifact.artifact_images.first.path, class: 'artifact-image'
 
-  :textile
-    h2. #{@artifact.std_term.titlecase}
+  %h2= format_artifact_name(@artifact)
   %p.muted
     = "#{@artifact.origin}" if @artifact.origin.present?
     = "(#{@artifact.prob_date})" if @artifact.prob_date.present?

@@ -8,7 +8,7 @@
   - @artifacts.each do |artifact|
     %a{href: "/artifacts/#{artifact[:accession_number]}"}
       %li
-        %strong== #{artifact.std_term.titlecase}
+        %strong= format_artifact_name(artifact)
         %br
         %span.muted
           %span.origin
