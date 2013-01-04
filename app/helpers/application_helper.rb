@@ -16,6 +16,14 @@ module ApplicationHelper
     content_for(:sidebar) {render partial: 'admin/side_menu'}
   end
 
+  def active_if(options_hash)
+    active = true
+    options_hash.each do |k, v|
+      active &&= (params[k] == v)
+    end
+    'active' if active
+  end
+
   def ga_tracking_code
     "<script type=\"text/javascript\">
 

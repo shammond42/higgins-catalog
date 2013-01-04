@@ -1,15 +1,15 @@
 %ul.nav.nav-list
   %li.nav-header Site Administration Tools
-  %li{class: ('active' if params[:controller] == 'admin' && params[:action] == 'index')}
+  %li{class: active_if(controller: 'admin', action: 'index')}
     %a{href: admin_path}
       Admin Summary
-  %li{class: ('active' if params[:controller] == 'questions')}
+  %li{class: active_if(controller: 'questions')}
     %a{href: questions_path}
       Answer Questions
-  %li{class: ('active' if params[:controller] == 'admin' && params[:action] == 'search_report')}
+  %li{class: active_if(controller: 'admin',action: 'search_report')}
     %a{href: search_report_path}
       Frequent Search Terms
-  %li{class: ('active' if params[:controller] == 'admin' && params[:action] == 'user_report')}
+  %li{class: active_if(controller: 'admin',action: 'user_report')}
     %a{href: user_report_path}
       Administer Users
   %li= link_to 'Sign Out'.html_safe, destroy_user_session_path, method: :delete
