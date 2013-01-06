@@ -41,6 +41,8 @@ group :development do
   gem 'guard', '>= 1.4.0'
   gem 'guard-test', '>= 0.5.0'
   gem 'better_errors'
+  gem 'pry'
+  gem 'pry-doc'
 end
 
 group :test do
