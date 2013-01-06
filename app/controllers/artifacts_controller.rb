@@ -1,7 +1,9 @@
 class ArtifactsController < ApplicationController
   def index
+    filter_params
+
     @artifacts = Artifact.search(params)
-    @search_log = SearchLog.create_from_query_string(params[:query]) if params[:query]
+    @search_log = SearchLog.create_from_query_string(params[:keyword]) if params[:keyword].present?
     session[:search_params] = {
       query: params[:query],
       page: params[:page],
@@ -30,4 +32,20 @@ class ArtifactsController < ApplicationController
   def daily
     @artifact = Artifact.of_the_day
   end
+
+  protected
+
+  def filter_params
+    if(params[:query] =~ DATE_RANGE_REGEX)
+      params[:low_date] = $2
+      params[:high_date] = $3
+      params[:keyword] = params[:query].sub(DATE_RANGE_REGEX,'')
+    else
+      params[:keyword] = params[:query]
+    end
+
+    params[:keyword].gsub!('keyword:','') if params[:keyword]
+  end
+
+  DATE_RANGE_REGEX = /(date_range\:)?\s*(\-?\d+)\s*\-\s*(\-?\d+)/
 end

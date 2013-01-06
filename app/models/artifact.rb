@@ -49,7 +49,7 @@ class Artifact < ActiveRecord::Base
 
   def self.search(params)
     tire.search(page:params[:page], per_page: 10, load: true) do
-      query {string params[:query], default_operator: "AND"} if params[:query].present?
+      query {string params[:keyword], default_operator: "AND"} if params[:keyword].present?
       filter :range, min_date: {lte: params[:high_date]} if params[:high_date].present?
       filter :range, max_date: {gte: params[:low_date]} if params[:low_date].present?
       filter :exists, field: :public_loc if params[:on_display].present?
