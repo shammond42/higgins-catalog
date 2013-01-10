@@ -1,10 +1,14 @@
 = form_for [@artifact, @new_question] do |f|
   %dl
-    %dt Nickname
-    %dd= f.text_field :nickname, class: 'input-xxlarge', placeholder: 'optional'
+    %dt
+      Nickname
+      %span.hint (optional, displayed with your question)
+    %dd= f.text_field :nickname, class: 'input-xxlarge', placeholder: 'j.doe'
   %dl
-    %dt E-Mail Address
-    %dd= f.text_field :email, class: 'input-xxlarge', placeholder: 'optional, used to send you the answer'
+    %dt
+      E-Mail Address
+      %span.hint (optional, we will e-mail you the answer if provided)
+    %dd= f.text_field :email, class: 'input-xxlarge', placeholder: 'jdoe@example.com'
   %dl.control-group
     %dt Your question
     %dd.controls= f.text_area :question, class: 'input-xxlarge', rows: 5
