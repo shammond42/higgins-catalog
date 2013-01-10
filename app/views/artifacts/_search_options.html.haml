@@ -17,8 +17,8 @@
     #collapseOne.accordion-body.collapse{class: !using_phone? ? 'in' : nil}
       .accordion-inner
         %ul.nav.nav-list
-          %li= temporal_facet_menu_item(params, nil, nil, 'No Filter')
-          %li= temporal_facet_menu_item(params, nil, 499, '499 and earlier')
+          %li= temporal_facet_menu_item(params, -10_000, 10_000, 'No date filter', true)
+          %li= temporal_facet_menu_item(params, -10_000, 499, '499 and earlier')
           - [[500, 999], [1000,1199], [1200,1399],[1400,1499],[1500,1599],[1600,1699],[1700,1799]].each do |date_range|
             %li= temporal_facet_menu_item(params, date_range[0], date_range[1])
           %li=temporal_facet_menu_item(params, 1800, nil, '1800 &ndash; Present'.html_safe)

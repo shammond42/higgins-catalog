@@ -41,6 +41,10 @@ class ArtifactsController < ApplicationController
       params[:high_date] = $3
       params[:keyword] = params[:query].sub(DATE_RANGE_REGEX,'')
     else
+      if session[:search_params]
+        params[:high_date] ||= session[:search_params][:high_date]
+        params[:low_date] ||= session[:search_params][:low_date]
+      end
       params[:keyword] = params[:query]
     end
 
