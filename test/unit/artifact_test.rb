@@ -106,7 +106,7 @@ class ArtifactTest < ActiveSupport::TestCase
     end
 
     should 'return the origin_with_date' do
-      artifact = Factory.build(:artifact)
+      artifact = FactoryGirl.build(:artifact)
       assert_nil artifact.origin
       assert_nil artifact.prob_date
       assert_equal '', artifact.origin_with_date
@@ -123,7 +123,7 @@ class ArtifactTest < ActiveSupport::TestCase
     end
 
     should 'return the best field it has for artifact of the day' do
-      artifact = Factory.build(:artifact, description: 'description')
+      artifact = FactoryGirl.build(:artifact, description: 'description')
       assert_equal 'description', artifact.daily_summary
 
       artifact.comments = 'comments'
