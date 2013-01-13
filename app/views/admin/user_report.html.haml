@@ -8,7 +8,7 @@
       %th Name
       %th Title
       %th E-Mail
-      %th Created
+      %th Notifications
       %th Last Sign In
   %tbody
     - @users.each do |user|
@@ -16,5 +16,5 @@
         %td= user.name
         %td= user.title
         %td= user.email
-        %td= user.created_at.stamp('Jan 1, 2012')
+        %td= (user.receives_question_notifications? ? 'Yes' : 'No')
         %td= most_recent_sign_in(user)
