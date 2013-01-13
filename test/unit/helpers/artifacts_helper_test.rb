@@ -5,7 +5,7 @@ class ArtifactsHelperTest < ActionView::TestCase
 
   context 'format_artifact_name' do
     setup do
-      @artifact = Factory.build(:artifact)
+      @artifact = FactoryGirl.build(:artifact)
     end
 
     should 'correctly format the name' do

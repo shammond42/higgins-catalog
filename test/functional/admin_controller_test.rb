@@ -15,7 +15,7 @@ class AdminControllerTest < ActionController::TestCase
 
   context 'an authenticated user' do
     setup do
-      Factory.create(:quality_artifact)
+      FactoryGirl.create(:quality_artifact)
       @user = FactoryGirl.create(:user)
       sign_in @user
     end
@@ -65,7 +65,7 @@ class AdminControllerTest < ActionController::TestCase
       end
 
       should 'filter by the number of days' do
-        10.times{|i| Factory.create(:search_log, terms: 'sword', created_at: i.days.ago)}
+        10.times{|i| FactoryGirl.create(:search_log, terms: 'sword', created_at: i.days.ago)}
         get :search_report, num_days: 7
 
         assert_equal 7, assigns[:num_days]

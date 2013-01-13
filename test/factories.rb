@@ -9,7 +9,7 @@ FactoryGirl.define do
       description 'It is made of metal.'
       comments 'This is a great artifact.'
 
-      after_create do |artifact|
+      after(:create) do |artifact|
         FactoryGirl.create_list(:artifact_image, 1, artifact: artifact)
       end
     end
