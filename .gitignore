@@ -9,7 +9,7 @@
 
 .rvmrc
 config/database.yml
-config/applicaton.yml
+config/application.yml
 
 #Higgins Provided Data
 /db/higgins_data/*.csv
