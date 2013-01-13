@@ -52,8 +52,8 @@ group :test do
   gem 'timecop'
 
   gem 'mocha'
-  gem 'factory_girl', require: false
-  gem 'factory_girl_rails', require: false
+  gem 'factory_girl'
+  gem 'factory_girl_rails'
   gem 'timecop'
 end
 
