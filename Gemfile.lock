@@ -65,6 +65,8 @@ GEM
     factory_girl_rails (4.1.0)
       factory_girl (~> 4.1.0)
       railties (>= 3.0.0)
+    figaro (0.5.3)
+      rails (~> 3.0)
     girl_friday (0.11.2)
       connection_pool (~> 1.0)
       rubinius-actor
@@ -221,6 +223,7 @@ DEPENDENCIES
   devise
   factory_girl
   factory_girl_rails
+  figaro
   growl
   guard (>= 1.4.0)
   guard-test (>= 0.5.0)
