@@ -34,7 +34,7 @@ set :deploy_to, "/home/www/#{application}"
 namespace :vlad do
   desc "Symlinks the configuration files"
   remote_task :symlink_config, :roles => :web do
-    %w(database.yml).each do |file|
+    %w(database.yml application.yml).each do |file|
       run "ln -s #{shared_path}/config/#{file} #{current_path}/config/#{file}"
     end
     run "ln -s #{shared_path}/object_photos #{current_path}/public/object_photos"
