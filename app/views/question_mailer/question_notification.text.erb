@@ -1,0 +1,12 @@
+A New Question Has Been Asked
+=============================
+
+Artifact: <%= @artifact.std_term%> (HAM <%= @artifact.accession_number %>)
+
+<%= @question.question.html_safe %>
+
+Asked by: <%= @question.nickname.present? ? @question.nickname : 'Anonymous' %>
+
+E-Mail: <%= @question.email.present? ? @question.email : 'Not given' %>
+
+Answer questions now: <%= questions_url(host: 'higgins.lostpapyr.us') %>

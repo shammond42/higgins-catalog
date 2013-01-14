@@ -10,6 +10,7 @@ class QuestionsController < ApplicationController
     @artifact = Artifact.find_by_accession_number(params[:artifact_id])
     @artifact.questions << @question
 
+    QuestionMailer.question_notification(@question).deliver
     if request.xhr?
       render partial: 'questions/processing', locals: {question: @question}, layout: nil
     else
@@ -29,6 +30,8 @@ class QuestionsController < ApplicationController
   def update
     @question = Question.find(params[:id])
     @question.update_attributes(params[:question])
+
+    QuestionMailer.answer_notification(@question).deliver if @question.email.present?
 
     if request.xhr?
       render partial: 'questions/question', locals: {question: @question}, layout: nil

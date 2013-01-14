@@ -106,7 +106,7 @@ class QuestionsControllerTest < ActionController::TestCase
       question = FactoryGirl.create(:question)
       redirect_path = artifact_url(question.artifact)
       request.env["HTTP_REFERER"] = redirect_path
-      put :update, id: question
+      put :update, id: question, question: {answer: 'Test answer.'}
       assert_response :redirect
       assert_redirected_to redirect_path
     end

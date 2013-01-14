@@ -21,7 +21,9 @@ module QuestionsHelper
 
   def question_byline(question)
     who = question.nickname.present? ? h(question.nickname) : "Anonymous"
-    if user_signed_in?
+
+    # respond_to is for ActionMailer which doesn't
+    if self.respond_to?(:user_signed_in?) && user_signed_in?
       who << " (#{question.email.present? ? link_to(question.email, "mailto://#{question.email}") : "email not given"})".html_safe
     end
 

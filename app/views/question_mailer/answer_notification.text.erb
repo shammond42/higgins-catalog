@@ -1,0 +1,10 @@
+Your Question Has Been Answered
+=============================
+
+Artifact: <%= @artifact.std_term%> (HAM <%= @artifact.accession_number %>)
+
+<%= @question.question.html_safe %>
+
+<%= @question.answer.html_safe %>
+
+See the artifact now: <%= artifact_url(@artifact, host: 'higgins.lostpapyr.us') %>
