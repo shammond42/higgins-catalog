@@ -32,11 +32,19 @@ body {
 // Example:
 // @linkColor: #ff0000;
 
+@font-face
+{
+font-family: Mearschaum;
+src: url('/fonts/mearschaum.ttf'),
+     url('/fonts/mearschaum.eot'); /* IE9+ */
+}
+
+@fancyFonts: "Mearschaum", "serif";
+@scriptFonts: "sanvito-pro",sans-serif;
+
 @baseFontSize: 16px;
 @backColor: #FFFAFA;
 @headerTextColor: #B17803;
-@fancyFonts: "aragon", "serif";
-@scriptFonts: "sanvito-pro",sans-serif;
 
 .navbar-inverse .navbar-inner { #gradient > .vertical(#2C1716, #410F0B);}
 
@@ -74,7 +82,7 @@ blockquote {
 }
 
 h1, h2, h3 {
-  font-family: @scriptFonts;
+  font-family: @fancyFonts;
 }
 
 h1 {
