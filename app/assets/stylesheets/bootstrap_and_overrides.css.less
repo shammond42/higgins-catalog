@@ -40,7 +40,6 @@ src: url('/fonts/mearschaum.ttf'),
 }
 
 @fancyFonts: "Mearschaum", "serif";
-@scriptFonts: "sanvito-pro",sans-serif;
 
 @baseFontSize: 16px;
 @backColor: #FFFAFA;
@@ -50,6 +49,7 @@ src: url('/fonts/mearschaum.ttf'),
 
 body {
   background-color: @backColor;
+  font-family: @sansFontFamily;
 }
 
 blockquote {
@@ -58,7 +58,7 @@ blockquote {
 
 .navbar .brand {
   font-family: @fancyFonts;
-  font-size: 25px;
+  font-size: 200%;
   color: @headerTextColor;
   text-shadow: 0 1px 0 #000;
 }
@@ -68,8 +68,10 @@ blockquote {
 }
 
 .navbar .nav li a {
-  font-family: @scriptFonts;
-  font-size: 20px;
+  font-family: @sansFontFamily;
+  font-style: oblique;
+  font-weight: 200;
+  font-size: 110%;
   color: @headerTextColor;
   text-shadow: 0 1px 0 #000;
 }
@@ -81,13 +83,17 @@ blockquote {
   }
 }
 
-h1, h2, h3 {
+h1 {
   font-family: @fancyFonts;
+  font-size: 350%;
+  line-height: 1.05;
 }
 
-h1 {
-  font-size: 50px;
-  line-height: 1.05;
+h2 {
+  font-family: @fancyFonts;
+  font-size: 200%;
+  // font-style: oblique;
+  // font-weight: normal;
 }
 
 #main {
