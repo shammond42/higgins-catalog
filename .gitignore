@@ -17,6 +17,8 @@ config/application.yml
 /public/ObjectPhotos.tgz
 /public/object_photos/*
 
+.DS_Store
+
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
