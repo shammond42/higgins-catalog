@@ -7,13 +7,12 @@
 - if @artifact.artifact_images.any?
   = image_tag @artifact.artifact_images.first.path, class: 'artifact-image'
   
-%h2 Description
 - if @artifact.label_text.present?
   %blockquote
     :textile
       #{@artifact.label_text}
-  %small
-    %i Exhibit Label
+
+%h2 Description
 %p= @artifact.description
 
 - if @artifact.comments.present?
