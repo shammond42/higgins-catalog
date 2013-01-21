@@ -8,7 +8,7 @@
   = image_tag @artifact.artifact_images.first.path, class: 'artifact-image'
   
 - if @artifact.label_text.present?
-  %blockquote
+  %blockquote.label_text
     :textile
       #{@artifact.label_text}
 
