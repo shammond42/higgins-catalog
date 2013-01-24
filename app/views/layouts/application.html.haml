@@ -19,8 +19,11 @@
 
   %body
     = render partial: 'layouts/nav_menu'
-    .container-fluid
-      .row-fluid
+    .container
+      .row
+        %section.span12#main-title
+          = yield(:main_title)
+      .row
         %aside.span4#side
           #sidebar
             = yield(:sidebar)

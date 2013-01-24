@@ -1,19 +1,18 @@
 - set_subtitle "#{@artifact.std_term.titlecase}"
 - content_for(:sidebar) do
   = render partial: 'info_sidebar'
-
-%h1.artifact-name= format_artifact_name(@artifact)
+- content_for(:main_title) do
+  %h1.artifact-name= format_artifact_name(@artifact)
 
 - if @artifact.artifact_images.any?
   = image_tag @artifact.artifact_images.first.path, class: 'artifact-image'
   
-%h2 Description
 - if @artifact.label_text.present?
-  %blockquote
+  %blockquote.label_text
     :textile
       #{@artifact.label_text}
-  %small
-    %i Exhibit Label
+
+%h2 Description
 %p= @artifact.description
 
 - if @artifact.comments.present?
