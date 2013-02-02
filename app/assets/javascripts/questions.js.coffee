@@ -48,12 +48,14 @@ artifactQuestion =
           $(@).slideDown 'slow'
   answerQuestion: (e) ->
     e.preventDefault()
-    if not $('#question_answer').val?()
-      $('#question_answer').parents('dl:first').addClass('error')
-      $('#question_answer').attr('placeholder', 'Please answer the question before submitting the form.')
+    if not $(@).children('.answer-field').val?()
+      $(@).parents('dl:first').addClass('error')
+      $(@).children('.answer-field').attr('placeholder', 'Please answer the question before submitting the form.')
       return
     form_data = $(@).serialize()
 
+    $(@).addClass('disabled')
+    $(@).children('.btn').fadeOut('fast')
     $.ajax $(@).attr('action'),
       data: form_data
       dataType: 'html'
