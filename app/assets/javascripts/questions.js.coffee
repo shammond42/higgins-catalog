@@ -5,6 +5,7 @@
 artifactQuestion =
   deleteQuestion: (e) ->
     e.preventDefault()
+    e.stopImmediatePropagation()
     $(@).fadeOut 'fast', ->
       if confirm('Are you sure you want to delete this question? This cannot be undone.')  
         $.ajax $(@).attr('href'),
@@ -18,7 +19,7 @@ artifactQuestion =
                 $('<h2 class="hide">All questions have been taken care of.</h2>').insertAfter('h1:first')
                 $('h2:first').slideDown()
       else
-        $(@).fadeIn()
+        $(@).fadeIn('fast')
   askQuestion: (e) ->
     e.preventDefault()
     if not $('#question_question').val?()
