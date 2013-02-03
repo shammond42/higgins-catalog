@@ -7,40 +7,47 @@
 
   During the Industrial Revolution, John Higgins' passion for steel and romance for chivalry led him to acquire, piece by piece, this great collection. He then built the world's first steel and glass building in Worcester, MA to house his collection.
 
-  This app combines my own love of knights and fantasy, with my passion for the ongoing Information Revolution to bring this great collection to you. Explore the wonders of a different time as this great collection moves from one revolution to the next.
+  Over the years the collection has grown to around 4,000 artifacts, which are detailed in this online catalog. Browse the collections or search for artifacts of particular interest. If you have a questions, go ahead an ask it in the form under each artifact. A museum staff member will try to answer.
+
+  You can learn more about the "Higgins Armory Museum online":http://www.higgins.org or come to Worcester, MA and see this wonderful collection for yourself.
+
+  h2. About the Application
+
+  The heart of this application was developed in about 48-hours as part of the 2012 "Rails Rumble":http://railsrumble.com contest. As you might expect from that the application is written in Ruby on Rails.
+
+  The application, but not the Higgins collection data, has been released under the MIT open source license. If you are a developer and want to contribute to the Higgins catalog project, or use this catalog in another context you can find source code and other details on the "Github project page":https://github.com/shammond42/higgins-catalog.
+
+  h2. About the Author
+
+  !>/assets/avatar-body.png(Steven Hammond)!
+
+  This app arose out of my three great passions.
+
+  # Since childhood I have been in love with stories of knights and fantasy that led to an interest in the real thing.
+  # I also love to get bac to my community, particularly in ways that help education. In addition to this project I server on my local School Committee and I am a volunteer education for NASA.
+  # Somebody once said, "Don't be a writer unless you can't not write." That's how I feel about software. I can't not code, and a project like this gives me a chance to build and create.
+
+  If you want to see more of my work, I blog, occasionally, on the following sites.
+
+  * "http://www.northpub.com":http://www.northpub.com (local politics and technology)
+  * "http://www.lostpapyr.us":http://www.lostpapyr.us (gaming)
 
   Enjoy,
   _Steven Hammond_
 
-  h2. Project Goals
+  h2. Dedicated to Jay Levitt
 
-  This project is a complete rewrite of the "existing catalog":http://users.wpi.edu/~jforgeng/CollectionIQP/searchform.pl. There were several objectives:
+  !>/assets/jay.jpg(Jay Levitt)!
 
-  # Win the "Rails Rumble":http://railsrumble.com!
-  # Greatly Improve the search capabilities of the site
-  # Provide a responsive design so that patrons can explore the database from within the museum
-  # Provide some engagement features
+  Jay was a good friend and a brilliant engineer. He had plans to participate in this project with me, but unfortunately that didn't happen. Jay passed away on Oct. 9, 2012 just days before the Rails Rumble started.
 
-  h2. Short Term Next Steps
+  Jay was instrumental in bringing the Internet to millions of people through his work at AOL. I met him when he joined "PatientsLikeMe":http://patientslikeme.com to, as he put it, "change the world again." The whole company misses you, Jay.
 
-  If there is interest in keeping this app alive, then there are a few things remaining to make this *production ready*.
+  These two videos reflect two different parts of Jay's personality. He shared them with me, and I share them with you.
 
-  - User Administration := Right now, users need to be added by hand on the server. I need to create a page for adding and deleting users. There also needs to be a way for users to change their passwords and a _forgot password_ link needs to be added to the sign in page. This will require connection to some sort of email service.
-  - Integration with the other sites := There are lots of ways this could go. The content of the rest of the Virtual Armory Site could be merged with this app, possibly by adding a CMS (Content Management System) so the content could be easily maintained by Museum staff. This site could be style more like the virtual armory, but that would make it hard to keep the responsive aspects of this design. This site could be maintained as its own entity separate from the other sites.
-  - Text Review and Updates := The text around the site, including this page needs to be changed to museum approved copy. The dedication page probably needs to be removed. A privacy policy and terms of use need to be added.
-  - Productionizing := There are a few basic any app needs to take care of as it moves to production. The app is already collection usage statitis on Google Analytics, and error reporing. The database should probably be rebuilt to clean up test questions and a backup regimen needs to be established. Finally, need to make sure that Google is properly indexing the catalog so that people can find this wonderful resource.
+:plain
+  <iframe width="560" height="315" src="http://www.youtube.com/embed/Uh4DGUNWmiU" frameborder="0" allowfullscreen></iframe>
 
-  h2. Medium Term Enhancements
+  <iframe width="420" height="315" src="http://www.youtube.com/embed/1wg_L0wGTyA" frameborder="0" allowfullscreen></iframe>
+
   
-  Once fully operation, there are a handful of features and improvements that I would like to add.
-
-  - Automated Email to Questioners := I somebody's question is answered it would be nice if we automatically send them an email with that answer in it.
-  - Twitter or Facebook Integration := When a question is particularly good a Tweet or Facebook post could be generated with a link to the artifact.
-  - Reporting on Searching := It might be interesting to the museum to record the searches that people do on the site and be able to report on them. This might provide some insight into what the public finds interesting.
-  - Mobile Performance Tuning := Performance is not bad, but there are some tweaks that could make the experience, especially on mobile, even better.
-
-  h3. Longer Term features
-  
-  - API := I have ready about an ArchaeoML format that is used to exchange Archaeological data. However, I could not find an actual specification for this. It might be useful if the artifacts in the catalog could be
-    retrieved in this format and used by researchers everywhere.
-  - Catalog Management := It would not be too hard to take this first step and turn it into a full replacement for the access database that is currently used to maintain the catalog. This would allow researchers to take advantage of the improved search capabilities, browser/mobile accessibility and allow a much broader range of features to be added.
