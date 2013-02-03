@@ -4,19 +4,24 @@
 
 %h1 Artifact List
 
-%ul.search-results
-  - @artifacts.each do |artifact|
-    %a{href: "/artifacts/#{artifact[:accession_number]}"}
-      %li
-        %strong= format_artifact_name(artifact)
-        %br
-        %span.muted
-          %span.origin
-            = artifact.origin_with_date
-          %span.accession_number
-            == Higgins Armory Museum (#{artifact.accession_number})
+- if @artifacts.any?
+  %ul.search-results
+    - @artifacts.each do |artifact|
+      %a{href: "/artifacts/#{artifact[:accession_number]}"}
+        %li
+          %strong= format_artifact_name(artifact)
+          %br
+          %span.muted
+            %span.origin
+              = artifact.origin_with_date
+            %span.accession_number
+              == Higgins Armory Museum (#{artifact.accession_number})
 
-- if using_phone?
-  = will_paginate @artifacts, page_links:false, class: 'pagination pagination-centered'
+  - if using_phone?
+    = will_paginate @artifacts, page_links:false, class: 'pagination pagination-centered'
+  - else
+    = will_paginate @artifacts, inner_window: 3, outer_window: 1, previous_label: '&laquo;', next_label: '&raquo;', class: 'pagination pagination-centered'
 - else
-  = will_paginate @artifacts, inner_window: 3, outer_window: 1, previous_label: '&laquo;', next_label: '&raquo;', class: 'pagination pagination-centered'
+  .alert
+    %h2 Sorry, we didn't any matches for your search.
+    %p Please change your search criteria in the search panel on the right and try again.
