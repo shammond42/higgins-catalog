@@ -8,4 +8,4 @@
     = "#{@artifact.origin}" if @artifact.origin.present?
     = "(#{@artifact.prob_date})" if @artifact.prob_date.present?
   :textile
-    #{@artifact.description}
+    #{h @artifact.description}

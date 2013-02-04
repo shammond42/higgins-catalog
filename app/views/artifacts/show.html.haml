@@ -10,7 +10,7 @@
 - if @artifact.label_text.present?
   %blockquote.label_text
     :textile
-      #{@artifact.label_text}
+      #{h @artifact.label_text}
 
 %h2 Description
 %p= @artifact.description
@@ -22,7 +22,7 @@
 - if @artifact.bibliography.present?
   %h2 Bibliography
   :textile
-    #{@artifact.bibliography}
+    #{h @artifact.bibliography}
 
 - if @artifact.published_refs.present? || @artifact.exhibit_history.present?
   %h2 Publication & Exhibit History
