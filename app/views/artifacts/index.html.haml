@@ -22,7 +22,8 @@
       = page_entries_info(@artifacts)
       = will_paginate @artifacts, page_links:false, class: 'pagination pagination-centered'
   - else
-    = will_paginate @artifacts, inner_window: 3, outer_window: 1, previous_label: '&laquo;', next_label: '&raquo;', class: 'pagination pagination-centered'
+    = will_paginate @artifacts, inner_window: 2, outer_window: 1,
+      class: 'pagination pagination-centered'
 - else
   .alert
     %h2 Sorry, we didn't any matches for your search.

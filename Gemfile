@@ -21,13 +21,13 @@ group :assets do
   gem 'therubyracer', :platforms => :ruby
   gem 'less-rails'
   gem 'twitter-bootstrap-rails'
-  gem 'bootstrap-will_paginate'
   gem 'uglifier', '>= 1.0.3'
 end
 
 gem 'turbolinks'
 gem 'jquery-rails'
 gem 'high_voltage'
+gem 'bootstrap-will_paginate'
 gem 'will_paginate'
 gem 'tire'
 gem 'devise'
