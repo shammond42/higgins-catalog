@@ -23,22 +23,22 @@
 
   %body
     = render partial: 'layouts/nav_menu'
-    .container
+    .container#main-container
       .row
         %section.span12#main-title
           = yield(:main_title)
       .row
-        %aside.span4#side
-          #sidebar
-            = yield(:sidebar)
         %section.span8#main
           #flash-messages
             =render :partial => 'layouts/flash_messages', :locals => {:flash => flash}
           = yield
+        %aside.span4.test#side
+          #sidebar
+            = yield(:sidebar)
     %footer.navbar.navbar-fixed-bottom.navbar-inverse.visible-phone
       .navbar-inner
-        .container-fluid
-          %a.logo.visible-phone{href: 'http://higgins.org'}
+        .container
+          %a.logo{href: 'http://higgins.org'}
             %img{src: '/assets/higgins-logo.gif'}
     /
       Javascripts

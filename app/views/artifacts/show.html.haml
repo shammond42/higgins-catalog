@@ -1,6 +1,7 @@
 - set_subtitle "#{@artifact.std_term.titlecase}"
 - content_for(:sidebar) do
-  = render partial: 'info_sidebar'
+  .hidden-phone
+    = render partial: 'info_sidebar'
 - content_for(:main_title) do
   %h1.artifact-name= format_artifact_name(@artifact)
 
@@ -35,6 +36,9 @@
     %dl#question-list
       - @questions.each do |question|
         = render partial: 'questions/question', locals: {question: question}
+
+%section.visible-phone
+  = render partial: 'artifacts/info_sidebar'
 
 - unless user_signed_in?
   %section#ask-a-question

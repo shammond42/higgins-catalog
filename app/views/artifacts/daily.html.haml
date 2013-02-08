@@ -1,5 +1,7 @@
 - set_subtitle 'Artifact of the Day'
 - content_for(:sidebar) do 
   = render partial: 'artifacts/search_options'
-
+- content_for(:main_title) do
+  %h1 Artifact of the Day
+  
 = render partial: 'artifacts/artifact_of_the_day'

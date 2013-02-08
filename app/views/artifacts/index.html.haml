@@ -18,7 +18,9 @@
               == Higgins Armory Museum (#{artifact.accession_number})
 
   - if using_phone?
-    = will_paginate @artifacts, page_links:false, class: 'pagination pagination-centered'
+    .pagination-info
+      = page_entries_info(@artifacts)
+      = will_paginate @artifacts, page_links:false, class: 'pagination pagination-centered'
   - else
     = will_paginate @artifacts, inner_window: 3, outer_window: 1, previous_label: '&laquo;', next_label: '&raquo;', class: 'pagination pagination-centered'
 - else

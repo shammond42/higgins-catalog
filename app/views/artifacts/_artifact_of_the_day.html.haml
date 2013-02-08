@@ -1,6 +1,4 @@
 %a.artifact-of-the-day{href: artifact_path(@artifact)}
-  %h1 Artifact of the Day
-  
   = image_tag @artifact.artifact_images.first.path, class: 'artifact-image'
 
   %h2= format_artifact_name(@artifact)

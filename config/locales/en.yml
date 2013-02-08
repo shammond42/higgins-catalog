@@ -2,4 +2,11 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  will_paginate:
+    artifact:
+      page_entries_info:
+        single_page_html:
+          zero:  "No artifacts found"
+          one:   "Displaying one artifact"
+          other: "Displaying all <b>%{count}</b> artifacts"
+        multi_page_html: "Artifacts <b>%{from}&nbsp;&ndash;&nbsp;%{to}</b> of <b>%{count}</b>"
