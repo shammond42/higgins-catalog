@@ -2,13 +2,14 @@ source 'https://rubygems.org'
 
 ruby '2.0.0'
 
-gem 'rails', '3.2.12'
+gem 'rails', '3.2.13'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
 gem 'haml-rails'
+gem 'haml-contrib'
 gem 'RedCloth'
 
 gem 'figaro'
@@ -55,7 +56,7 @@ group :test do
   gem 'shoulda-context'
   gem 'timecop'
 
-  gem 'mocha'
+  gem 'mocha', require: false
   gem 'factory_girl'
   gem 'factory_girl_rails'
   gem 'timecop'

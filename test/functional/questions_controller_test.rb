@@ -3,6 +3,8 @@ require 'test_helper'
 class QuestionsControllerTest < ActionController::TestCase
   test 'ask a question' do
     artifact = FactoryGirl.create(:artifact)
+    user = FactoryGirl.create(:user, receives_question_notifications: true)
+    
     redirect_path = artifact_url(artifact)
     request.env["HTTP_REFERER"] = redirect_path
 
