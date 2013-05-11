@@ -8,6 +8,9 @@
 /.bundle
 
 .rvmrc
+.ruby-version
+.ruby-gemset
+
 config/database.yml
 config/application.yml
 
