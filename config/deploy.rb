@@ -5,6 +5,7 @@ set :user, 'www'
 set :domain, "#{user}@ramses.lostpapyr.us"
 set :repository,  "git@github.com:shammond42/higgins-catalog.git"
 
+set :revision, 'master'
 # set :scm, :git
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 
