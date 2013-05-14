@@ -115,7 +115,7 @@ namespace :higgins do
                                         :header_converters => :symbol) do |line|
         artifact = CategorySynonym.new({
           category: line[:category],
-          synonym: line[:category_xref],
+          synonym: line[:categoryxref],
           note: line[:note]
           }).save!
         print '.'
