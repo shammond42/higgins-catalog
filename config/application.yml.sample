@@ -1,0 +1,5 @@
+# Add application configuration variables here, as shown below.
+
+SMTP_USER_NAME: 'username'
+SMTP_PASSWORD: 'password'
+SESSION_SECRET: 'output from rake secret goes here'
