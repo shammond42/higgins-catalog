@@ -4,6 +4,20 @@ module QuestionsHelper
       class: 'btn btn-danger btn-mini btn-question-delete'
   end
 
+  def mark_spam_link(question)
+    link_to 'Mark as Spam', mark_spam_question_path(question), method: :post,
+      class: 'btn btn-warning btn-mini'
+  end
+
+  def mark_ham_link(question)
+    link_to 'Mark as Ham', mark_ham_question_path(question), method: :post,
+      class: 'btn btn-success btn-mini'
+  end
+
+  def question_artifact_link(question)
+    link_to 'Go To Artifact', artifact_path(question.artifact), class: 'btn btn-inverse btn-mini'
+  end
+
   def edit_answer_link(question)
     link_to 'Edit Answer', edit_question_path(question),
         class: 'btn btn-inverse btn-mini btn-answer-edit'

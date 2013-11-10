@@ -20,7 +20,7 @@ class ArtifactsController < ApplicationController
     end
 
     if user_signed_in?
-      @questions = @artifact.questions.sort_by{|q| [q.answer.present? ? -1 : 1, q.created_at]}
+      @questions = @artifact.questions.not_spam.sort_by{|q| [q.answer.present? ? -1 : 1, q.created_at]}
     else
       @questions = @artifact.questions.answered
     end

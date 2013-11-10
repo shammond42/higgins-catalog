@@ -35,6 +35,7 @@ gem 'will_paginate'
 gem 'tire'
 gem 'devise'
 gem 'stamp'
+gem 'rakismet'
 
 gem 'airbrake'
 gem 'newrelic_rpm'

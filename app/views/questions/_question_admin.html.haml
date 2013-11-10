@@ -1,0 +1,11 @@
+%dl.question-item
+  %dt== #{question.artifact.std_term} (HAM&nbsp;#{question.artifact.accession_number})
+  %dd= question.question
+  %dd.muted= question_byline(question)
+  %dd
+    = question_artifact_link(question) unless question.is_spam?
+    = delete_question_link question
+    - if question.is_spam?
+      = mark_ham_link question
+    -else
+      = mark_spam_link question

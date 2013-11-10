@@ -1,17 +1,19 @@
 - set_subtitle 'Unasnwered Questions'
 - admin_sidebar
 
-%h1 Unanswered Questions
+%h1 Question Admin
 
 - if @questions.empty?
   %h2 No questions need to be answered at this time
 -else
-  %section#question-list
+  %h2 Unanswered Questions
+  %section.question-list
     - @questions.each do |question|
-      %dl.question-item
-        %dt== #{question.artifact.std_term} (HAM&nbsp;#{question.artifact.accession_number})
-        %dd= question.question
-        %dd.muted= question_byline(question)
-        %dd
-          = link_to 'Go To Artifact', artifact_path(question.artifact), class: 'btn btn-inverse btn-mini'
-          = delete_question_link question
+      = render partial: 'question_admin', locals: {question: question}
+
+- unless @spam_questions.empty?
+  %h2 Spam Questions
+  %section.question-list
+    - @spam_questions.each do |question|
+      = render partial: 'question_admin', locals: {question: question}
+

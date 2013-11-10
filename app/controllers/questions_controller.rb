@@ -2,7 +2,8 @@ class QuestionsController < ApplicationController
   before_filter :authenticate_user!, except: [:create]
   
   def index
-    @questions = Question.unanswered.order('created_at asc').includes(:artifact)
+    @questions = Question.unanswered.not_spam.order('created_at asc').includes(:artifact)
+    @spam_questions = Question.unanswered.spam.order('created_at asc').includes(:artifact)
   end
 
   def create
@@ -49,5 +50,21 @@ class QuestionsController < ApplicationController
     else
       redirect_to questions_path
     end
+  end
+
+  def mark_spam
+    question = Question.find(params[:id])
+    question.update_attribute(:is_spam, true)
+    question.spam!
+
+    redirect_to questions_path
+  end
+
+  def mark_ham
+    question = Question.find(params[:id])
+    question.update_attribute(:is_spam, false)
+    question.ham!
+
+    redirect_to questions_path
   end
 end

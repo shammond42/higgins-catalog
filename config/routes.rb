@@ -6,7 +6,10 @@ HigginsCatalog::Application.routes.draw do
 
   devise_for :users
 
-  resources :questions
+  resources :questions do
+    post 'mark_spam', on: :member
+    post 'mark_ham', on: :member
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130111153601) do
+ActiveRecord::Schema.define(:version => 20131110131226) do
 
   create_table "artifact_images", :force => true do |t|
     t.integer  "artifact_id", :null => false
@@ -77,8 +77,9 @@ ActiveRecord::Schema.define(:version => 20130111153601) do
     t.text     "question"
     t.text     "answer"
     t.integer  "artifact_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.boolean  "is_spam",     :default => false
   end
 
   add_index "questions", ["artifact_id"], :name => "index_questions_on_artifact_id"

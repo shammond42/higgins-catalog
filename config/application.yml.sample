@@ -3,3 +3,4 @@
 SMTP_USER_NAME: 'username'
 SMTP_PASSWORD: 'password'
 SESSION_SECRET: 'output from rake secret goes here'
+AKISMET_KEY: 'akismet key'
