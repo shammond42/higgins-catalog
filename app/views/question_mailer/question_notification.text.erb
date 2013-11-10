@@ -3,6 +3,8 @@ A New Question Has Been Asked
 
 Artifact: <%= @artifact.std_term%> (HAM <%= @artifact.accession_number %>)
 
+Spam: This question <%= @question.is_spam? ? 'is' : 'is not' %> spam.
+
 <%= @question.question.html_safe %>
 
 Asked by: <%= @question.nickname.present? ? @question.nickname : 'Anonymous' %>

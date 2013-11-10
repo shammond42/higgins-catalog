@@ -7,9 +7,11 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = Question.create(params[:question])
     @artifact = Artifact.find_by_accession_number(params[:artifact_id])
-    @artifact.questions << @question
+
+    @question = @artifact.questions.build(params[:question])
+    @question.is_spam = @question.spam? # Check Akismet for spam
+    @question.save!
 
     QuestionMailer.question_notification(@question).deliver
     if request.xhr?
