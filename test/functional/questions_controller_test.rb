@@ -19,7 +19,7 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_equal old_question_count + 1, Question.count
   end
 
-  context 'an admin' do
+  context 'as an admin' do
      setup do
       @user = FactoryGirl.create(:user)
       sign_in @user
@@ -78,6 +78,32 @@ class QuestionsControllerTest < ActionController::TestCase
         assert_redirected_to questions_path
         assert_equal old_question_count-1, @artifact.questions.count
         deny @artifact.questions.include?(question)
+      end
+
+      should 'be able mark a question as spam' do
+        question = @artifact.questions.unanswered.first
+        old_spam_count = @artifact.questions.spam.count
+        old_ham_count = @artifact.questions.not_spam.count
+
+        post :mark_spam, id: question
+        assert_response :redirect
+        assert_redirected_to questions_path
+        assert_equal old_spam_count+1, @artifact.questions.spam.count
+        assert_equal old_ham_count-1, @artifact.questions.not_spam.count
+      end
+
+      should 'be able to mark a spam question as ham' do
+        question = @artifact.questions.unanswered.first
+        question.update_attribute(:is_spam, true)
+        old_spam_count = @artifact.questions.spam.count
+        old_ham_count = @artifact.questions.not_spam.count   
+
+
+        post :mark_ham, id: question
+        assert_response :redirect
+        assert_redirected_to questions_path
+        assert_equal old_spam_count-1, @artifact.questions.spam.count
+        assert_equal old_ham_count+1, @artifact.questions.not_spam.count   
       end
     end
   end
