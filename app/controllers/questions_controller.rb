@@ -59,7 +59,11 @@ class QuestionsController < ApplicationController
     question.update_attribute(:is_spam, true)
     question.spam!
 
-    redirect_to questions_path
+    if request.xhr?
+      render nothing: true
+    else
+      redirect_to questions_path
+    end
   end
 
   def mark_ham

@@ -6,13 +6,13 @@
 - if @questions.empty?
   %h2 No questions need to be answered at this time
 -else
-  %h2 Unanswered Questions
+  %h2#unanswered-questions Unanswered Questions
   %section.question-list
     - @questions.each do |question|
       = render partial: 'question_admin', locals: {question: question}
 
 - unless @spam_questions.empty?
-  %h2 Spam Questions
+  %h2#spam-questions Spam Questions
   %section.question-list
     - @spam_questions.each do |question|
       = render partial: 'question_admin', locals: {question: question}

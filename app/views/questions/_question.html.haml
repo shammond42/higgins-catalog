@@ -1,4 +1,4 @@
-%dl.question-item.control-group
+%dl.question-item.control-group{class: spam_class(question)}
   %dt{class: question_class(question)}= question.question
   %dd.muted= question_byline(question)
   - if question.answer.present?

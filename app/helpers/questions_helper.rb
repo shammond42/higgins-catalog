@@ -6,12 +6,12 @@ module QuestionsHelper
 
   def mark_spam_link(question)
     link_to 'Mark as Spam', mark_spam_question_path(question), method: :post,
-      class: 'btn btn-warning btn-mini'
+      class: 'btn btn-warning btn-mini btn-question-mark-spam'
   end
 
   def mark_ham_link(question)
     link_to 'Mark as Ham', mark_ham_question_path(question), method: :post,
-      class: 'btn btn-success btn-mini'
+      class: 'btn btn-success btn-mini btn-question-mark-ham'
   end
 
   def question_artifact_link(question)
@@ -25,6 +25,10 @@ module QuestionsHelper
 
   def question_class(question)
     question.answer.present? ? 'answered-question' : 'unanswered-question'
+  end
+
+  def spam_class(question)
+    question.is_spam? ? 'spam' : 'ham'
   end
 
   def thank_you_title(question)

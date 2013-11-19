@@ -33,7 +33,7 @@
 - if @questions.any?
   %section#questions-and-answers
     %h2 Questions & Answers
-    %dl#question-list
+    %section.question-list
       - @questions.each do |question|
         = render partial: 'questions/question', locals: {question: question}
 
