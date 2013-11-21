@@ -3,17 +3,19 @@
 
 %h1 Question Admin
 
+%h2#unanswered-questions Unanswered Questions
 - if @questions.empty?
-  %h2 No questions need to be answered at this time
+  %h3#all-done.muted No questions need to be answered at this time
 -else
-  %h2#unanswered-questions Unanswered Questions
-  %section.question-list
+  %section#ham-list.question-list
     - @questions.each do |question|
       = render partial: 'question_admin', locals: {question: question}
 
-- unless @spam_questions.empty?
-  %h2#spam-questions Spam Questions
-  %section.question-list
+%h2#spam-questions Spam Questions
+- if @spam_questions.empty?
+  %h3#no-questions.muted No questions have been marked spam
+%section#spam-list.question-list
+  - if @spam_questions
     - @spam_questions.each do |question|
       = render partial: 'question_admin', locals: {question: question}
 

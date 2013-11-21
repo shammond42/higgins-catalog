@@ -38,7 +38,7 @@ class QuestionsControllerTest < ActionController::TestCase
         assert_template :index
 
         assert_equal 0, assigns(:questions).size
-        assert_select 'h2', /[Nn]o questions/
+        assert_select 'h3', /[Nn]o questions/
       end
     end
     

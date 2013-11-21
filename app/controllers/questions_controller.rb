@@ -60,7 +60,7 @@ class QuestionsController < ApplicationController
     question.spam!
 
     if request.xhr?
-      render nothing: true
+      render partial: 'question_admin', locals: {question: question}
     else
       redirect_to questions_path
     end

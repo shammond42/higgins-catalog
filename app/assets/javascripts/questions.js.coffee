@@ -3,6 +3,13 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 artifactQuestion =
+  moveQuestion: (question, result) ->
+    dl = question.parents('dl:first')
+    hidden_result = $(result).addClass('hide')[0].outerHTML
+    $('#spam-list').append(hidden_result)
+    $('#no-questions').slideUp()
+    $('.hide').slideDown(1000)
+    artifactQuestion.hideQuestion(question)
   hideQuestion: (question) ->
     dl = question.parents('dl:first')
     dl.slideUp 1000, ->
@@ -27,9 +34,10 @@ artifactQuestion =
     e.stopImmediatePropagation()
     $.ajax $(@).attr('href'),
       type: 'post'
+      dataType: 'html'
       context: $(@)
-      success: ->
-        artifactQuestion.hideQuestion($(@))
+      success: (result) ->
+        artifactQuestion.moveQuestion($(@), result)
   askQuestion: (e) ->
     e.preventDefault()
     if not $('#question_question').val?()
