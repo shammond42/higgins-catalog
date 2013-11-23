@@ -33,6 +33,8 @@
 - if @questions.any?
   %section#questions-and-answers
     %h2 Questions & Answers
+    - if user_signed_in?
+      = link_to 'Return to Questions Admin', questions_path, class: 'btn btn-inverse', id: 'return-to-questions'
     %section.question-list
       - @questions.each do |question|
         = render partial: 'questions/question', locals: {question: question}

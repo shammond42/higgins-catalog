@@ -77,6 +77,10 @@ class ArtifactsControllerTest < ActionController::TestCase
     should 'not see unanswered questions' do
       assert_select '.unanswered-question', false
     end
+
+    should 'not see the return to questions list button' do
+      assert_select '#return-to-questions', false
+    end
   end
 
     context 'with an authorized user' do
@@ -93,6 +97,10 @@ class ArtifactsControllerTest < ActionController::TestCase
 
     should 'not be able to ask a new question' do
       assert_select '#new_question', false
+    end
+
+    should 'see the return to questions list button' do
+      assert_select '#return-to-questions', true
     end
 
     should 'see answered questions' do
