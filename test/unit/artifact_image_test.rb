@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class ArtifactImageTest < ActiveSupport::TestCase
-  should allow_mass_assignment_of(:artifact_id)
+  should_not allow_mass_assignment_of(:artifact_id)
   should allow_mass_assignment_of(:path)
   should allow_mass_assignment_of(:sort_order)
 
