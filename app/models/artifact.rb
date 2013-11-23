@@ -62,14 +62,13 @@ class Artifact < ActiveRecord::Base
   end
 
   def category_synonyms
-    return @synonyms if @synonyms.present?
+    @synonyms ||= calc_category_synonyms
+  end
 
+  def calc_category_synonyms
     t = CategorySynonym.arel_table
-
     @synonyms = CategorySynonym.where(t[:category].eq(alt_name).or(t[:synonym].eq(alt_name))).
-      map{|i| [i.category,i.synonym]}.
-      flatten.
-      uniq.join(', ')
+      map{|i| [i.category,i.synonym]}.flatten.uniq.join(', ')
   end
 
   def geoloc_synonyms
