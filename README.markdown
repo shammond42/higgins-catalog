@@ -1,3 +1,4 @@
+<a href="https://codeclimate.com/github/shammond42/higgins-catalog"><img src="https://codeclimate.com/github/shammond42/higgins-catalog.png" style="float: right;"/></a>
 # Higgins Armory Catalog
 
 ## Introduction
