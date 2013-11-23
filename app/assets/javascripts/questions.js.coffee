@@ -3,20 +3,26 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 artifactQuestion =
-  moveQuestion: (question, result) ->
-    dl = question.parents('dl:first')
+  moveQuestionToSpam: (question, result) ->
     hidden_result = $(result).addClass('hide')[0].outerHTML
     $('#spam-list').append(hidden_result)
-    $('#no-questions').slideUp()
-    $('.hide').slideDown(1000)
+    $('#no-spam').slideUp()
+    $('.question-item.hide').slideDown(1000)
+    artifactQuestion.hideQuestion(question)
+  moveQuestionToHam: (question, result) ->
+    hidden_result = $(result).addClass('hide')[0].outerHTML
+    $('#ham-list').append(hidden_result)
+    $('#no-ham').slideUp()
+    $('.question-item.hide').slideDown(1000)
     artifactQuestion.hideQuestion(question)
   hideQuestion: (question) ->
     dl = question.parents('dl:first')
     dl.slideUp 1000, ->
       dl.remove()
-      if $('dl.ham').length is 0 # only used in question admin index page
-        $('<h3 class="hide muted" id="all-done">All questions have been taken care of.</h2>').insertAfter('#unanswered-questions')
-        $('#all-done').slideDown()
+      if $('dl.ham').length == 0 # only used in question admin index page
+        $('#no-ham').slideDown()
+      if $('dl.spam').length == 0 # only used in question admin index page
+        $('#no-spam').slideDown()
   deleteQuestion: (e) ->
     e.preventDefault()
     e.stopImmediatePropagation()
@@ -37,7 +43,16 @@ artifactQuestion =
       dataType: 'html'
       context: $(@)
       success: (result) ->
-        artifactQuestion.moveQuestion($(@), result)
+        artifactQuestion.moveQuestionToSpam($(@), result)
+  markHam: (e) ->
+    e.preventDefault()
+    e.stopImmediatePropagation()
+    $.ajax $(@).attr('href'),
+      type: 'post'
+      dataType: 'html'
+      context: $(@)
+      success: (result) ->
+        artifactQuestion.moveQuestionToHam($(@), result)
   askQuestion: (e) ->
     e.preventDefault()
     if not $('#question_question').val?()
@@ -86,10 +101,11 @@ artifactQuestion =
           $(@).html($(result).html())
           $(@).slideDown 'slow'
   init: ->
-    $('.question-item').on 'click', '.btn-question-delete', this.deleteQuestion
-    $('.question-item').on 'click', '.btn-question-mark-spam', this.markSpam
-    $('.question-item').on 'click', '.btn-answer-edit', this.editAnswer
-    $('.question-item').on 'submit','.edit_question', this.answerQuestion
+    $('.question-list').on 'click', '.btn-question-delete', this.deleteQuestion
+    $('.question-list').on 'click', '.btn-question-mark-spam', this.markSpam
+    $('.question-list').on 'click', '.btn-question-mark-ham', this.markHam
+    $('.question-list').on 'click', '.btn-answer-edit', this.editAnswer
+    $('.question-list').on 'submit','.edit_question', this.answerQuestion
     $('#new_question').submit this.askQuestion
   
 $ ->

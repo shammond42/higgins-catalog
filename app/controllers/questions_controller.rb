@@ -71,6 +71,10 @@ class QuestionsController < ApplicationController
     question.update_attribute(:is_spam, false)
     question.ham!
 
-    redirect_to questions_path
+    if request.xhr?
+      render partial: 'question_admin', locals: {question: question}
+    else
+      redirect_to questions_path
+    end
   end
 end

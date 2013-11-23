@@ -4,16 +4,14 @@
 %h1 Question Admin
 
 %h2#unanswered-questions Unanswered Questions
-- if @questions.empty?
-  %h3#all-done.muted No questions need to be answered at this time
--else
-  %section#ham-list.question-list
-    - @questions.each do |question|
-      = render partial: 'question_admin', locals: {question: question}
+%h3#no-ham.muted{class: ('hide' if @questions.any?)} No questions need to be answered at this time
+%section#ham-list.question-list
+  - @questions.each do |question|
+    = render partial: 'question_admin', locals: {question: question}
 
 %h2#spam-questions Spam Questions
 - if @spam_questions.empty?
-  %h3#no-questions.muted No questions have been marked spam
+  %h3#no-spam.muted No questions have been marked spam
 %section#spam-list.question-list
   - if @spam_questions
     - @spam_questions.each do |question|
