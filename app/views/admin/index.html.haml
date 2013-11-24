@@ -19,7 +19,11 @@
         %dl
           %dt Questions
           %dd Total questions: #{@questions[:total]}
-          %dd Answered questinos: #{@questions[:answered]}
-          %dd Unanswered questinos: #{@questions[:unanswered]}
+          %dd Answered questions: #{@questions[:answered]}
+          %dd Unanswered questions: #{@questions[:unanswered]}
+          %dt Version Info
+          %dd Ruby Version: #{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}
+          %dd Rails Version: #{Rails::VERSION::STRING}
+          
 %h1 Artifact of the Day
 = render partial: 'artifacts/artifact_of_the_day'
