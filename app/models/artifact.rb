@@ -99,8 +99,4 @@ class Artifact < ActiveRecord::Base
   def self.process_accession_number(ac_num)
     ac_num.gsub(' NC', '.NC').gsub('#','').gsub(/\s/, '').downcase
   end
-
-  # def self.de_space_ac_num(ac_num)
-  #   ac_num.gsub(/^[Nn]o#./,'n').sub(/(\d+)/){"%04d"%$1.to_i}.gsub(' & ', '&').gsub(' NC','.NC').downcase
-  # end
 end
