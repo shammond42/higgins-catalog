@@ -1,4 +1,5 @@
 require 'csv'
+require 'pathname'
 
 namespace :higgins do
   namespace :data do
@@ -23,6 +24,32 @@ namespace :higgins do
     desc 'Delete all processes photos'
     task :delete_processed_images  => :environment do
       ArtifactImage.delete_all
+    end
+
+    desc 'Improved image processing'
+    task :improved_process_images => :environment do
+      STDOUT.sync = true
+      found = 0
+      no_image_count = 0
+      unfound = []
+
+      Artifact.all.each do |artifact|
+        number_part = artifact.accession_number.sub(/\.[a-zA-Z].*$/,'')
+        images = Dir.glob("#{IMAGE_PATH}/#{number_part}.*")
+        if images.size == 0
+          no_image_count = no_image_count + 1
+          unfound << artifact.accession_number
+          print 'F'
+        else
+          images.each do |image_full_path|
+            filename = Pathname.new(image_full_path).basename
+            artifact.artifact_images.create(path: "/object_photos/#{filename}")
+            print '.'
+          end
+        end
+      end
+
+      puts "No Images: #{no_image_count}"
     end
 
     desc 'Process Higgins Provided Pictures'
