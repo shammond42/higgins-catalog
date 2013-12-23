@@ -5,9 +5,11 @@
 - content_for(:main_title) do
   %h1.artifact-name= format_artifact_name(@artifact)
 
-- if @artifact.artifact_images.any?
+- if @artifact.artifact_images.count == 1
   = image_tag @artifact.artifact_images.first.path, class: 'artifact-image'
-  
+- elsif @artifact.artifact_images.count > 1
+  = render partial: 'image_carousel', locals: {artifact: @artifact}
+
 - if @artifact.label_text.present?
   %blockquote.label_text
     :textile

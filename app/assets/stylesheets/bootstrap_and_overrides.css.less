@@ -43,9 +43,11 @@ src: url('/fonts/mearschaum.ttf'),
 
 @baseFontSize: 16px;
 @backColor: #FFFAFA;
+@headerLightBackgroundColor: #410F0B;
+@headerDarkBackgroundColor: #2C1716;
 @headerTextColor: #B17803;
 
-.navbar-inverse .navbar-inner { #gradient > .vertical(#2C1716, #410F0B);}
+.navbar-inverse .navbar-inner { #gradient > .vertical(@headerDarkBackgroundColor, @headerLightBackgroundColor);}
 
 body {
   background-color: @backColor;
@@ -167,12 +169,24 @@ a.artifact-of-the-day, a:hover.artifact-of-the-day {
   }
 }
 
-.artifact-image {
+.artifact-image-container {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  border: solid 1px #333;
-  .border-radius(5px);
+  padding: 1px;
+  .artifact-image {
+    border: solid 1px #333;
+    .border-radius(5px);
+  }
+}
+
+.carousel-indicators li {
+  background-color: @headerLightBackgroundColor;
+  // background-color: rgba(65,15,11,1.0);
+}
+
+.carousel-indicators .active {
+  background-color: @headerTextColor;
 }
 
 img {
