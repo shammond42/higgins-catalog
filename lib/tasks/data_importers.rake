@@ -43,7 +43,12 @@ namespace :higgins do
         else
           images.each do |image_full_path|
             filename = Pathname.new(image_full_path).basename
-            artifact.artifact_images.create(path: "/object_photos/#{filename}")
+            artifact_image = artifact.artifact_images.build
+            artifact_image.transaction do
+              artifact_image.image = File.open(image_full_path)
+              artifact_image.save!
+            end
+            # artifact.artifact_images.create(path: "/object_photos/#{filename}")
             print '.'
           end
         end
@@ -54,6 +59,7 @@ namespace :higgins do
 
     desc 'Process Higgins Provided Pictures'
     task :process_images => :environment do
+      raise "Run improved process images"
       STDOUT.sync = true
       found = 0
       unfound = []

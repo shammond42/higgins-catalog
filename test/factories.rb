@@ -1,3 +1,5 @@
+include ActionDispatch::TestProcess
+
 FactoryGirl.define do
   # User definitions
   factory :artifact do
@@ -27,7 +29,7 @@ FactoryGirl.define do
 
   factory :artifact_image do
     artifact
-    path '/test/path/image.jpg'
+    image {fixture_file_upload( Rails.root + 'app/assets/images/avatar-body.png', 'image/png')}
   end
 
   factory :question do

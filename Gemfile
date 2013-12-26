@@ -37,6 +37,8 @@ gem 'devise'
 gem 'stamp'
 gem 'rakismet'
 
+gem 'carrierwave'
+
 gem 'airbrake'
 gem 'newrelic_rpm'
 

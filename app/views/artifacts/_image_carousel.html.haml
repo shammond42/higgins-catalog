@@ -5,6 +5,6 @@
   .carousel-inner.artifact-image-container
     -artifact.artifact_images.each_with_index do |image, index|
       .item{class: ('active' if index == 0)}
-        = image_tag image.path, class: 'artifact-image'
+        = image_tag image.url, class: 'artifact-image'
   %a.carousel-control.left{href: '#my-carousel', data: {slide: 'prev'}} &lsaquo;
   %a.carousel-control.right{href: '#my-carousel', data: {slide: 'next'}} &rsaquo;
