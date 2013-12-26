@@ -6,7 +6,7 @@
   %h1.artifact-name= format_artifact_name(@artifact)
 
 - if @artifact.artifact_images.count == 1
-  = image_tag @artifact.artifact_images.first.path, class: 'artifact-image'
+  = image_tag @artifact.artifact_images.first.path, class: 'artifact-image artifact-image-container'
 - elsif @artifact.artifact_images.count > 1
   = render partial: 'image_carousel', locals: {artifact: @artifact}
 

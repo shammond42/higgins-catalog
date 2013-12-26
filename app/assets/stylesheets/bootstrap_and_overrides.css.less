@@ -171,18 +171,19 @@ a.artifact-of-the-day, a:hover.artifact-of-the-day {
 
 .artifact-image-container {
   display: block;
+  max-height: 600px;
   margin-left: auto;
   margin-right: auto;
-  padding: 1px;
+  border: solid 2px @headerLightBackgroundColor;
+  .border-radius(10px);
   .artifact-image {
-    border: solid 1px #333;
-    .border-radius(5px);
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
 .carousel-indicators li {
   background-color: @headerLightBackgroundColor;
-  // background-color: rgba(65,15,11,1.0);
 }
 
 .carousel-indicators .active {
