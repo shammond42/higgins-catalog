@@ -32,6 +32,7 @@ namespace :higgins do
       found = 0
       no_image_count = 0
       unfound = []
+      errors = []
 
       Artifact.all.each do |artifact|
         number_part = artifact.accession_number.sub(/\.[a-zA-Z].*$/,'')
@@ -39,22 +40,32 @@ namespace :higgins do
         if images.size == 0
           no_image_count = no_image_count + 1
           unfound << artifact.accession_number
-          print 'F'
+          print "F".red
         else
           images.each do |image_full_path|
             filename = Pathname.new(image_full_path).basename
             artifact_image = artifact.artifact_images.build
             artifact_image.transaction do
-              artifact_image.image = File.open(image_full_path)
-              artifact_image.save!
+              begin
+                artifact_image.image = File.open(image_full_path)
+                image = MiniMagick::Image.open(image_full_path)
+                artifact_image.width = image[:width]
+                artifact_image.height = image[:height]
+                artifact_image.save!
+                print ".".green
+              rescue MiniMagick::Invalid
+                errors << image_full_path
+                print "E".yellow
+              end
             end
-            # artifact.artifact_images.create(path: "/object_photos/#{filename}")
-            print '.'
           end
         end
       end
 
+      puts ''
       puts "No Images: #{no_image_count}"
+      File.open('db/no_image.csv', 'w'){|f| unfound.each{|u| f.puts(u)}}
+      File.open('db/errors.csv', 'w'){|f| errors.each{|e| f.puts(e)}}
     end
 
     desc 'Process Higgins Provided Pictures'
