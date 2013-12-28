@@ -113,6 +113,9 @@ h2 {
 }
 
 #sidebar {
+  section {
+    margin-bottom: 30px;
+  }
   h2 {
     padding: 0;
     margin-bottom: 0;
@@ -174,11 +177,21 @@ a.artifact-of-the-day, a:hover.artifact-of-the-day {
   max-height: 600px;
   margin-left: auto;
   margin-right: auto;
-  border: solid 2px @headerLightBackgroundColor;
+  border: solid 3px @headerLightBackgroundColor;
   .border-radius(10px);
   .artifact-image {
     margin-left: auto;
     margin-right: auto;
+  }
+}
+
+#image-collection {
+  .artifact-image {
+    width: 15%;
+    margin: 0;
+    padding: 0;
+    border: solid 1px @headerLightBackgroundColor;
+    .border-radius(5px);
   }
 }
 

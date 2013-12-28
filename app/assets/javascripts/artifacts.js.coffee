@@ -8,7 +8,18 @@ artifactSearch =
     $('#low_date').val($(@).data('low'))
     $('#high_date').val($(@).data('high'))
     $('#search-form').submit()
-    
+  setUpImageWall: ->
+    wall = new freewall("#image-collection")
+    wall.reset
+      cellW: 'auto'
+      cellH: 'auto'
+      gutterX: 5
+      gutterY: 5
+      onResize: ->
+        wall.fitWidth();
+    wall.fitWidth()
+  
 $ ->
+  artifactSearch.setUpImageWall()
   $('.date-filter-link').click artifactSearch.submitForm
   $("#query").focus()

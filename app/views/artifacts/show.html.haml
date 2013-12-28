@@ -2,13 +2,13 @@
 - content_for(:sidebar) do
   .hidden-phone
     = render partial: 'info_sidebar'
+    - if @artifact.artifact_images.count > 1
+      = render partial: 'image_collection', locals: {artifact: @artifact}
 - content_for(:main_title) do
   %h1.artifact-name= format_artifact_name(@artifact)
 
-- if @artifact.artifact_images.count == 1
+- if @artifact.artifact_images.any?
   = image_tag @artifact.artifact_images.first.url, class: 'artifact-image artifact-image-container'
-- elsif @artifact.artifact_images.count > 1
-  = render partial: 'image_carousel', locals: {artifact: @artifact}
 
 - if @artifact.label_text.present?
   %blockquote.label_text
