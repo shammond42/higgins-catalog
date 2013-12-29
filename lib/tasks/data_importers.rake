@@ -35,8 +35,17 @@ namespace :higgins do
       errors = []
 
       Artifact.all.each do |artifact|
-        number_part = artifact.accession_number.sub(/\.[a-zA-Z].*$/,'')
+        number_part = if artifact.accession_number =~ /\w+\-\w+/ # A range like 1234.a-m
+          artifact.accession_number.sub(/\.\w+\-\w+$/,'')
+        else
+          artifact.accession_number.sub(/\.nc$/,'')
+        end
+
         images = Dir.glob("#{IMAGE_PATH}/#{number_part}.*")
+
+        # if not images, drop back one level and try again
+        images = Dir.glob("#{IMAGE_PATH}/#{number_part.sub(/\.[\w&-]+$/,'')}.*") if images.size == 0 && !(number_part =~ /no\./)
+
         if images.size == 0
           no_image_count = no_image_count + 1
           unfound << artifact.accession_number
