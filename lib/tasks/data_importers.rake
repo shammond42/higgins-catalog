@@ -41,7 +41,7 @@ namespace :higgins do
           artifact.accession_number.sub(/\.nc$/,'')
         end
 
-        images = Dir.glob("#{IMAGE_PATH}/#{number_part}.*")
+        images = Dir.glob("#{IMAGE_PATH}/#{number_part}*")
 
         # if not images, drop back one level and try again
         images = Dir.glob("#{IMAGE_PATH}/#{number_part.sub(/\.[\w&-]+$/,'')}.*") if images.size == 0 && !(number_part =~ /no\./)
