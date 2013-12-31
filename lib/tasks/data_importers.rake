@@ -1,11 +1,13 @@
 require 'csv'
 require 'pathname'
 require 'rubyfish'
+require 'fileutils'
 
 namespace :higgins do
   namespace :data do
     CSV_FILE_PATH = 'db/higgins_data'
-    IMAGE_PATH = 'public/object_photos'
+    IMAGE_SOURCE_PATH = 'db/higgins_data/object_photos_orig'
+    IMAGE_DEST_PATH = 'public/object_photos'
 
     desc 'Import all higgins data.'
     task :import_all_data => :environment do
@@ -26,6 +28,7 @@ namespace :higgins do
     task :delete_processed_images  => :environment do
       Artifact.update_all(key_image_id: nil)
       ArtifactImage.delete_all
+      FileUtils.rm("#{IMAGE_DEST_PATH}/*.jpg", force: true)
     end
 
     desc 'Improved image processing'
@@ -43,30 +46,38 @@ namespace :higgins do
           artifact.accession_number.sub(/\.nc$/,'')
         end
 
-        images = Dir.glob("#{IMAGE_PATH}/#{number_part}*")
+        images = Dir.glob("#{IMAGE_SOURCE_PATH}/#{number_part}[\.a-z]*")
 
-        # if not images, drop back one level and try again
-        images = Dir.glob("#{IMAGE_PATH}/#{number_part.sub(/\.[\w&-]+$/,'')}.*") if images.size == 0 && !(number_part =~ /no\./)
+        # if no images, drop back one level and try again
+        if (images.size == 0) && (number_part =~ /[a-z]$/) && !(number_part =~ /no\./)
+          images = Dir.glob("#{IMAGE_SOURCE_PATH}/#{number_part.sub(/\.[\w&-]+$/,'')}[\.a-z]*")
+        end
 
         if images.size == 0
           no_image_count = no_image_count + 1
           unfound << artifact.accession_number
           print "F".red
         else
-          images.each do |image_full_path|
-            filename = Pathname.new(image_full_path).basename
+          last_key_image_path = ''
+          images.each do |orig_path|
+            filename = Pathname.new(orig_path).basename
+            new_path = "#{IMAGE_DEST_PATH}/#{filename}"
+            FileUtils.cp(orig_path, new_path)
+
             artifact_image = artifact.artifact_images.build
             artifact_image.transaction do
               begin
-                artifact_image.image = File.open(image_full_path)
-                image = MiniMagick::Image.open(image_full_path)
+                artifact_image.image = File.open(new_path)
+                image = MiniMagick::Image.open(new_path)
                 new_distance = RubyFish::Levenshtein.distance(
                   artifact.accession_number,
-                  File.basename(image_full_path).sub(/\.jpg$/,''))
-                old_distance = artifact.key_image.nil? ? 1_000 : RubyFish::Levenshtein.distance(
+                  File.basename(new_path).sub(/\.jpg$/,''))
+                old_distance = RubyFish::Levenshtein.distance(
                   artifact.accession_number,
-                  File.basename(artifact.key_image.current_path.sub(/\.jpg$/,'')))
+                  File.basename(last_key_image_path.sub(/\.jpg$/,'')))
+
                 if new_distance < old_distance
+                  last_key_image_path = new_path
                   artifact.key_image = artifact_image
                   artifact.save!
                 end
