@@ -15,8 +15,8 @@ config/database.yml
 config/application.yml
 
 #Higgins Provided Data
-/db/higgins_data/*.csv
-/db/higgins_data/*.txt
+/db/higgins_data/*
+
 /public/ObjectPhotos.tgz
 /public/object_photos/*
 /public/uploads/*
