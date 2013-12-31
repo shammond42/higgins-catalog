@@ -7,7 +7,7 @@
 - content_for(:main_title) do
   %h1.artifact-name= format_artifact_name(@artifact)
 
-- if @artifact.artifact_images.any?
+- if @artifact.key_image.present?
   = image_tag @artifact.key_image.url, class: 'artifact-image artifact-image-container'
 
 - if @artifact.label_text.present?

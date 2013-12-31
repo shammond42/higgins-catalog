@@ -10,7 +10,8 @@ FactoryGirl.define do
     factory :quality_artifact do
       description 'It is made of metal.'
       comments 'This is a great artifact.'
-
+      association :key_image, factory: :artifact_image
+      
       after(:create) do |artifact|
         FactoryGirl.create_list(:artifact_image, 1, artifact: artifact)
       end
