@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131227223959) do
+ActiveRecord::Schema.define(:version => 20131231005352) do
 
   create_table "artifact_images", :force => true do |t|
     t.integer  "artifact_id", :null => false
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(:version => 20131227223959) do
     t.text     "status"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+    t.integer  "key_image_id"
   end
 
   add_index "artifacts", ["accession_number"], :name => "index_artifacts_on_accession_number", :unique => true

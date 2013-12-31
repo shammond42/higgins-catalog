@@ -37,6 +37,7 @@ gem 'devise'
 gem 'stamp'
 gem 'rakismet'
 gem 'colorize'
+gem 'rubyfish'
 
 gem 'carrierwave'
 gem 'mini_magick'

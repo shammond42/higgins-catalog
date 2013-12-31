@@ -11,6 +11,7 @@ class Artifact < ActiveRecord::Base
   validates_uniqueness_of :accession_number
 
   has_many :artifact_images
+  belongs_to :key_image, class_name: "ArtifactImage"
   has_many :questions, order: 'created_at desc'
 
   scope :quality_entries, where('comments is not null and description is not null and exists

@@ -1,5 +1,6 @@
 require 'csv'
 require 'pathname'
+require 'rubyfish'
 
 namespace :higgins do
   namespace :data do
@@ -21,8 +22,9 @@ namespace :higgins do
       Rake::Task['higgins:data:process_images'].execute
     end
 
-    desc 'Delete all processes photos'
+    desc 'Delete all processed photos'
     task :delete_processed_images  => :environment do
+      Artifact.update_all(key_image_id: nil)
       ArtifactImage.delete_all
     end
 
@@ -58,6 +60,16 @@ namespace :higgins do
               begin
                 artifact_image.image = File.open(image_full_path)
                 image = MiniMagick::Image.open(image_full_path)
+                new_distance = RubyFish::Levenshtein.distance(
+                  artifact.accession_number,
+                  File.basename(image_full_path).sub(/\.jpg$/,''))
+                old_distance = artifact.key_image.nil? ? 1_000 : RubyFish::Levenshtein.distance(
+                  artifact.accession_number,
+                  File.basename(artifact.key_image.current_path.sub(/\.jpg$/,'')))
+                if new_distance < old_distance
+                  artifact.key_image = artifact_image
+                  artifact.save!
+                end
                 artifact_image.width = image[:width]
                 artifact_image.height = image[:height]
                 artifact_image.save!
