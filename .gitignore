@@ -18,7 +18,8 @@ config/application.yml
 /db/higgins_data/*
 
 /public/ObjectPhotos.tgz
-/public/object_photos/*.jpb
+/public/object_photos/*.jpg
+/public/object_photos/*.jpeg
 /public/uploads/*
 
 .DS_Store
