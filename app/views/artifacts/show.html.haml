@@ -8,7 +8,7 @@
   %h1.artifact-name= format_artifact_name(@artifact)
 
 - if @artifact.artifact_images.any?
-  = image_tag @artifact.artifact_images.first.url, class: 'artifact-image artifact-image-container'
+  = image_tag @artifact.key_image.url, class: 'artifact-image artifact-image-container'
 
 - if @artifact.label_text.present?
   %blockquote.label_text
