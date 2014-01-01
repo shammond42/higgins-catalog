@@ -18,8 +18,8 @@ config/application.yml
 /db/higgins_data/*
 
 /public/ObjectPhotos.tgz
-/public/object_photos/*.jpg
-/public/object_photos/*.jpeg
+/public/object_photos/*
+/public/object_photos/*
 /public/uploads/*
 
 .DS_Store
@@ -28,3 +28,5 @@ config/application.yml
 /log/*.log
 /tmp
 /coverage
+
+*sublime*

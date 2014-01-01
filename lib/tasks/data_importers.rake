@@ -28,7 +28,7 @@ namespace :higgins do
     task :delete_processed_images  => :environment do
       Artifact.update_all(key_image_id: nil)
       ArtifactImage.delete_all
-      FileUtils.rm("#{IMAGE_DEST_PATH}/*.jpg", force: true)
+      FileUtils.rm_rf(IMAGE_DEST_PATH)
     end
 
     desc 'Improved image processing'
@@ -58,34 +58,35 @@ namespace :higgins do
           unfound << artifact.accession_number
           print "F".red
         else
-          last_key_image_path = ''
+          last_key_filename = ''
           images.each do |orig_path|
             filename = Pathname.new(orig_path).basename
-            new_path = "#{IMAGE_DEST_PATH}/#{filename}"
-            FileUtils.cp(orig_path, new_path)
 
             artifact_image = artifact.artifact_images.build
             artifact_image.transaction do
               begin
-                artifact_image.image = File.open(new_path)
-                image = MiniMagick::Image.open(new_path)
+                artifact_image.image = File.open(orig_path)
+
                 new_distance = RubyFish::Levenshtein.distance(
                   artifact.accession_number,
-                  File.basename(new_path).sub(/\.jpg$/,''))
+                  filename.sub(/\.jpg$/,''))
                 old_distance = RubyFish::Levenshtein.distance(
                   artifact.accession_number,
-                  File.basename(last_key_image_path.sub(/\.jpg$/,'')))
+                  last_key_filename.sub(/\.jpg$/,''))
 
                 if new_distance < old_distance
-                  last_key_image_path = new_path
+                  last_key_filename = filename
                   artifact.key_image = artifact_image
                   artifact.save!
                 end
-                artifact_image.width = image[:width]
-                artifact_image.height = image[:height]
+
+                image = Magick::Image.read(orig_path).first
+                artifact_image.width = image.columns
+                artifact_image.height = image.rows
+                
                 artifact_image.save!
                 print ".".green
-              rescue MiniMagick::Invalid
+              rescue Magick::ImageMagickError
                 errors << image_full_path
                 print "E".yellow
               end
@@ -96,8 +97,8 @@ namespace :higgins do
 
       puts ''
       puts "No Images: #{no_image_count}"
-      File.open('db/no_image.csv', 'w'){|f| unfound.each{|u| f.puts(u)}}
-      File.open('db/errors.csv', 'w'){|f| errors.each{|e| f.puts(e)}}
+      File.open('db/higgins_data/no_image.csv', 'w'){|f| unfound.each{|u| f.puts(u)}}
+      File.open('db/higgins_data/errors.csv', 'w'){|f| errors.each{|e| f.puts(e)}}
     end
 
     desc 'Process Higgins Provided Pictures'

@@ -40,7 +40,7 @@ gem 'colorize'
 gem 'rubyfish'
 
 gem 'carrierwave'
-gem 'mini_magick'
+gem 'rmagick'
 
 gem 'airbrake'
 gem 'newrelic_rpm'
