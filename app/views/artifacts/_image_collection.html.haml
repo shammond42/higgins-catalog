@@ -3,7 +3,10 @@
   %h2 Alternate Views
   %ul#image-collection{style: "list-style-type: none; margin-left: 0;"}
     - artifact.artifact_images.each do |artifact_image|
-      %li.item= image_tag artifact_image.image.small.url, class: 'artifact-image', onClick: "$('#imageModal').modal();", title: artifact_image.image
+      %li.item
+        %a{href: artifact_image.image.url, data: {lightbox: artifact.accession_number}}
+          = image_tag artifact_image.image.small.url, class: 'artifact-image',
+            title: artifact_image.image
 
   #imageModal.modal.hide.fade{ tabindex: "-1", role: "dialog", style: "width: #{modal_image.width + 20}px;",
     'aria-labelledby' =>"myModalLabel", 'aria-hidden' => "true"}
