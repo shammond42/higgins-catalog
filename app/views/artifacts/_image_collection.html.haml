@@ -1,19 +1,9 @@
 - modal_image = artifact.artifact_images[0]
 %section
   %h2 Alternate Views
-  %ul#image-collection{style: "list-style-type: none; margin-left: 0;"}
+  %ul#image-collection.thumbnails
     - artifact.artifact_images.each do |artifact_image|
-      %li.item
-        %a{href: artifact_image.image.url, data: {lightbox: artifact.accession_number}}
+      %li.item.span2
+        %a.thumbnail{href: artifact_image.image.url, data: {lightbox: artifact.accession_number}}
           = image_tag artifact_image.image.small.url, class: 'artifact-image',
             title: artifact_image.image
-
-  #imageModal.modal.hide.fade{ tabindex: "-1", role: "dialog", style: "width: #{modal_image.width + 20}px;",
-    'aria-labelledby' =>"myModalLabel", 'aria-hidden' => "true"}
-    .modal-header
-      %button{type: "button", class: "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"} ×
-      %h3#myModalLabel Image Detail
-    .modal-body{style: 'max-height: 600px;'}
-      = image_tag modal_image.url, style: "margin: auto;"
-    .modal-footer
-      %button.btn{data:{dismiss: "modal"}, 'aria-hidden' => "true"} Close
