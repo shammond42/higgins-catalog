@@ -1,9 +1,8 @@
-- modal_image = artifact.artifact_images[0]
 %section
   %h2 Alternate Views
   %ul#image-collection.thumbnails
     - artifact.artifact_images.each do |artifact_image|
-      %li.item.span2
+      %li.item{class: gallery_width_class(artifact.artifact_images.count)}
         %a.thumbnail{href: artifact_image.image.url, data: {lightbox: artifact.accession_number}}
           = image_tag artifact_image.image.small.url, class: 'artifact-image',
             title: artifact_image.image

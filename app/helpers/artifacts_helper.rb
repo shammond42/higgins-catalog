@@ -24,6 +24,10 @@ module ArtifactsHelper
     ]
   end
 
+  def gallery_width_class(image_count)
+    image_count > 10 ? 'span1' : 'span2'
+  end
+
   def return_link
     link_text, return_path = if request.referrer == root_url
       ['Return to Homepage', root_path]
