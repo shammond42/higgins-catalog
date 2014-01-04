@@ -32,7 +32,7 @@ namespace :higgins do
     end
 
     desc 'Improved image processing'
-    task :improved_process_images => :environment do
+    task :process_images => :environment do
       STDOUT.sync = true
       found = 0
       no_image_count = 0
@@ -99,40 +99,6 @@ namespace :higgins do
       puts "No Images: #{no_image_count}"
       File.open('db/higgins_data/no_image.csv', 'w'){|f| unfound.each{|u| f.puts(u)}}
       File.open('db/higgins_data/errors.csv', 'w'){|f| errors.each{|e| f.puts(e)}}
-    end
-
-    desc 'Process Higgins Provided Pictures'
-    task :process_images => :environment do
-      raise "Run improved process images"
-      STDOUT.sync = true
-      found = 0
-      unfound = []
-
-      Dir.entries(IMAGE_PATH).each do |filename|
-        next unless filename =~ /[jJ][pP][gG]$/
-
-        # clean up messy names
-        accession_number = Artifact.process_accession_number(filename[0...-4])
-        new_filename = Artifact.process_accession_number(filename).downcase
-
-        # rename file
-        File.rename("#{IMAGE_PATH}/#{filename}", "#{IMAGE_PATH}/#{new_filename}")
-
-        # associate new file with database
-        artifact = Artifact.find_by_accession_number(Artifact.process_accession_number(filename[0...-4]))
-        if artifact.present?
-          artifact.artifact_images.create(path: "/object_photos/#{new_filename}")
-          print '.'
-          found += 1
-        else # no record for this image
-          print 'F'
-          unfound << new_filename
-        end
-      end
-      puts ''
-      puts "Found: #{found}"
-      puts "Unfound: #{unfound.size}"
-      unfound.each {|u| puts u}
     end
 
     desc 'Delete all artifacts from the database'
@@ -216,6 +182,27 @@ namespace :higgins do
         print '.'
       end
       puts 'done'
+    end
+
+    desc 'Rematch questions to their new artifact ids'
+    task :repair_question_artifact_association => :environment do
+      STDOUT.sync = true
+      orphaned_questions = []
+      Question.all.each do |question|
+        artifact = Artifact.where(accession_number: question.accession_number).first
+        if artifact.present?
+          question.update_attribute(:artifact_id, artifact.id)
+          print '.'.green
+        else
+          orphaned_questions << question.accession_number
+          question.destroy # remove the orphaned question
+          print 'F'.red
+        end
+      end
+
+      puts ''
+      puts "Orphaned questions: #{orphaned_questions.size}"
+      File.open('db/higgins_data/orphaned_questions.csv', 'w'){|f| orphaned_questions.each{|o| f.puts(o)}}
     end
   end
 end
