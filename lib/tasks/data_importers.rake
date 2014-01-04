@@ -141,7 +141,7 @@ namespace :higgins do
         else
           puts line[:accessionnumber]
         end
-        print '.'
+        print '.'.green
       end
       puts 'done'
     end
@@ -161,7 +161,7 @@ namespace :higgins do
           synonym: line[:categoryxref],
           note: line[:note]
           }).save!
-        print '.'
+        print '.'.green
       end
       puts 'done'
     end
@@ -179,7 +179,7 @@ namespace :higgins do
           geoloc: line[1],
           synonym: line[2]
           }).save!
-        print '.'
+        print '.'.green
       end
       puts 'done'
     end
