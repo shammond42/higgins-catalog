@@ -43,6 +43,8 @@
 
 %section.visible-phone
   = render partial: 'artifacts/info_sidebar'
+  - if @artifact.artifact_images.count > 1
+    = render partial: 'image_collection', locals: {artifact: @artifact}
 
 - unless user_signed_in?
   %section#ask-a-question
