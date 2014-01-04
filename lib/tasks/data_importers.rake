@@ -1,9 +1,13 @@
 require 'csv'
+require 'pathname'
+require 'rubyfish'
+require 'fileutils'
 
 namespace :higgins do
   namespace :data do
     CSV_FILE_PATH = 'db/higgins_data'
-    IMAGE_PATH = 'public/object_photos'
+    IMAGE_SOURCE_PATH = 'db/higgins_data/object_photos_orig'
+    IMAGE_DEST_PATH = 'public/object_photos'
 
     desc 'Import all higgins data.'
     task :import_all_data => :environment do
@@ -20,13 +24,86 @@ namespace :higgins do
       Rake::Task['higgins:data:process_images'].execute
     end
 
-    desc 'Delete all processes photos'
+    desc 'Delete all processed photos'
     task :delete_processed_images  => :environment do
+      Artifact.update_all(key_image_id: nil)
       ArtifactImage.delete_all
+      FileUtils.rm_rf(IMAGE_DEST_PATH)
+    end
+
+    desc 'Improved image processing'
+    task :improved_process_images => :environment do
+      STDOUT.sync = true
+      found = 0
+      no_image_count = 0
+      unfound = []
+      errors = []
+
+      Artifact.all.each do |artifact|
+        number_part = if artifact.accession_number =~ /\w+\-\w+/ # A range like 1234.a-m
+          artifact.accession_number.sub(/\.\w+\-\w+$/,'')
+        else
+          artifact.accession_number.sub(/\.nc$/,'')
+        end
+
+        images = Dir.glob("#{IMAGE_SOURCE_PATH}/#{number_part}[\.a-z]*")
+
+        # if no images, drop back one level and try again
+        if (images.size == 0) && (number_part =~ /[a-z]$/) && !(number_part =~ /no\./)
+          images = Dir.glob("#{IMAGE_SOURCE_PATH}/#{number_part.sub(/\.[\w&-]+$/,'')}[\.a-z]*")
+        end
+
+        if images.size == 0
+          no_image_count = no_image_count + 1
+          unfound << artifact.accession_number
+          print "F".red
+        else
+          last_key_filename = ''
+          images.each do |orig_path|
+            filename = Pathname.new(orig_path).basename
+
+            artifact_image = artifact.artifact_images.build
+            artifact_image.transaction do
+              begin
+                artifact_image.image = File.open(orig_path)
+
+                new_distance = RubyFish::Levenshtein.distance(
+                  artifact.accession_number,
+                  filename.sub(/\.jpg$/,''))
+                old_distance = RubyFish::Levenshtein.distance(
+                  artifact.accession_number,
+                  last_key_filename.sub(/\.jpg$/,''))
+
+                if new_distance < old_distance
+                  last_key_filename = filename
+                  artifact.key_image = artifact_image
+                  artifact.save!
+                end
+
+                image = Magick::Image.read(orig_path).first
+                artifact_image.width = image.columns
+                artifact_image.height = image.rows
+                
+                artifact_image.save!
+                print ".".green
+              rescue Magick::ImageMagickError
+                errors << image_full_path
+                print "E".yellow
+              end
+            end
+          end
+        end
+      end
+
+      puts ''
+      puts "No Images: #{no_image_count}"
+      File.open('db/higgins_data/no_image.csv', 'w'){|f| unfound.each{|u| f.puts(u)}}
+      File.open('db/higgins_data/errors.csv', 'w'){|f| errors.each{|e| f.puts(e)}}
     end
 
     desc 'Process Higgins Provided Pictures'
     task :process_images => :environment do
+      raise "Run improved process images"
       STDOUT.sync = true
       found = 0
       unfound = []

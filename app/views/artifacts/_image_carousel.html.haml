@@ -1,0 +1,10 @@
+#my-carousel.carousel.slide
+  %ol.carousel-indicators.hidden-phone
+    - artifact.artifact_images.count.times do |image_num|
+      %li{class: ('active' if image_num == 0), data: {'target' => '#my-carousel', 'slide-to' => image_num}}
+  .carousel-inner.artifact-image-container
+    -artifact.artifact_images.each_with_index do |image, index|
+      .item{class: ('active' if index == 0)}
+        = image_tag image.url, class: 'artifact-image'
+  %a.carousel-control.left{href: '#my-carousel', data: {slide: 'prev'}} &lsaquo;
+  %a.carousel-control.right{href: '#my-carousel', data: {slide: 'next'}} &rsaquo;

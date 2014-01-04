@@ -36,6 +36,11 @@ gem 'tire'
 gem 'devise'
 gem 'stamp'
 gem 'rakismet'
+gem 'colorize'
+gem 'rubyfish'
+
+gem 'carrierwave'
+gem 'rmagick'
 
 gem 'airbrake'
 gem 'newrelic_rpm'

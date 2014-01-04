@@ -42,6 +42,10 @@ GEM
     bootstrap-will_paginate (0.0.9)
       will_paginate
     builder (3.0.4)
+    carrierwave (0.9.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
     coderay (1.0.9)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -50,6 +54,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.2)
+    colorize (0.6.0)
     commonjs (0.2.6)
     devise (2.2.4)
       bcrypt-ruby (~> 3.0)
@@ -168,6 +173,8 @@ GEM
     ref (1.0.4)
     rest-client (1.6.7)
       mime-types (>= 1.16)
+    rmagick (2.13.2)
+    rubyfish (0.0.6)
     sass (3.2.9)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -235,7 +242,9 @@ DEPENDENCIES
   airbrake
   better_errors
   bootstrap-will_paginate
+  carrierwave
   coffee-rails (~> 3.2.1)
+  colorize
   devise
   factory_girl
   factory_girl_rails
@@ -256,6 +265,8 @@ DEPENDENCIES
   rails (= 3.2.16)
   rakismet
   rb-fsevent
+  rmagick
+  rubyfish
   sass-rails (~> 3.2.3)
   shoulda-context
   shoulda-matchers

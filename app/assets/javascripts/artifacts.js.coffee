@@ -8,7 +8,7 @@ artifactSearch =
     $('#low_date').val($(@).data('low'))
     $('#high_date').val($(@).data('high'))
     $('#search-form').submit()
-    
+  
 $ ->
   $('.date-filter-link').click artifactSearch.submitForm
   $("#query").focus()

@@ -8,14 +8,16 @@
   %ul.search-results
     - @artifacts.each do |artifact|
       %a{href: "/artifacts/#{artifact[:accession_number]}"}
-        %li
+        %li{style: 'margin-bottom: 5px; padding: 10px;'}
+          - if artifact.key_image.present?
+            =image_tag artifact.key_image.image.thumb.url, style: 'float: right; height: 60px; width: 80px; border: solid 1px black; margin-top: -5px;'
           %strong= format_artifact_name(artifact)
           %br
           %span.muted
             %span.origin
               = artifact.origin_with_date
             %span.accession_number
-              == Higgins Armory Museum (#{artifact.accession_number})
+              == HAM (#{artifact.accession_number})
 
   - if using_phone?
     .pagination-info

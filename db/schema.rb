@@ -11,17 +11,28 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131110131226) do
+ActiveRecord::Schema.define(:version => 20131231005352) do
 
   create_table "artifact_images", :force => true do |t|
     t.integer  "artifact_id", :null => false
-    t.string   "path",        :null => false
+    t.string   "image",       :null => false
     t.integer  "sort_order"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.integer  "width"
+    t.integer  "height"
   end
 
   add_index "artifact_images", ["artifact_id"], :name => "index_artifact_images_on_artifact_id"
+
+  create_table "artifact_images_bak", :id => false, :force => true do |t|
+    t.integer  "id"
+    t.integer  "artifact_id"
+    t.string   "path"
+    t.integer  "sort_order"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "artifacts", :force => true do |t|
     t.string   "accession_number"
@@ -49,6 +60,7 @@ ActiveRecord::Schema.define(:version => 20131110131226) do
     t.text     "status"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+    t.integer  "key_image_id"
   end
 
   add_index "artifacts", ["accession_number"], :name => "index_artifacts_on_accession_number", :unique => true
