@@ -49,9 +49,9 @@ namespace :higgins do
         images = Dir.glob("#{IMAGE_SOURCE_PATH}/#{number_part}[\.a-z]*")
 
         # if no images, drop back one level and try again
-        if (images.size == 0) && (number_part =~ /[a-z]$/) && !(number_part =~ /no\./)
-          images = Dir.glob("#{IMAGE_SOURCE_PATH}/#{number_part.sub(/\.[\w&-]+$/,'')}[\.a-z]*")
-        end
+        # if (images.size == 0) && (number_part =~ /[a-z]$/) && !(number_part =~ /no\./)
+        #   images = Dir.glob("#{IMAGE_SOURCE_PATH}/#{number_part.sub(/\.[\w&-]+$/,'')}[\.a-z]*")
+        # end
 
         if images.size == 0
           no_image_count = no_image_count + 1
