@@ -30,7 +30,7 @@ FactoryGirl.define do
 
   factory :artifact_image do
     artifact
-    image {fixture_file_upload( Rails.root + 'app/assets/images/avatar-body.png', 'image/png')}
+    image {fixture_file_upload( Rails.root + 'app/assets/images/jay.jpg', 'image/jpg')}
   end
 
   factory :question do

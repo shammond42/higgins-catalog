@@ -49,9 +49,9 @@ namespace :higgins do
         images = Dir.glob("#{IMAGE_SOURCE_PATH}/#{number_part}[\.a-z]*")
 
         # if no images, drop back one level and try again
-        # if (images.size == 0) && (number_part =~ /[a-z]$/) && !(number_part =~ /no\./)
-        #   images = Dir.glob("#{IMAGE_SOURCE_PATH}/#{number_part.sub(/\.[\w&-]+$/,'')}[\.a-z]*")
-        # end
+        if (images.size == 0) && (number_part =~ /[a-z]$/) && !(number_part =~ /no\./)
+          images = Dir.glob("#{IMAGE_SOURCE_PATH}/#{number_part.sub(/\.[\w&-]+$/,'')}[\.a-z]*")
+        end
 
         if images.size == 0
           no_image_count = no_image_count + 1
@@ -67,14 +67,7 @@ namespace :higgins do
               begin
                 artifact_image.image = File.open(orig_path)
 
-                new_distance = RubyFish::Levenshtein.distance(
-                  artifact.accession_number,
-                  filename.sub(/\.jpg$/,''))
-                old_distance = RubyFish::Levenshtein.distance(
-                  artifact.accession_number,
-                  last_key_filename.sub(/\.jpg$/,''))
-
-                if new_distance < old_distance
+                if artifact.key_image.nil? || artifact_image.is_closer_to_accession_number_than?(artifact.key_image)
                   last_key_filename = filename
                   artifact.key_image = artifact_image
                   artifact.save!
