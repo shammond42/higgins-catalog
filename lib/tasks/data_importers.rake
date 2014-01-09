@@ -34,8 +34,6 @@ namespace :higgins do
     desc 'Improved image processing'
     task :process_images => :environment do
       STDOUT.sync = true
-      found = 0
-      no_image_count = 0
       unfound = []
       errors = []
 
@@ -54,11 +52,9 @@ namespace :higgins do
         end
 
         if images.size == 0
-          no_image_count = no_image_count + 1
           unfound << artifact.accession_number
-          print "F".red
+          print "N".red
         else
-          last_key_filename = ''
           images.each do |orig_path|
             filename = Pathname.new(orig_path).basename
 
@@ -67,17 +63,16 @@ namespace :higgins do
               begin
                 artifact_image.image = File.open(orig_path)
 
-                if artifact.key_image.nil? || artifact_image.is_closer_to_accession_number_than?(artifact.key_image)
-                  last_key_filename = filename
-                  artifact.key_image = artifact_image
-                  artifact.save!
-                end
-
                 image = Magick::Image.read(orig_path).first
                 artifact_image.width = image.columns
                 artifact_image.height = image.rows
                 
                 artifact_image.save!
+
+                if artifact.key_image.nil? || artifact_image.is_closer_to_accession_number_than?(artifact.key_image)
+                  artifact.update_attribute(:key_image_id, artifact_image.id)
+                end
+
                 print ".".green
               rescue Magick::ImageMagickError
                 errors << image_full_path
@@ -89,7 +84,8 @@ namespace :higgins do
       end
 
       puts ''
-      puts "No Images: #{no_image_count}"
+      puts "No Images: #{unfound.size}"
+      puts "Errors: #{errors.size}"
       File.open('db/higgins_data/no_image.csv', 'w'){|f| unfound.each{|u| f.puts(u)}}
       File.open('db/higgins_data/errors.csv', 'w'){|f| errors.each{|e| f.puts(e)}}
     end
