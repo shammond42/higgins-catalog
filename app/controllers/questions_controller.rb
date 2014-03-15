@@ -13,14 +13,13 @@ class QuestionsController < ApplicationController
     @question.is_spam = @question.spam? # Check Akismet for spam
     @question.save!
 
-    unless @question.is_spam?
-      QuestionMailer.question_notification(@question).deliver
-      if request.xhr?
-        render partial: 'questions/processing', locals: {question: @question}, layout: nil
-      else
-        flash[:success] = 'Thank you for the question. Watch your e-mail for the answer.'
-        redirect_to :back
-      end
+    
+    QuestionMailer.question_notification(@question).deliver unless @question.is_spam?
+    if request.xhr?
+      render partial: 'questions/processing', locals: {question: @question}, layout: nil
+    else
+      flash[:success] = 'Thank you for the question. Watch your e-mail for the answer.'
+      redirect_to :back
     end
   end
 

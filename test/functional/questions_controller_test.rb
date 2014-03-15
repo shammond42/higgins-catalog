@@ -1,22 +1,54 @@
 require 'test_helper'
 
 class QuestionsControllerTest < ActionController::TestCase
-  test 'ask a question' do
-    artifact = FactoryGirl.create(:artifact)
-    user = FactoryGirl.create(:user, receives_question_notifications: true)
-    
-    redirect_path = artifact_url(artifact)
-    request.env["HTTP_REFERER"] = redirect_path
+  context 'a public user' do
+    setup do
+      @artifact = FactoryGirl.create(:artifact)
+      @user = FactoryGirl.create(:user, receives_question_notifications: true)
+      
+      @redirect_path = artifact_url(@artifact)
+      request.env["HTTP_REFERER"] = @redirect_path
 
-    old_question_count = Question.count
+      @old_question_count = Question.count
+    end
 
-    post :create, artifact_id: artifact.to_param, question: {question: 'What is this?', nickname: 'Bilbo',
-      email: 'bbaggins@fellowship.org'}
+    should 'be able to ask a question' do
+      post :create, artifact_id: @artifact.to_param, question: {question: 'What is this?', nickname: 'Bilbo',
+        email: 'bbaggins@fellowship.org'}
 
-    assert_response :redirect
-    assert_redirected_to redirect_path
-    assert_not_nil assigns[:artifact] 
-    assert_equal old_question_count + 1, Question.count
+      assert_response :redirect
+      assert_redirected_to @redirect_path
+      assert_not_nil assigns[:artifact] 
+      assert_equal @old_question_count + 1, Question.count
+    end
+
+    context 'after asking the questin' do
+      should 'have an e-mail sent when it is not spammy' do
+        Object.stubs(:spam?).returns(false)
+
+        # assert_emails 1 do # TODO Enable this in Rails 4
+          post :create, artifact_id: @artifact.to_param, question: {question: 'What is this?', nickname: 'Bilbo',
+            email: 'bbaggins@fellowship.org'}
+          assert_response :redirect
+
+          question_email = ActionMailer::Base.deliveries.last
+          assert_equal @user.email, question_email.to[0]
+          assert_match(/What is this/, question_email.body)
+        # end
+      end
+
+      should 'not have an e-mail sent when it is spammy' do
+        Question.any_instance.stubs(:spam?).returns(true)
+        ActionMailer::Base.deliveries = []
+
+        # assert_no_emails do #TODO Enable this in Rails 4
+          post :create, artifact_id: @artifact.to_param, question: {question: 'This is spam', nickname: 'Bilbo',
+            email: 'bbaggins@fellowship.org'}
+          assert_response :redirect
+          assert_nil ActionMailer::Base.deliveries.last
+        # end
+      end
+    end
   end
 
   context 'as an admin' do
