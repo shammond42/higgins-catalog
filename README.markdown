@@ -22,6 +22,9 @@ This application was initially built in 48 hours for the [2012 Rails Rumble](htt
 * Elastic Search
 * PostgreSql (though it should also run fine on MySql and SqlLite)
 
+## Getting Started
+
+VBoxManage dhcpserver remove --netname HostInterfaceNetworking-vboxnet0
 
 ## Contributing
 
