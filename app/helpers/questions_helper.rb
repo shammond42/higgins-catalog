@@ -1,4 +1,6 @@
 module QuestionsHelper
+  include ERB::Util
+  
   def delete_question_link(question)
     link_to 'Delete Question', question_path(question), method: :delete,
       class: 'btn btn-danger btn-mini btn-question-delete'
