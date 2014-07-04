@@ -33,7 +33,7 @@ class QuestionsControllerTest < ActionController::TestCase
 
           question_email = ActionMailer::Base.deliveries.last
           assert_equal @user.email, question_email.to[0]
-          assert_match(/What is this/, question_email.body)
+          assert_match(/What is this/, question_email.body.to_s)
         # end
       end
 
