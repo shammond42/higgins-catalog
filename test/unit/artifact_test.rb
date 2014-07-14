@@ -36,8 +36,8 @@ class ArtifactTest < ActiveSupport::TestCase
   
   context 'the Artifact class' do
     should 'be able to select an artifact of the day' do
-      5.times {FactoryGirl.create(:artifact)}
-      5.times {FactoryGirl.create(:quality_artifact)}
+      10.times {FactoryGirl.create(:artifact)}
+      10.times {FactoryGirl.create(:quality_artifact)}
 
       Timecop.freeze(Time.local(2012, 10, 21)) do 
         assert Artifact.all.include?(Artifact.of_the_day)

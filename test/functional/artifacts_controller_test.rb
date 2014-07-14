@@ -6,6 +6,7 @@ class ArtifactsControllerTest < ActionController::TestCase
   setup do
     Artifact.tire.index.delete
     load File.expand_path("../../../app/models/artifact.rb", __FILE__)
+    sleep 0.1
   end
 
   test 'browse artifacts' do
