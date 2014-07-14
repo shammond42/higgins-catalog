@@ -5,3 +5,10 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+User.create({
+  name: 'Test Admin',
+  email: 'test_admin@example.com',
+  title: 'Test admin',
+  password: 'test_admin',
+  password_confirmation: 'test_admin'
+  }).update_attribute(:receives_question_notifications, false)

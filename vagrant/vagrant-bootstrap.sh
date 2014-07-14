@@ -154,6 +154,7 @@ echo "Initializing application's database..."
 {
   bundle exec rake db:create
   bundle exec rake db:schema:load
+  bundle exec rake db:seed
 } >> $LOG_FILE 2>&1
 
 echo "Loading application data ..."
