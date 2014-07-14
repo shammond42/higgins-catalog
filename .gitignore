@@ -32,4 +32,4 @@ config/application.yml
 *sublime*
 
 /.vagrant
-/vendor/bundle
+/vendor/bundle*
