@@ -13,7 +13,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
 
   # Provision postgres
-  config.vm.provision :shell, path: "vagrant-bootstrap.sh", privileged: false
+  config.vm.provision :shell, path: "vagrant/vagrant-bootstrap.sh", privileged: false
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -24,6 +24,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # config.vm.network "forwarded_port", guest: 80, host: 8080
+  config.vm.network :forwarded_port, host: 3000, guest: 3000
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -57,7 +58,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # vb.gui = true
   
     # Use VBoxManage to customize the VM. For example to change memory:
-    vb.customize ["modifyvm", :id, "--memory", "1024"]
+    vb.customize ["modifyvm", :id, "--memory", "2048"]
   end
   #
   # View the documentation for the provider you're using for more
