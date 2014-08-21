@@ -40,7 +40,8 @@ gem 'colorize'
 gem 'rubyfish'
 
 gem 'carrierwave'
-gem 'rmagick', '2.13.2', :require => 'RMagick'
+# gem 'rmagick', '2.13.2', :require => 'RMagick'
+gem 'mini_magick'
 
 gem 'airbrake'
 gem 'newrelic_rpm'
