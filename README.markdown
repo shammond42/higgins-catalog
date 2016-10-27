@@ -1,4 +1,7 @@
 <a href="https://codeclimate.com/github/shammond42/higgins-catalog"><img src="https://codeclimate.com/github/shammond42/higgins-catalog.png" style="float: right;"/></a>
+
+[![Open Thanks](https://thawing-falls-79026.herokuapp.com/images/thanks-1.svg)](https://thawing-falls-79026.herokuapp.com/r/anfjmyek)
+
 # Higgins Armory Catalog
 
 ## Introduction
