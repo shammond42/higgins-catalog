@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.0.0'
+ruby '2.3.1'
 
 gem 'rails', '3.2.20'
 
@@ -46,6 +46,8 @@ gem 'mini_magick'
 gem 'airbrake'
 gem 'newrelic_rpm'
 
+gem 'puma'
+
 group :development do
   gem 'vlad'
   gem 'vlad-git'
@@ -56,7 +58,6 @@ group :development do
   gem 'better_errors'
   gem 'pry'
   gem 'pry-doc'
-  gem 'thin'
 end
 
 group :test do
