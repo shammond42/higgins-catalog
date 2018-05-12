@@ -1,0 +1,5 @@
+  max_threads: 8
+  workers: 3
+  socket_type: unix
+  port: 3002
+  environment: development

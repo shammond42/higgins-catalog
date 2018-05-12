@@ -1,0 +1,5 @@
+  max_threads: 4
+  workers: 2
+  socket_type: tcp
+  port: 3000
+  environment: development
