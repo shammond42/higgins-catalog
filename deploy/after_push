@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -e
+oldrev=$1
+newrev=$2
+
+export rvmsudo_secure_path=1
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+# git-deploy is adding /usr/lib/git-core to the path ahead of RVM
+# This is a poor fix, but the best I could find.
+rvm use .
+
+
+run() {
+  [ -x $1 ] && $1 $oldrev $newrev
+}
+
+echo files changed: $(git diff $oldrev $newrev --diff-filter=ACDMR --name-only | wc -l)
+
+umask 002
+
+git submodule sync && git submodule update --init --recursive
+
+run deploy/before_restart
+run deploy/restart && run deploy/after_restart
