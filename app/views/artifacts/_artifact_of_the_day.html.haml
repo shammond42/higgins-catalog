@@ -5,5 +5,5 @@
   %p.muted
     = "#{@artifact.origin}" if @artifact.origin.present?
     = "(#{@artifact.prob_date})" if @artifact.prob_date.present?
-  :textile
-    #{h @artifact.description}
+  
+  = textilize(h @artifact.description)

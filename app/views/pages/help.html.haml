@@ -2,7 +2,8 @@
 - content_for(:sidebar) do 
   = render partial: 'artifacts/search_options'
 
-:textile
+:ruby
+  page_text = <<-EOS
   h1. Search Help
 
   The search field provided is deceptively simple. It is really quite powerful. Review the following tips to take advantage of it.
@@ -14,3 +15,5 @@
   - Accession Number := If you want to get a specific item by its catalog number you can do this by typeing 'accession_number: 9999' in the search box. Some accession numbers have strange formats, so this is not 100% reliable yet.
   - Other Fields := You can also search for things by other specific fields, like _origin_ or _materials_. Try _materials: silver_ if you are looking for your lycanthrope slaying options.
   - Canned Searches := Don't know what to search for, there are few canned searches that you can try out.
+  EOS
+= textilize(page_text)

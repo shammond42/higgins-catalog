@@ -1,5 +1,4 @@
 class SearchLog < ActiveRecord::Base
-  attr_accessible :linked_search, :terms, :search_type
   before_validation :set_default_values
   validates_presence_of :terms, :search_type
 

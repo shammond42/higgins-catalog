@@ -1,5 +1,5 @@
 class AdminController < ApplicationController
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
 
   def index
     @artifact = Artifact.of_the_day
@@ -36,10 +36,10 @@ class AdminController < ApplicationController
     end
 
 
-    @popular_searches = SearchLog.count(:all,
-      group: :terms,
-      order: 'count_all desc',
-      conditions: conditions,
-      limit: @num_terms)
+    @popular_searches = SearchLog.group(:terms).order('count_all desc').where(conditions).limit(@number_terms).count
+      # group: :terms,
+      # order: 'count_all desc',
+      # conditions: conditions,
+      # limit: @num_terms)
   end
 end

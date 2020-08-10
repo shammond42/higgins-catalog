@@ -66,7 +66,7 @@ class AdminControllerTest < ActionController::TestCase
 
       should 'filter by the number of days' do
         10.times{|i| FactoryGirl.create(:search_log, terms: 'sword', created_at: i.days.ago)}
-        get :search_report, num_days: 7
+        get :search_report, params: {num_days: 7}
 
         assert_equal 7, assigns[:num_days]
         assert_equal 1, assigns[:popular_searches].length

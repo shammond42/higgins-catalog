@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-ruby '2.3.1'
+ruby '2.6.3'
 
-gem 'rails', '3.2.20'
+gem 'rails', '6.0.3.2'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -11,28 +11,29 @@ gem 'pg'
 gem 'haml-rails'
 gem 'haml-contrib'
 gem 'RedCloth'
+gem 'pandoc-ruby'
 
 gem 'figaro'
 
 # Gems used only for assets and not required
 # in production environments by default.
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+# group :assets do
+  gem 'sass-rails' #,   '~> 3.2.3'
+  gem 'coffee-rails' #, '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer', :platforms => :ruby
   gem 'less-rails'
-  gem 'twitter-bootstrap-rails'
+  gem 'twitter-bootstrap-rails', '2.2.8'
   gem 'uglifier', '>= 1.0.3'
-end
+# end
 
 gem 'turbolinks'
 gem 'jquery-rails'
-gem 'high_voltage', '~> 2.1.0' # Update for Rails 4
+gem 'high_voltage' #, '~> 2.1.0' # Update for Rails 4
 gem 'bootstrap-will_paginate'
 gem 'will_paginate'
-gem 'tire'
+# gem 'tire'
 gem 'devise'
 gem 'stamp'
 gem 'rakismet'
@@ -42,9 +43,6 @@ gem 'rubyfish'
 gem 'carrierwave'
 # gem 'rmagick', '2.13.2', :require => 'RMagick'
 gem 'mini_magick'
-
-gem 'airbrake'
-gem 'newrelic_rpm'
 
 gem 'puma'
 
@@ -64,6 +62,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'shoulda-context'
   gem 'timecop'
+  gem 'rails-controller-testing'
 
   gem 'mocha', require: false
   gem 'factory_girl'

@@ -1,15 +1,7 @@
 require 'test_helper'
 
 class SearchLogTest < ActiveSupport::TestCase
-  should validate_presence_of(:terms)
-
-  should_not allow_mass_assignment_of(:id)
-  should_not allow_mass_assignment_of(:created_at)
-  should_not allow_mass_assignment_of(:updated_at)
-
-  should allow_mass_assignment_of(:terms)
-  should allow_mass_assignment_of(:search_type)
-  should allow_mass_assignment_of(:linked_search)
+  # should validate_presence_of(:terms)
 
   context 'A new search term' do
     should 'have "keyword" as a default term' do

@@ -2,7 +2,8 @@
 - content_for(:sidebar) do 
   = render partial: 'artifacts/search_options'
 
-:textile
+:ruby
+  page_text = <<-EOS
   h1. Explore the greatest collection of arms and armor in the Western Hemisphere
 
   During the Industrial Revolution, John Higgins' passion for steel and romance for chivalry led him to acquire, piece by piece, this great collection. He then built the world's first steel and glass building in Worcester, MA to house his collection.
@@ -27,9 +28,9 @@
 
   This app arose out of my three great passions.
 
-  # Since childhood I have been in love with stories of knights and fantasy that led to an interest in the real thing.
-  # I also love to give back to my community, particularly in ways that help education. In addition to this project I serve on my local School Committee and I am a volunteer educator for NASA.
-  # Somebody once said, "Don't be a writer unless you can't not write." That's how I feel about software. I can't not code, and a project like this gives me a chance to build and create.
+  * Since childhood I have been in love with stories of knights and fantasy that led to an interest in the real thing.
+  * I also love to give back to my community, particularly in ways that help education. In addition to this project I serve on my local School Committee and I am a volunteer educator for NASA.
+  * Somebody once said, "Don't be a writer unless you can't not write." That's how I feel about software. I can't not code, and a project like this gives me a chance to build and create.
 
   If you want to see more of my work, I blog, occasionally, on the following sites.
 
@@ -45,10 +46,14 @@
   Jay was instrumental in bringing the Internet to millions of people through his work at AOL. I met him when he joined "PatientsLikeMe":http://patientslikeme.com to, as he put it, "change the world again." The whole company misses you, Jay.
 
   These two videos reflect two different parts of Jay's personality. He shared them with me, and I share them with you.
+  EOS
+
+= textilize(page_text)
 
 :plain
   <iframe width="560" height="315" src="http://www.youtube.com/embed/Uh4DGUNWmiU" frameborder="0" allowfullscreen></iframe>
 
   <iframe width="420" height="315" src="http://www.youtube.com/embed/1wg_L0wGTyA" frameborder="0" allowfullscreen></iframe>
+
 
   

@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  before_filter :authenticate_user!, except: [:create]
+  before_action :authenticate_user!, except: [:create]
   
   def index
     @questions = Question.unanswered.not_spam.order('created_at asc').includes(:artifact)
@@ -9,7 +9,7 @@ class QuestionsController < ApplicationController
   def create
     @artifact = Artifact.find_by_accession_number(params[:artifact_id])
 
-    @question = @artifact.questions.build(params[:question])
+    @question = @artifact.questions.build(question_params)
     @question.is_spam = @question.spam? # Check Akismet for spam
     @question.save!
 
@@ -19,7 +19,7 @@ class QuestionsController < ApplicationController
       render partial: 'questions/processing', locals: {question: @question}, layout: nil
     else
       flash[:success] = 'Thank you for the question. Watch your e-mail for the answer.'
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 
@@ -33,7 +33,7 @@ class QuestionsController < ApplicationController
 
   def update
     @question = Question.find(params[:id])
-    @question.update_attributes(params[:question])
+    @question.update(question_params)
 
     QuestionMailer.answer_notification(@question).deliver if @question.email.present?
 
@@ -41,7 +41,7 @@ class QuestionsController < ApplicationController
       render partial: 'questions/question', locals: {question: @question}, layout: nil
     else
       flash[:success] = 'The question has been answered.'
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 
@@ -77,5 +77,11 @@ class QuestionsController < ApplicationController
     else
       redirect_to questions_path
     end
+  end
+
+  private
+
+  def question_params
+    params.require(:question).permit(:question, :answer, :nickname, :email)
   end
 end

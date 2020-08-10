@@ -1,7 +1,6 @@
 require 'carrierwave/orm/activerecord'
 
 class ArtifactImage < ActiveRecord::Base
-  attr_accessible :path, :sort_order
   mount_uploader :image, ImageUploader
 
   validates_presence_of :artifact_id

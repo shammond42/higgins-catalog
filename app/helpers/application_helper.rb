@@ -24,6 +24,10 @@ module ApplicationHelper
     'active' if active
   end
 
+  def textilize(text)
+    RedCloth.new(text).to_html.html_safe
+  end
+
   def ga_tracking_code
     "<script type=\"text/javascript\">
 

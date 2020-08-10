@@ -6,12 +6,12 @@ class User < ActiveRecord::Base
          #:registerable, :recoverable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
-  attr_accessible :name, :title
+  # attr_accessible :email, :password, :password_confirmation, :remember_me
+  # attr_accessible :name, :title
 
   validates_presence_of :email, message: 'All users must have an e-mail address.'
   validates_presence_of :name, message: 'Please enter the name for this user.'
   validates_presence_of :title, message: "What is this user's title."
 
-  scope :question_responders, where(receives_question_notifications: true)
+  scope :question_responders, -> { where(receives_question_notifications: true) }
 end

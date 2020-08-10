@@ -5,7 +5,7 @@ class PagesControllerTest < ActionController::TestCase
 
   test 'can get static pages' do
     %w(about help).each do |page|
-      get :show, :id => page 
+      get :show, params: {id: page}
 
       assert_response :success
       assert_template page

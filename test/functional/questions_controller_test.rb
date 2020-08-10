@@ -13,8 +13,8 @@ class QuestionsControllerTest < ActionController::TestCase
     end
 
     should 'be able to ask a question' do
-      post :create, artifact_id: @artifact.to_param, question: {question: 'What is this?', nickname: 'Bilbo',
-        email: 'bbaggins@fellowship.org'}
+      post :create, params: { artifact_id: @artifact.to_param, question: {question: 'What is this?', nickname: 'Bilbo',
+        email: 'bbaggins@fellowship.org'} }
 
       assert_response :redirect
       assert_redirected_to @redirect_path
@@ -27,8 +27,8 @@ class QuestionsControllerTest < ActionController::TestCase
         Object.stubs(:spam?).returns(false)
 
         # assert_emails 1 do # TODO Enable this in Rails 4
-          post :create, artifact_id: @artifact.to_param, question: {question: 'What is this?', nickname: 'Bilbo',
-            email: 'bbaggins@fellowship.org'}
+          post :create, params: { artifact_id: @artifact.to_param, question: {question: 'What is this?', nickname: 'Bilbo',
+            email: 'bbaggins@fellowship.org'} }
           assert_response :redirect
 
           question_email = ActionMailer::Base.deliveries.last
@@ -42,8 +42,8 @@ class QuestionsControllerTest < ActionController::TestCase
         ActionMailer::Base.deliveries = []
 
         # assert_no_emails do #TODO Enable this in Rails 4
-          post :create, artifact_id: @artifact.to_param, question: {question: 'This is spam', nickname: 'Bilbo',
-            email: 'bbaggins@fellowship.org'}
+          post :create, params: { artifact_id: @artifact.to_param, question: {question: 'This is spam', nickname: 'Bilbo',
+            email: 'bbaggins@fellowship.org'} }
           assert_response :redirect
           assert_nil ActionMailer::Base.deliveries.last
         # end
@@ -94,7 +94,7 @@ class QuestionsControllerTest < ActionController::TestCase
         redirect_path = artifact_url(question.artifact)
         request.env["HTTP_REFERER"] = redirect_path
 
-        put :update, id: question, question: {answer: 'No'}
+        put :update, params: { id: question, question: {answer: 'No'} }
         assert_response :redirect
         assert_not_nil assigns(:question)
         assert_equal question.id, assigns(:question).id
@@ -105,7 +105,7 @@ class QuestionsControllerTest < ActionController::TestCase
         question = @artifact.questions.unanswered.first
         old_question_count = @artifact.questions.count
 
-        delete :destroy, id: question
+        delete :destroy, params: {id: question}
         assert_response :redirect
         assert_redirected_to questions_path
         assert_equal old_question_count-1, @artifact.questions.count
@@ -117,7 +117,7 @@ class QuestionsControllerTest < ActionController::TestCase
         old_spam_count = @artifact.questions.spam.count
         old_ham_count = @artifact.questions.not_spam.count
 
-        post :mark_spam, id: question
+        post :mark_spam, params: {id: question}
         assert_response :redirect
         assert_redirected_to questions_path
         assert_equal old_spam_count+1, @artifact.questions.spam.count
@@ -131,7 +131,7 @@ class QuestionsControllerTest < ActionController::TestCase
         old_ham_count = @artifact.questions.not_spam.count   
 
 
-        post :mark_ham, id: question
+        post :mark_ham, params: {id: question}
         assert_response :redirect
         assert_redirected_to questions_path
         assert_equal old_spam_count-1, @artifact.questions.spam.count
@@ -146,7 +146,7 @@ class QuestionsControllerTest < ActionController::TestCase
       assert_response :redirect
       assert_redirected_to new_user_session_url
 
-      put :update, id: FactoryGirl.create(:question)
+      put :update, params: { id: FactoryGirl.create(:question) }
       assert_response :redirect
       assert_redirected_to new_user_session_url
     end
@@ -166,7 +166,7 @@ class QuestionsControllerTest < ActionController::TestCase
       question = FactoryGirl.create(:question)
       redirect_path = artifact_url(question.artifact)
       request.env["HTTP_REFERER"] = redirect_path
-      put :update, id: question, question: {answer: 'Test answer.'}
+      put :update, params: { id: question, question: {answer: 'Test answer.'} }
       assert_response :redirect
       assert_redirected_to redirect_path
     end
