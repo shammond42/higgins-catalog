@@ -33,7 +33,7 @@ gem 'jquery-rails'
 gem 'high_voltage' #, '~> 2.1.0' # Update for Rails 4
 gem 'bootstrap-will_paginate'
 gem 'will_paginate'
-# gem 'tire'
+gem 'elasticsearch-model'
 gem 'devise'
 gem 'stamp'
 gem 'rakismet'

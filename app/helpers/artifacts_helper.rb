@@ -37,4 +37,14 @@ module ArtifactsHelper
 
     link_to link_text, return_path, class: 'btn btn-inverse', style: 'margin-top: 10px;'
   end
+
+  def key_image(artifact)
+    if(artifact.respond_to?(:key_image))
+      return artifact.key_image
+    elsif(artifact.key_image_id.present?)
+      return ArtifactImage.find(artifact.key_image_id)
+    else
+      return nil
+    end
+  end
 end

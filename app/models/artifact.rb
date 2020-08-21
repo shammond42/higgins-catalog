@@ -1,6 +1,12 @@
 class Artifact < ActiveRecord::Base
-  # include Tire::Model::Search
-  # include Tire::Model::Callbacks
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
+  after_commit :index_document, if: :persisted?
+  after_commit :delete_document, on: [:destroy]
+
+  index_name "#{Rails.application.class.module_parent_name.underscore}_#{Rails.env}"
+  document_type self.name.downcase
 
   validates_presence_of :accession_number
   validates_uniqueness_of :accession_number
@@ -12,49 +18,60 @@ class Artifact < ActiveRecord::Base
   scope :quality_entries, -> { where('comments is not null and description is not null and exists
     (select 1 from artifact_images where artifacts.id = artifact_id)').order(:accession_number) }
 
-  # Elasticsearch Indexing Configuration
-  # mapping do
-  #   indexes :id, type: 'integer'
-  #   indexes :accession_number, index: 'not_analyzed'
-  #   indexes :std_term, boost: 10
-  #   indexes :category_synonyms, boost: 5
-  #   indexes :artist
-  #   indexes :school_period
-  #   indexes :materials
-  #   indexes :measure
-  #   indexes :weight
-  #   indexes :comments
-  #   indexes :description
-  #   indexes :label_text
-  #   indexes :bibliography
-  #   indexes :published_refs
-  #   indexes :exhibit_history
-  #   indexes :marks
-  #   indexes :public_loc
+  settings index: { number_of_shards: 1 } do
+    mapping dynamic: false do
+      indexes :id
+      indexes :accession_number, analyzer: 'whitespace'
+      indexes :std_term, analyzer: 'english'
+      indexes :alt_name, analyzer: 'english'
+      indexes :category_synonyms, analyzer: 'english'
+      indexes :artist, analyzer: 'standard'
+      indexes :school_period, analyzer: 'standard'
+      indexes :materials, analyzer: 'english'
+      indexes :measure, analyzer: 'standard'
+      indexes :weight, analyzer: 'standard'
+      indexes :comments, analyzer: 'english'
+      indexes :description, analyzer: 'english'
+      indexes :label_text, analyzer: 'english'
+      indexes :bibliography, analyzer: 'standard'
+      indexes :published_refs, analyzer: 'standard'
+      indexes :exhibit_history, analyzer: 'english'
+      indexes :marks, analyzer: 'english'
+      indexes :public_loc, analyzer: 'standard'
 
-  #   indexes :origin, boost: 7
-  #   indexes :geoloc_synonyms, boost: 5
+      indexes :origin, analyzer: 'standard'
+      indexes :geoloc_synonyms
 
-  #   indexes :min_date, type: 'integer'
-  #   indexes :max_date, type: 'integer'
-  # end
+      # indexes :prob_date, type: 'text', analyzer: 'standard'
+      indexes :min_date
+      indexes :max_date
+
+      indexes :key_image_id
+    end
+  end
 
   def to_param
     accession_number
   end
 
-  def self.search(params)
-    # tire.search(page:params[:page], per_page: 10, load: true) do
-    #   query {string params[:keyword], default_operator: "AND"} if params[:keyword].present?
-    #   filter :range, min_date: {lte: params[:high_date]} if params[:high_date].present?
-    #   filter :range, max_date: {gte: params[:low_date]} if params[:low_date].present?
-    #   filter :exists, field: :public_loc if params[:on_display].present?
-    #   sort {by :accession_number} if params[:query].blank?
-    # end
+  def self.search(query)
+    __elasticsearch__.search(
+    {
+      query: {
+         multi_match: {
+           query: query,
+           type: 'most_fields',
+           fields: ['accession_number', 'std_term^20', 'alt_name^5', 'category_synonyms^5', 'artist', 'school_period', 'materials', 'measure',
+            'weight', 'comments', 'description', 'label_text', 'bibliography', 'published_refs', 'exhibit_history', 'marks', 'public_loc',
+            'origin^7', 'geoloc_synonyms^5'] #, 'min_date', 'max_date']
+         }
+       },
+       # more blocks will go IN HERE. Keep reading!
+    })
   end
 
-  def to_indexed_json
-    to_json(methods: [:category_synonyms, :geoloc_synonyms, :to_param])
+  def as_indexed_json(options=nil)
+    self.as_json(except: [:prob_date], methods: [:category_synonyms, :geoloc_synonyms, :to_param, :origin_with_date])
   end
 
   def category_synonyms
@@ -85,6 +102,14 @@ class Artifact < ActiveRecord::Base
 
   def origin_with_date
     [self.origin, self.prob_date].compact.join(', ')
+  end
+
+  def index_document
+    __elasticsearch__.index_document
+  end
+
+  def delete_document
+    __elasticsearch__.delete_document
   end
 
   def self.of_the_day
