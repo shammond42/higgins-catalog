@@ -7,7 +7,7 @@ class ArtifactsController < ApplicationController
 
     @artifacts = Artifact.search(params[:query], low_date, high_date).paginate(page: params[:page], per_page: 10)
 
-    @search_log = SearchLog.create_from_query_string(params[:keyword]) if params[:keyword].present?
+    @search_log = SearchLog.create_from_query_string(params[:query]) if params[:query].present?
     session[:search_params] = {
       query: params[:query],
       page: params[:page],
