@@ -54,18 +54,40 @@ class Artifact < ActiveRecord::Base
     accession_number
   end
 
-  def self.search(query)
+  def self.search(query, min_date, max_date)
+    Rails.logger.info '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5'
+    Rails.logger.info min_date
+    Rails.logger.info max_date
+
     __elasticsearch__.search(
     {
       query: {
-         multi_match: {
-           query: query,
-           type: 'most_fields',
-           fields: ['accession_number', 'std_term^20', 'alt_name^5', 'category_synonyms^5', 'artist', 'school_period', 'materials', 'measure',
-            'weight', 'comments', 'description', 'label_text', 'bibliography', 'published_refs', 'exhibit_history', 'marks', 'public_loc',
-            'origin^7', 'geoloc_synonyms^5'] #, 'min_date', 'max_date']
-         }
+        bool: {
+          must: {
+            multi_match: {
+              query: query,
+              type: 'most_fields',
+              fields: ['accession_number', 'std_term^20', 'alt_name^5', 'category_synonyms^5', 'artist', 'school_period', 'materials', 'measure',
+                'weight', 'comments', 'description', 'label_text', 'bibliography', 'published_refs', 'exhibit_history', 'marks', 'public_loc',
+                'origin^7', 'geoloc_synonyms^5']
+            }
+          },
+          filter: {
+            bool: {
+              must: [
+                {range: {min_date: { gte: min_date }}},
+                {range: {max_date: { lte: max_date }}}
+              ]
+            }
+              # {range: {min_date: { gte: min_date }}},
+              #   max_date: { lte: max_date }
+              # }
+          }
+            # range: { min_date: { gte: min_date }},
+            # range: { max_date: { lte: max_date }}
+        }
        },
+      
        # more blocks will go IN HERE. Keep reading!
     })
   end

@@ -1,10 +1,11 @@
 class ArtifactsController < ApplicationController
   def index
+    query = params[:query].present? ? params[:query] : ''
     # filter_params
+    low_date = params[:low_date].present? ? params[:low_date].to_i : -10_000
+    high_date = params[:high_date].present? ? params[:high_date].to_i : 10_000
 
-    # @artifacts = Artifact.where(id: Artifact.search(params[:query]).pluck(:_id)).paginate(page: params[:page], per_page: 10)
-    @artifacts = Artifact.search(params[:query]).paginate(page: params[:page], per_page: 10)
-    # @artifacts = Artifact.find(artifact_ids)
+    @artifacts = Artifact.search(params[:query], low_date, high_date).paginate(page: params[:page], per_page: 10)
 
     @search_log = SearchLog.create_from_query_string(params[:keyword]) if params[:keyword].present?
     session[:search_params] = {
