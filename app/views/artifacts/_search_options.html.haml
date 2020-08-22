@@ -24,11 +24,3 @@
           - [[500, 999], [1000,1199], [1200,1399],[1400,1499],[1500,1599],[1600,1699],[1700,1799]].each do |date_range|
             %li= temporal_facet_menu_item(params, date_range[0], date_range[1])
           %li=temporal_facet_menu_item(params, 1800, 2100, '1800 &ndash; Present'.html_safe)
-  .accordion-group
-    .accordion-heading
-      %a.accordion-toggle{href: '#collapseTwo', data: {toggle: 'collapse'}} Canned Searches
-    #collapseTwo.accordion-body.collapse{class: !using_phone? ? 'in' : nil}
-      .accordion-inner
-        %ul.nav.nav-list
-          %li= link_to 'Browse by Accession Number', artifacts_path
-          %li= link_to 'On Display in the Museum', artifacts_path(on_display: true)
