@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.6.3'
 
 gem 'rails', '6.0.3.2'
-
+gem 'rake'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
@@ -47,8 +47,6 @@ gem 'mini_magick'
 gem 'puma'
 
 group :development do
-  gem 'vlad'
-  gem 'vlad-git'
   gem 'rb-fsevent'
   # gem 'growl'
   # gem 'guard', '>= 1.4.0'
